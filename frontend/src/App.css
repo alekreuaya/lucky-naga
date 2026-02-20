@@ -25,7 +25,7 @@
 .wheel-inner-position {
   position: absolute;
   top: 49%;
-  left: 48%;
+  left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
 }
@@ -52,7 +52,7 @@
 }
 
 .wheel-canvas-new {
-  border-radius: 50%;
+  border-radius: 70%;
   position: relative;
   z-index: 10;
 }
