@@ -371,28 +371,42 @@ class LuckyWheelAPITester:
             self.log_test("Get history", False, error_msg=str(e))
         return False
 
-    def test_update_prizes(self):
-        """Test PUT /api/admin/prizes"""
-        if not self.admin_token:
-            self.log_test("Update prizes", False, error_msg="No admin token available")
+    def test_update_prizes_new_structure(self):
+        """Test PUT /api/admin/prizes with new structure (image_url, probability, no points)"""
+        if not self.master_token:
+            self.log_test("Update prizes (new structure)", False, error_msg="No master token available")
             return False
         
         try:
-            headers = {"Authorization": f"Bearer {self.admin_token}"}
-            # Create test prize pool
+            headers = {"Authorization": f"Bearer {self.master_token}"}
+            # Create test prize pool with new structure
             test_prizes = [
-                {"label": "Test Prize 1", "points": 100, "color": "#8B5CF6", "probability": 0.5},
-                {"label": "Test Prize 2", "points": 200, "color": "#F472B6", "probability": 0.5},
+                {
+                    "label": "Test Dragon Gem",
+                    "image_url": "https://example.com/gem.png",
+                    "color": "#FFD700",
+                    "probability": 25.0
+                },
+                {
+                    "label": "Test Fire Crystal",
+                    "image_url": "",
+                    "color": "#FF6B6B",
+                    "probability": 75.0
+                },
             ]
             payload = {"prizes": test_prizes}
             response = requests.put(f"{self.base_url}/admin/prizes", json=payload, headers=headers, timeout=10)
             if response.status_code == 200:
-                self.log_test("Update prizes", True, "Prize pool updated successfully")
-                return True
+                data = response.json()
+                if "prizes" in data and len(data["prizes"]) == 2:
+                    self.log_test("Update prizes (new structure)", True, "Prize pool updated with new structure")
+                    return True
+                else:
+                    self.log_test("Update prizes (new structure)", False, error_msg=f"Unexpected response: {data}")
             else:
-                self.log_test("Update prizes", False, error_msg=f"Status code: {response.status_code}")
+                self.log_test("Update prizes (new structure)", False, error_msg=f"Status code: {response.status_code}")
         except Exception as e:
-            self.log_test("Update prizes", False, error_msg=str(e))
+            self.log_test("Update prizes (new structure)", False, error_msg=str(e))
         return False
 
     def test_get_stats(self):
