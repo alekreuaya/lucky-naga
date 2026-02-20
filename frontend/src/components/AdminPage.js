@@ -236,6 +236,13 @@ function PrizesTab({ token }) {
 
   const COLORS = ["#9B1B30", "#D4A030", "#7A1526", "#B8860B", "#8B0000", "#DAA520", "#5C0A1A", "#C5943A"];
 
+  const totalWeight = prizes.reduce((sum, p) => sum + (p.probability || 0), 0);
+
+  const getWinPercent = (prob) => {
+    if (totalWeight === 0) return 0;
+    return ((prob / totalWeight) * 100).toFixed(1);
+  };
+
   const updatePrize = (index, field, value) => {
     const updated = [...prizes];
     updated[index] = { ...updated[index], [field]: value };
@@ -247,7 +254,7 @@ function PrizesTab({ token }) {
       label: "New Prize",
       points: 50,
       color: COLORS[prizes.length % COLORS.length],
-      probability: 0.1,
+      probability: 10,
     }]);
   };
 
@@ -258,7 +265,12 @@ function PrizesTab({ token }) {
   const savePrizes = async () => {
     setSaving(true);
     try {
-      await axios.put(`${API}/admin/prizes`, { prizes }, { headers });
+      // Normalize probabilities to 0-1 range for backend
+      const normalized = prizes.map(p => ({
+        ...p,
+        probability: p.probability / (totalWeight || 1)
+      }));
+      await axios.put(`${API}/admin/prizes`, { prizes: normalized }, { headers });
       toast.success("Prize pool updated!");
       fetchPrizes();
     } catch (err) {
@@ -270,6 +282,49 @@ function PrizesTab({ token }) {
 
   return (
     <div className="space-y-6" data-testid="prizes-tab">
+      {/* Win Rate Overview */}
+      <div className="dragon-card p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="text-xl font-bold font-['Cinzel'] gold-text flex items-center gap-2">
+            <BarChart3 className="w-5 h-5 text-[#FFD700]" />
+            Win Rate Overview
+          </h4>
+          <span className="text-xs font-bold text-[#D4A030]/40 uppercase tracking-widest font-['Cinzel']">
+            Total Weight: {totalWeight.toFixed(1)}
+          </span>
+        </div>
+        {/* Visual bar showing all prizes proportionally */}
+        <div className="flex h-10 rounded-xl overflow-hidden border border-[#D4A030]/30 mb-4" data-testid="win-rate-bar">
+          {prizes.map((prize, i) => {
+            const pct = getWinPercent(prize.probability);
+            return pct > 0 ? (
+              <motion.div
+                key={i}
+                className="relative flex items-center justify-center overflow-hidden group cursor-default"
+                style={{ width: `${pct}%`, backgroundColor: prize.color || COLORS[i % COLORS.length] }}
+                initial={{ width: 0 }}
+                animate={{ width: `${pct}%` }}
+                transition={{ duration: 0.5, delay: i * 0.05 }}
+                title={`${prize.label}: ${pct}%`}
+              >
+                <span className="text-[10px] font-bold text-white/90 truncate px-1 font-['Cinzel']">
+                  {parseFloat(pct) >= 8 ? `${pct}%` : ""}
+                </span>
+              </motion.div>
+            ) : null;
+          })}
+        </div>
+        <div className="flex flex-wrap gap-3">
+          {prizes.map((prize, i) => (
+            <div key={i} className="flex items-center gap-1.5 text-xs" data-testid={`win-rate-legend-${i}`}>
+              <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: prize.color || COLORS[i % COLORS.length] }} />
+              <span className="text-[#FFF8E7]/70 font-medium">{prize.label}</span>
+              <span className="text-[#FFD700] font-bold">{getWinPercent(prize.probability)}%</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="dragon-card p-6">
         <div className="flex items-center justify-between mb-6">
           <h4 className="text-xl font-bold font-['Cinzel'] gold-text">
@@ -296,61 +351,74 @@ function PrizesTab({ token }) {
           </div>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {prizes.map((prize, i) => (
             <motion.div
               key={i}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 rounded-xl border border-[#D4A030]/15 bg-[#1a0a0a]/40"
+              className="p-4 rounded-xl border border-[#D4A030]/15 bg-[#1a0a0a]/40"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03 }}
               data-testid={`prize-item-${i}`}
             >
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <input
-                  type="color"
-                  value={prize.color}
-                  onChange={(e) => updatePrize(i, "color", e.target.value)}
-                  className="w-10 h-10 rounded-lg border border-[#D4A030]/30 cursor-pointer bg-transparent"
-                  data-testid={`prize-color-${i}`}
-                />
-                <input
-                  type="text"
-                  value={prize.label}
-                  onChange={(e) => updatePrize(i, "label", e.target.value)}
-                  className="dragon-input flex-1 sm:w-40"
-                  placeholder="Label"
-                  data-testid={`prize-label-${i}`}
-                />
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-3">
+                <div className="flex items-center gap-2 flex-1 w-full sm:w-auto">
+                  <input
+                    type="color"
+                    value={prize.color}
+                    onChange={(e) => updatePrize(i, "color", e.target.value)}
+                    className="w-10 h-10 rounded-lg border border-[#D4A030]/30 cursor-pointer bg-transparent shrink-0"
+                    data-testid={`prize-color-${i}`}
+                  />
+                  <input
+                    type="text"
+                    value={prize.label}
+                    onChange={(e) => updatePrize(i, "label", e.target.value)}
+                    className="dragon-input flex-1"
+                    placeholder="Prize Name"
+                    data-testid={`prize-label-${i}`}
+                  />
+                  <input
+                    type="number"
+                    value={prize.points}
+                    onChange={(e) => updatePrize(i, "points", parseInt(e.target.value) || 0)}
+                    className="dragon-input w-24"
+                    placeholder="Points"
+                    data-testid={`prize-points-${i}`}
+                  />
+                  <motion.button
+                    onClick={() => removePrize(i)}
+                    className="p-2 rounded-full hover:bg-[#9B1B30]/20 transition-colors shrink-0"
+                    whileHover={{ scale: 1.1 }}
+                    data-testid={`remove-prize-${i}`}
+                  >
+                    <Trash2 className="w-5 h-5 text-[#9B1B30]" />
+                  </motion.button>
+                </div>
               </div>
-              <div className="flex items-center gap-2 w-full sm:w-auto">
+
+              {/* Win Rate Slider */}
+              <div className="flex items-center gap-3" data-testid={`prize-winrate-row-${i}`}>
+                <span className="text-xs font-bold text-[#D4A030]/50 uppercase tracking-wider font-['Cinzel'] w-20 shrink-0">
+                  Win Rate
+                </span>
                 <input
-                  type="number"
-                  value={prize.points}
-                  onChange={(e) => updatePrize(i, "points", parseInt(e.target.value) || 0)}
-                  className="dragon-input w-24"
-                  placeholder="Points"
-                  data-testid={`prize-points-${i}`}
+                  type="range"
+                  min="1"
+                  max="100"
+                  value={Math.round(prize.probability) || 1}
+                  onChange={(e) => updatePrize(i, "probability", parseInt(e.target.value))}
+                  className="flex-1 h-2 rounded-full appearance-none cursor-pointer"
+                  style={{
+                    background: `linear-gradient(to right, ${prize.color || '#D4A030'} 0%, ${prize.color || '#D4A030'} ${Math.round(prize.probability)}%, rgba(212,160,48,0.15) ${Math.round(prize.probability)}%, rgba(212,160,48,0.15) 100%)`
+                  }}
+                  data-testid={`prize-winrate-slider-${i}`}
                 />
-                <input
-                  type="number"
-                  value={prize.probability}
-                  onChange={(e) => updatePrize(i, "probability", parseFloat(e.target.value) || 0.1)}
-                  className="dragon-input w-24"
-                  step="0.01"
-                  min="0.01"
-                  max="1"
-                  placeholder="Prob"
-                  data-testid={`prize-probability-${i}`}
-                />
-                <motion.button
-                  onClick={() => removePrize(i)}
-                  className="p-2 rounded-full hover:bg-[#9B1B30]/20 transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  data-testid={`remove-prize-${i}`}
-                >
-                  <Trash2 className="w-5 h-5 text-[#9B1B30]" />
-                </motion.button>
+                <div className="flex items-center gap-1 shrink-0">
+                  <span className="text-lg font-bold font-['Cinzel'] text-[#FFD700] w-16 text-right">
+                    {getWinPercent(prize.probability)}%
+                  </span>
+                </div>
               </div>
             </motion.div>
           ))}
