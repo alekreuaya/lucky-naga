@@ -29,17 +29,30 @@ class LuckyWheelAPITester:
         })
 
     def test_get_prizes(self):
-        """Test GET /api/prizes - should return 8 prize segments"""
+        """Test GET /api/prizes - should have image_url and probability fields, no points"""
         try:
             response = requests.get(f"{self.base_url}/prizes", timeout=10)
             if response.status_code == 200:
                 data = response.json()
                 prizes = data.get("prizes", [])
-                if len(prizes) == 8:
-                    self.log_test("GET /api/prizes (8 segments)", True, f"Found {len(prizes)} segments")
-                    return True
+                if len(prizes) >= 1:
+                    # Check prize structure
+                    sample_prize = prizes[0]
+                    has_image_url = "image_url" in sample_prize
+                    has_probability = "probability" in sample_prize
+                    has_points = "points" in sample_prize
+                    
+                    if has_image_url and has_probability and not has_points:
+                        self.log_test("GET /api/prizes (new structure)", True, f"Found {len(prizes)} prizes with correct fields")
+                        return True
+                    else:
+                        issues = []
+                        if not has_image_url: issues.append("missing image_url")
+                        if not has_probability: issues.append("missing probability")
+                        if has_points: issues.append("still has points field")
+                        self.log_test("GET /api/prizes (new structure)", False, error_msg=f"Prize structure issues: {', '.join(issues)}")
                 else:
-                    self.log_test("GET /api/prizes (8 segments)", False, error_msg=f"Expected 8 segments, got {len(prizes)}")
+                    self.log_test("GET /api/prizes", False, error_msg=f"No prizes found")
             else:
                 self.log_test("GET /api/prizes", False, error_msg=f"Status code: {response.status_code}")
         except Exception as e:
