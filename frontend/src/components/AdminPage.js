@@ -270,12 +270,12 @@ function PrizesTab({ token }) {
   const savePrizes = async () => {
     setSaving(true);
     try {
-      // Normalize probabilities to 0-1 range for backend
-      const normalized = prizes.map(p => ({
+      // Send weights as probabilities - backend uses relative weights for random selection
+      const toSave = prizes.map(p => ({
         ...p,
         probability: p.probability / (totalWeight || 1)
       }));
-      await axios.put(`${API}/admin/prizes`, { prizes: normalized }, { headers });
+      await axios.put(`${API}/admin/prizes`, { prizes: toSave }, { headers });
       toast.success("Prize pool updated!");
       fetchPrizes();
     } catch (err) {
