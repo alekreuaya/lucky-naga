@@ -83,9 +83,9 @@ export default function MainPage() {
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex items-center gap-3">
-          <Sparkles className="w-8 h-8 text-[#FFD700]" />
+          <img src={LOGO_GIF} alt="NAGA1001" className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
           <h1 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
-            Dragon Wheel
+            NAGA1001
           </h1>
         </div>
       </motion.header>
