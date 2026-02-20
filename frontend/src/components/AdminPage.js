@@ -706,6 +706,116 @@ function AdminsTab({ token }) {
   );
 }
 
+
+function SettingsTab({ token }) {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [changing, setChanging] = useState(false);
+
+  const headers = { Authorization: `Bearer ${token}` };
+
+  const handleChangePassword = async () => {
+    if (!currentPassword || !newPassword) {
+      toast.error("All fields are required");
+      return;
+    }
+    if (newPassword.length < 6) {
+      toast.error("New password must be at least 6 characters");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+    setChanging(true);
+    try {
+      await axios.post(`${API}/admin/change-password`, {
+        current_password: currentPassword,
+        new_password: newPassword
+      }, { headers });
+      toast.success("Password changed successfully!");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (err) {
+      toast.error(err.response?.data?.detail || "Failed to change password");
+    } finally {
+      setChanging(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6" data-testid="settings-tab">
+      <div className="dragon-card p-6 max-w-lg">
+        <h4 className="text-xl font-bold font-['Cinzel'] gold-text mb-2 flex items-center gap-2">
+          <Lock className="w-5 h-5 text-[#FFD700]" />
+          Change Password
+        </h4>
+        <p className="text-sm text-[#D4A030]/40 mb-6">Update your admin account password</p>
+
+        <div className="space-y-4">
+          <div>
+            <label className="text-xs font-bold text-[#D4A030]/50 uppercase tracking-wider font-['Cinzel'] mb-1 block">
+              Current Password
+            </label>
+            <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Enter current password"
+              className="dragon-input w-full"
+              data-testid="current-password-input"
+            />
+          </div>
+
+          <div className="ornate-divider my-2" />
+
+          <div>
+            <label className="text-xs font-bold text-[#D4A030]/50 uppercase tracking-wider font-['Cinzel'] mb-1 block">
+              New Password
+            </label>
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Enter new password (min 6 chars)"
+              className="dragon-input w-full"
+              data-testid="new-password-input"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs font-bold text-[#D4A030]/50 uppercase tracking-wider font-['Cinzel'] mb-1 block">
+              Confirm New Password
+            </label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm new password"
+              className="dragon-input w-full"
+              data-testid="confirm-password-input"
+            />
+          </div>
+
+          <motion.button
+            onClick={handleChangePassword}
+            disabled={changing || !currentPassword || !newPassword || !confirmPassword}
+            className="dragon-btn bg-gradient-to-r from-[#D4A030] to-[#B8860B] text-[#1a0a0a] px-6 py-3 w-full flex items-center justify-center gap-2 mt-2 disabled:opacity-40"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            data-testid="change-password-button"
+          >
+            <Lock className="w-5 h-5" />
+            {changing ? "Changing..." : "Change Password"}
+          </motion.button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
   const [role, setRole] = useState(localStorage.getItem("admin_role") || "");
