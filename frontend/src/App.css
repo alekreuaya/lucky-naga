@@ -1,4 +1,4 @@
-/* Lucky Wheel App Styles */
+/* Lucky Wheel App Styles - Dragon Theme */
 .wheel-container {
   position: relative;
   display: flex;
@@ -8,22 +8,28 @@
 
 .wheel-pointer {
   position: absolute;
-  top: -10px;
+  top: -12px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   width: 0;
   height: 0;
-  border-left: 18px solid transparent;
-  border-right: 18px solid transparent;
-  border-top: 36px solid #1F1F1F;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-top: 34px solid #FFD700;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
 }
 
 .wheel-canvas {
   border-radius: 50%;
-  border: 6px solid #1F1F1F;
-  box-shadow: 0 0 0 6px #FDF8F6, 0 0 0 10px #1F1F1F, 0 0 40px rgba(139, 92, 246, 0.3);
+  border: 5px solid #D4A030;
+  box-shadow: 
+    0 0 0 4px rgba(26, 10, 10, 0.9),
+    0 0 0 7px #8B6914,
+    0 0 0 9px rgba(26, 10, 10, 0.9),
+    0 0 0 11px rgba(212, 160, 48, 0.3),
+    0 0 50px rgba(212, 160, 48, 0.2),
+    0 0 80px rgba(155, 27, 48, 0.15);
 }
 
 @keyframes spin-wheel {
@@ -62,9 +68,43 @@
   opacity: 0;
 }
 
-/* Tab styling override */
+/* Tab styling override - dragon gold */
 .admin-tabs [data-state="active"] {
-  background: #8B5CF6 !important;
-  color: white !important;
-  border-color: #1F1F1F !important;
+  background: linear-gradient(135deg, #9B1B30, #7A1526) !important;
+  color: #FFD700 !important;
+  border-color: rgba(212, 160, 48, 0.5) !important;
+  box-shadow: 0 0 15px rgba(155, 27, 48, 0.3) !important;
+}
+
+/* Ornate corner decorations */
+.ornate-corners {
+  position: relative;
+}
+.ornate-corners::before,
+.ornate-corners::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(212, 160, 48, 0.5);
+}
+.ornate-corners::before {
+  top: 8px; left: 8px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+.ornate-corners::after {
+  bottom: 8px; right: 8px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+/* Fire particle glow on buttons */
+@keyframes fire-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(212, 160, 48, 0.2), 0 0 30px rgba(155, 27, 48, 0.1); }
+  50% { box-shadow: 0 0 25px rgba(212, 160, 48, 0.4), 0 0 50px rgba(155, 27, 48, 0.2); }
+}
+
+.fire-glow {
+  animation: fire-glow 2s ease-in-out infinite;
 }

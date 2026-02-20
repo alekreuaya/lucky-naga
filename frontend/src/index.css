@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Crimson+Pro:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,15 +6,15 @@
 
 body {
   margin: 0;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Crimson Pro', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #FDF8F6;
-  color: #1F1F1F;
+  background: #1a0a0a;
+  color: #FFF8E7;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Cinzel', serif;
 }
 
 code {
@@ -23,31 +23,31 @@ code {
 
 @layer base {
   :root {
-    --background: 24 33% 97%;
-    --foreground: 0 0% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 12%;
-    --primary: 263 84% 66%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 330 86% 70%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 187 92% 42%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 12%;
-    --input: 0 0% 85%;
-    --ring: 263 84% 66%;
-    --chart-1: 263 84% 66%;
-    --chart-2: 330 86% 70%;
-    --chart-3: 187 92% 42%;
-    --chart-4: 160 84% 39%;
-    --chart-5: 38 92% 50%;
-    --radius: 1.5rem;
+    --background: 0 50% 8%;
+    --foreground: 43 80% 93%;
+    --card: 0 40% 12%;
+    --card-foreground: 43 80% 93%;
+    --popover: 0 40% 12%;
+    --popover-foreground: 43 80% 93%;
+    --primary: 43 76% 50%;
+    --primary-foreground: 0 50% 8%;
+    --secondary: 0 72% 36%;
+    --secondary-foreground: 43 80% 93%;
+    --muted: 0 30% 18%;
+    --muted-foreground: 43 30% 60%;
+    --accent: 43 76% 50%;
+    --accent-foreground: 0 50% 8%;
+    --destructive: 0 84% 40%;
+    --destructive-foreground: 43 80% 93%;
+    --border: 43 50% 30%;
+    --input: 0 30% 18%;
+    --ring: 43 76% 50%;
+    --chart-1: 43 76% 50%;
+    --chart-2: 0 72% 36%;
+    --chart-3: 43 90% 65%;
+    --chart-4: 0 50% 50%;
+    --chart-5: 30 80% 45%;
+    --radius: 1rem;
   }
 }
 
@@ -79,75 +79,108 @@ code {
   }
 }
 
-/* Neo-brutalist card */
-.neo-card {
-  background: white;
-  border: 2px solid #1F1F1F;
-  border-radius: 24px;
-  box-shadow: 4px 4px 0px 0px #1F1F1F;
-  transition: all 0.2s ease;
+/* Dragon ornate card */
+.dragon-card {
+  background: linear-gradient(135deg, #2a0e0e 0%, #1a0808 100%);
+  border: 1px solid rgba(212, 160, 48, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(212, 160, 48, 0.08), inset 0 1px 0 rgba(212, 160, 48, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.neo-card:hover {
-  box-shadow: 6px 6px 0px 0px #1F1F1F;
-  transform: translate(-1px, -1px);
+.dragon-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
 }
 
-.neo-btn {
-  border: 2px solid #1F1F1F;
-  border-radius: 9999px;
-  box-shadow: 4px 4px 0px 0px #1F1F1F;
-  transition: all 0.15s ease;
+.dragon-card:hover {
+  box-shadow: 0 0 30px rgba(212, 160, 48, 0.15), inset 0 1px 0 rgba(212, 160, 48, 0.25);
+  border-color: rgba(212, 160, 48, 0.6);
+}
+
+.dragon-btn {
+  border: 1px solid rgba(212, 160, 48, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(212, 160, 48, 0.15);
+  transition: all 0.3s ease;
   font-weight: 700;
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.05em;
 }
 
-.neo-btn:hover {
-  box-shadow: 2px 2px 0px 0px #1F1F1F;
-  transform: translate(2px, 2px);
+.dragon-btn:hover {
+  box-shadow: 0 0 25px rgba(212, 160, 48, 0.3);
+  border-color: rgba(255, 215, 0, 0.8);
+  transform: translateY(-1px);
 }
 
-.neo-btn:active {
-  box-shadow: none;
-  transform: translate(4px, 4px);
+.dragon-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 10px rgba(212, 160, 48, 0.1);
 }
 
-.neo-input {
-  border: 2px solid #1F1F1F;
+.dragon-input {
+  border: 1px solid rgba(212, 160, 48, 0.3);
   border-radius: 12px;
   padding: 12px 16px;
   font-size: 1rem;
   font-weight: 500;
-  transition: all 0.2s ease;
-  background: white;
+  transition: all 0.3s ease;
+  background: rgba(26, 10, 10, 0.8);
+  color: #FFF8E7;
+  font-family: 'Crimson Pro', serif;
 }
 
-.neo-input:focus {
+.dragon-input::placeholder {
+  color: rgba(212, 160, 48, 0.4);
+}
+
+.dragon-input:focus {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
-  border-color: #8B5CF6;
+  box-shadow: 0 0 0 3px rgba(212, 160, 48, 0.15), 0 0 20px rgba(212, 160, 48, 0.1);
+  border-color: rgba(255, 215, 0, 0.7);
 }
 
 /* Wheel container glow */
 .wheel-glow {
-  filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.3));
+  filter: drop-shadow(0 0 40px rgba(212, 160, 48, 0.25));
+}
+
+/* Gold text shimmer */
+.gold-text {
+  background: linear-gradient(135deg, #FFD700, #DAA520, #FFD700, #B8860B, #FFD700);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gold-shimmer 4s ease-in-out infinite;
+}
+
+@keyframes gold-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FDF8F6;
+  background: #1a0a0a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #8B5CF6;
-  border-radius: 4px;
+  background: linear-gradient(to bottom, #D4A030, #8B6914);
+  border-radius: 3px;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
 
 .animate-float {
@@ -155,10 +188,28 @@ code {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
-  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.8); }
+  0%, 100% { box-shadow: 0 0 20px rgba(212, 160, 48, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(212, 160, 48, 0.6); }
 }
 
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Ornate divider */
+.ornate-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 160, 48, 0.5), transparent);
+}
+
+/* Dragon pattern overlay */
+.dragon-pattern {
+  background-image: 
+    radial-gradient(ellipse at 20% 50%, rgba(155, 27, 48, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(155, 27, 48, 0.1) 0%, transparent 50%);
+}
+
+/* Red glow accent */
+.red-glow {
+  box-shadow: 0 0 30px rgba(155, 27, 48, 0.3);
 }
