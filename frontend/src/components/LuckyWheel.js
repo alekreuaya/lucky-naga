@@ -219,7 +219,15 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     }
   });
 
-  const canvasSize = typeof window !== 'undefined' && window.innerWidth < 640 ? 280 : 360;
+  // Calculate canvas size to fit inside the dragon frame circle (approximately 68% of container)
+  const getCanvasSize = () => {
+    if (typeof window === 'undefined') return 240;
+    const width = window.innerWidth;
+    if (width < 640) return 240;  // Mobile: 420 * 0.57
+    if (width < 768) return 285;  // Tablet: 500 * 0.57
+    return 308;                   // Desktop: 540 * 0.57
+  };
+  const canvasSize = getCanvasSize();
 
   return (
     <div className="wheel-container" data-testid="wheel-container">

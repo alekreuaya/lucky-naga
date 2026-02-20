@@ -112,8 +112,9 @@ export default function MainPage() {
                 Spin the wheel and claim your fortune
               </p>
 
-              <div className="mb-8 relative flex items-center justify-center" style={{ minHeight: '480px', minWidth: '480px' }}>
-                <div className="relative z-[1]">
+              <div className="mb-8 relative flex items-center justify-center wheel-background-container" data-testid="wheel-background-container">
+                <DragonSVG />
+                <div className="wheel-inner-position">
                   <LuckyWheel
                     ref={wheelRef}
                     prizes={prizes}
@@ -122,7 +123,6 @@ export default function MainPage() {
                     onSpinEnd={handleSpinEnd}
                   />
                 </div>
-                <DragonSVG />
               </div>
             </motion.div>
 

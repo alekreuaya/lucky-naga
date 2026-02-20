@@ -1,4 +1,35 @@
 /* Lucky Wheel App Styles - Dragon Theme */
+
+/* Background container for wheel with dragon image */
+.wheel-background-container {
+  position: relative;
+  width: 420px;
+  height: 420px;
+}
+
+@media (min-width: 640px) {
+  .wheel-background-container {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+@media (min-width: 768px) {
+  .wheel-background-container {
+    width: 540px;
+    height: 540px;
+  }
+}
+
+/* Position the wheel inside the circle of the background image */
+.wheel-inner-position {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
 .wheel-container {
   position: relative;
   display: flex;
