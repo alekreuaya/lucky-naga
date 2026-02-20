@@ -43,22 +43,15 @@ export default function MainPage() {
 
   const handleSpin = async (username, redeemCode) => {
     if (spinning) return;
-
     try {
       const res = await axios.post(`${API}/spin`, { username, redeem_code: redeemCode });
       const prize = res.data.prize;
-
-      // Find the prize index on the wheel
       const prizeIndex = prizes.findIndex(p => p.label === prize.label);
       const idx = prizeIndex >= 0 ? prizeIndex : 0;
-
-      // Start wheel animation
       const canvas = document.querySelector('[data-testid="wheel-canvas"]');
       if (canvas && canvas.startSpin) {
         canvas.startSpin(idx);
       }
-
-      // Set the won prize for the modal
       setWonPrize(prize);
     } catch (err) {
       const msg = err.response?.data?.detail || "Failed to spin. Please try again.";
@@ -79,22 +72,22 @@ export default function MainPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDF8F6]" data-testid="main-page">
+    <div className="min-h-screen bg-[#1a0a0a] dragon-pattern" data-testid="main-page">
       {/* Header */}
       <motion.header
-        className="px-6 md:px-12 py-6 flex items-center justify-between"
+        className="px-6 md:px-12 py-6 flex items-center justify-between border-b border-[#D4A030]/15"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex items-center gap-3">
-          <Sparkles className="w-8 h-8 text-[#8B5CF6]" />
-          <h1 className="text-2xl md:text-3xl font-bold font-['Fredoka'] text-[#1F1F1F]">
-            Lucky Wheel
+          <Sparkles className="w-8 h-8 text-[#FFD700]" />
+          <h1 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
+            Dragon Wheel
           </h1>
         </div>
         <a
           href="/admin"
-          className="text-sm font-bold text-[#8B5CF6] hover:underline flex items-center gap-1"
+          className="text-sm font-bold text-[#D4A030]/60 hover:text-[#FFD700] transition-colors flex items-center gap-1 font-['Cinzel'] tracking-wider"
           data-testid="admin-link"
         >
           Admin
@@ -104,7 +97,6 @@ export default function MainPage() {
       {/* Main Content */}
       <main className="px-6 md:px-12 pb-12">
         <div className="max-w-7xl mx-auto">
-          {/* Desktop: Split Layout / Mobile: Stacked */}
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             {/* Left: Wheel */}
             <motion.div
@@ -114,16 +106,14 @@ export default function MainPage() {
               transition={{ delay: 0.1 }}
             >
               <motion.h2
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold font-['Fredoka'] text-center mb-2"
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold font-['Cinzel'] text-center mb-2"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <span className="text-[#8B5CF6]">Try</span>{" "}
-                <span className="text-[#F472B6]">Your</span>{" "}
-                <span className="text-[#06B6D4]">Luck!</span>
+                <span className="gold-text">Try Your Luck</span>
               </motion.h2>
-              <p className="text-base md:text-lg text-[#666] font-medium text-center mb-8">
-                Spin the wheel and win exciting prizes
+              <p className="text-base md:text-lg text-[#D4A030]/50 font-medium text-center mb-8 tracking-wider">
+                Spin the dragon wheel and claim your fortune
               </p>
 
               <div className="mb-8">
@@ -141,10 +131,9 @@ export default function MainPage() {
             <div className="lg:w-[400px] xl:w-[440px] flex flex-col gap-8">
               <SpinForm onSpin={handleSpin} spinning={spinning} />
 
-              {/* History Section */}
               <div className="flex items-center gap-2 -mb-4">
-                <History className="w-5 h-5 text-[#06B6D4]" />
-                <span className="text-sm font-bold uppercase tracking-widest text-[#06B6D4]">
+                <History className="w-5 h-5 text-[#D4A030]" />
+                <span className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4A030]/60 font-['Cinzel']">
                   Live Winners
                 </span>
               </div>
@@ -154,7 +143,6 @@ export default function MainPage() {
         </div>
       </main>
 
-      {/* Win Modal */}
       <WinModal show={showWin} prize={wonPrize} onClose={handleCloseWin} />
     </div>
   );

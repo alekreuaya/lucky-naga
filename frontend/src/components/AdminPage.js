@@ -21,7 +21,7 @@ function AdminLogin({ onLogin }) {
       const res = await axios.post(`${API}/admin/login`, { password });
       localStorage.setItem("admin_token", res.data.token);
       onLogin(res.data.token);
-      toast.success("Welcome, Admin!");
+      toast.success("Welcome, Dragon Master!");
     } catch (err) {
       toast.error(err.response?.data?.detail || "Login failed");
     } finally {
@@ -30,49 +30,49 @@ function AdminLogin({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-[#FDF8F6]" data-testid="admin-login-page">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-[#1a0a0a] dragon-pattern" data-testid="admin-login-page">
       <motion.div
-        className="neo-card p-8 md:p-12 max-w-md w-full"
+        className="dragon-card ornate-corners p-8 md:p-12 max-w-md w-full"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="text-center mb-8">
-          <Shield className="w-16 h-16 mx-auto mb-4 text-[#8B5CF6]" />
-          <h2 className="text-3xl md:text-4xl font-bold font-['Fredoka'] text-[#1F1F1F]">
+          <Shield className="w-16 h-16 mx-auto mb-4 text-[#D4A030]" />
+          <h2 className="text-3xl md:text-4xl font-bold font-['Cinzel'] gold-text">
             Admin Panel
           </h2>
-          <p className="text-sm font-semibold text-[#666] uppercase tracking-widest mt-2">
+          <p className="text-sm font-semibold text-[#D4A030]/40 uppercase tracking-[0.2em] mt-3">
             Enter password to continue
           </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div className="relative">
-            <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8B5CF6]" />
+            <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#D4A030]" />
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Admin Password"
-              className="neo-input w-full pl-12"
+              className="dragon-input w-full pl-12"
               data-testid="admin-password-input"
             />
           </div>
           <motion.button
             type="submit"
             disabled={loading || !password}
-            className="neo-btn w-full py-4 px-8 text-lg bg-[#8B5CF6] text-white disabled:opacity-50"
+            className="dragon-btn fire-glow w-full py-4 px-8 text-lg bg-gradient-to-r from-[#9B1B30] to-[#7A1526] text-[#FFD700] disabled:opacity-40"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             data-testid="admin-login-button"
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Entering..." : "Enter the Lair"}
           </motion.button>
         </form>
 
         <a
           href="/"
-          className="block text-center mt-6 text-sm font-bold text-[#8B5CF6] hover:underline"
+          className="block text-center mt-6 text-sm font-bold text-[#D4A030]/50 hover:text-[#FFD700] transition-colors font-['Cinzel'] tracking-wider"
           data-testid="back-to-main"
         >
           <ArrowLeft className="inline w-4 h-4 mr-1" />
@@ -125,15 +125,15 @@ function CodesTab({ token }) {
 
   return (
     <div className="space-y-6" data-testid="codes-tab">
-      <div className="neo-card p-6">
-        <h4 className="text-xl font-bold font-['Fredoka'] mb-4 text-[#1F1F1F]">Generate New Codes</h4>
+      <div className="dragon-card p-6">
+        <h4 className="text-xl font-bold font-['Cinzel'] gold-text mb-4">Generate New Codes</h4>
         <div className="flex flex-col sm:flex-row gap-3">
           <input
             type="text"
             value={prefix}
             onChange={(e) => setPrefix(e.target.value)}
             placeholder="Prefix (optional)"
-            className="neo-input flex-1"
+            className="dragon-input flex-1"
             data-testid="code-prefix-input"
           />
           <input
@@ -142,35 +142,35 @@ function CodesTab({ token }) {
             onChange={(e) => setCount(Math.max(1, parseInt(e.target.value) || 1))}
             min={1}
             max={50}
-            className="neo-input w-24"
+            className="dragon-input w-24"
             data-testid="code-count-input"
           />
           <motion.button
             onClick={handleGenerate}
             disabled={generating}
-            className="neo-btn bg-[#10B981] text-white px-6 py-3 flex items-center gap-2"
+            className="dragon-btn bg-gradient-to-r from-[#D4A030] to-[#B8860B] text-[#1a0a0a] px-6 py-3 flex items-center gap-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             data-testid="generate-codes-button"
           >
             <Plus className="w-5 h-5" />
-            {generating ? "Generating..." : "Generate"}
+            {generating ? "Forging..." : "Generate"}
           </motion.button>
         </div>
       </div>
 
-      <div className="neo-card p-6">
+      <div className="dragon-card p-6">
         <div className="flex items-center justify-between mb-4">
-          <h4 className="text-xl font-bold font-['Fredoka'] text-[#1F1F1F]">
+          <h4 className="text-xl font-bold font-['Cinzel'] gold-text">
             All Codes ({codes.length})
           </h4>
           <motion.button
             onClick={fetchCodes}
-            className="p-2 rounded-full hover:bg-[#F3F0FF] transition-colors"
+            className="p-2 rounded-full hover:bg-[#D4A030]/10 transition-colors"
             whileHover={{ rotate: 180 }}
             data-testid="refresh-codes-button"
           >
-            <RefreshCw className="w-5 h-5 text-[#8B5CF6]" />
+            <RefreshCw className="w-5 h-5 text-[#D4A030]" />
           </motion.button>
         </div>
 
@@ -178,8 +178,10 @@ function CodesTab({ token }) {
           {codes.map((code, i) => (
             <motion.div
               key={i}
-              className={`flex items-center gap-3 p-4 rounded-2xl border-2 transition-colors ${
-                code.is_used ? "bg-[#FEE2E2] border-[#EF4444]/30" : "bg-[#ECFDF5] border-[#10B981]/30"
+              className={`flex items-center gap-3 p-4 rounded-xl border transition-colors ${
+                code.is_used
+                  ? "bg-[#9B1B30]/10 border-[#9B1B30]/25"
+                  : "bg-[#D4A030]/5 border-[#D4A030]/20"
               }`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -187,25 +189,27 @@ function CodesTab({ token }) {
               data-testid={`code-item-${i}`}
             >
               <div className="flex-1 min-w-0">
-                <p className="font-bold text-[#1F1F1F] truncate">{code.username}</p>
-                <p className="text-sm font-mono text-[#666]">{code.redeem_code}</p>
+                <p className="font-bold text-[#FFF8E7] truncate font-['Cinzel'] text-sm">{code.username}</p>
+                <p className="text-sm font-mono text-[#D4A030]/50">{code.redeem_code}</p>
               </div>
-              <span className={`text-xs font-bold uppercase px-3 py-1 rounded-full ${
-                code.is_used ? "bg-[#EF4444] text-white" : "bg-[#10B981] text-white"
+              <span className={`text-xs font-bold uppercase px-3 py-1 rounded-lg font-['Cinzel'] tracking-wider ${
+                code.is_used
+                  ? "bg-[#9B1B30]/30 text-[#FF6B6B] border border-[#9B1B30]/40"
+                  : "bg-[#D4A030]/15 text-[#FFD700] border border-[#D4A030]/30"
               }`}>
                 {code.is_used ? "Used" : "Active"}
               </span>
               <button
                 onClick={() => copyCode(code, i)}
-                className="p-2 rounded-full hover:bg-white/50 transition-colors"
+                className="p-2 rounded-full hover:bg-[#D4A030]/10 transition-colors"
                 data-testid={`copy-code-${i}`}
               >
-                {copiedIdx === i ? <Check className="w-4 h-4 text-[#10B981]" /> : <Copy className="w-4 h-4 text-[#666]" />}
+                {copiedIdx === i ? <Check className="w-4 h-4 text-[#FFD700]" /> : <Copy className="w-4 h-4 text-[#D4A030]/50" />}
               </button>
             </motion.div>
           ))}
           {codes.length === 0 && (
-            <p className="text-center text-[#999] py-8 font-medium">No codes generated yet</p>
+            <p className="text-center text-[#D4A030]/30 py-8 font-medium">No codes forged yet</p>
           )}
         </div>
       </div>
@@ -230,7 +234,7 @@ function PrizesTab({ token }) {
 
   useEffect(() => { fetchPrizes(); }, [fetchPrizes]);
 
-  const COLORS = ["#8B5CF6", "#F472B6", "#06B6D4", "#10B981", "#F59E0B", "#EF4444", "#3B82F6", "#EC4899"];
+  const COLORS = ["#9B1B30", "#D4A030", "#7A1526", "#B8860B", "#8B0000", "#DAA520", "#5C0A1A", "#C5943A"];
 
   const updatePrize = (index, field, value) => {
     const updated = [...prizes];
@@ -266,15 +270,15 @@ function PrizesTab({ token }) {
 
   return (
     <div className="space-y-6" data-testid="prizes-tab">
-      <div className="neo-card p-6">
+      <div className="dragon-card p-6">
         <div className="flex items-center justify-between mb-6">
-          <h4 className="text-xl font-bold font-['Fredoka'] text-[#1F1F1F]">
+          <h4 className="text-xl font-bold font-['Cinzel'] gold-text">
             Prize Pool ({prizes.length} segments)
           </h4>
           <div className="flex gap-2">
             <motion.button
               onClick={addPrize}
-              className="neo-btn bg-[#06B6D4] text-white px-4 py-2 text-sm flex items-center gap-1"
+              className="dragon-btn bg-[#D4A030]/15 text-[#FFD700] px-4 py-2 text-sm flex items-center gap-1"
               whileHover={{ scale: 1.02 }}
               data-testid="add-prize-button"
             >
@@ -283,7 +287,7 @@ function PrizesTab({ token }) {
             <motion.button
               onClick={savePrizes}
               disabled={saving}
-              className="neo-btn bg-[#10B981] text-white px-4 py-2 text-sm flex items-center gap-1"
+              className="dragon-btn bg-gradient-to-r from-[#D4A030] to-[#B8860B] text-[#1a0a0a] px-4 py-2 text-sm flex items-center gap-1"
               whileHover={{ scale: 1.02 }}
               data-testid="save-prizes-button"
             >
@@ -296,7 +300,7 @@ function PrizesTab({ token }) {
           {prizes.map((prize, i) => (
             <motion.div
               key={i}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 rounded-2xl border-2 border-[#1F1F1F]/10 bg-[#FDF8F6]"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 rounded-xl border border-[#D4A030]/15 bg-[#1a0a0a]/40"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03 }}
@@ -307,14 +311,14 @@ function PrizesTab({ token }) {
                   type="color"
                   value={prize.color}
                   onChange={(e) => updatePrize(i, "color", e.target.value)}
-                  className="w-10 h-10 rounded-lg border-2 border-[#1F1F1F] cursor-pointer"
+                  className="w-10 h-10 rounded-lg border border-[#D4A030]/30 cursor-pointer bg-transparent"
                   data-testid={`prize-color-${i}`}
                 />
                 <input
                   type="text"
                   value={prize.label}
                   onChange={(e) => updatePrize(i, "label", e.target.value)}
-                  className="neo-input flex-1 sm:w-40"
+                  className="dragon-input flex-1 sm:w-40"
                   placeholder="Label"
                   data-testid={`prize-label-${i}`}
                 />
@@ -324,7 +328,7 @@ function PrizesTab({ token }) {
                   type="number"
                   value={prize.points}
                   onChange={(e) => updatePrize(i, "points", parseInt(e.target.value) || 0)}
-                  className="neo-input w-24"
+                  className="dragon-input w-24"
                   placeholder="Points"
                   data-testid={`prize-points-${i}`}
                 />
@@ -332,7 +336,7 @@ function PrizesTab({ token }) {
                   type="number"
                   value={prize.probability}
                   onChange={(e) => updatePrize(i, "probability", parseFloat(e.target.value) || 0.1)}
-                  className="neo-input w-24"
+                  className="dragon-input w-24"
                   step="0.01"
                   min="0.01"
                   max="1"
@@ -341,11 +345,11 @@ function PrizesTab({ token }) {
                 />
                 <motion.button
                   onClick={() => removePrize(i)}
-                  className="p-2 rounded-full hover:bg-[#FEE2E2] transition-colors"
+                  className="p-2 rounded-full hover:bg-[#9B1B30]/20 transition-colors"
                   whileHover={{ scale: 1.1 }}
                   data-testid={`remove-prize-${i}`}
                 >
-                  <Trash2 className="w-5 h-5 text-[#EF4444]" />
+                  <Trash2 className="w-5 h-5 text-[#9B1B30]" />
                 </motion.button>
               </div>
             </motion.div>
@@ -372,89 +376,86 @@ function StatsTab({ token }) {
 
   useEffect(() => { fetchStats(); }, [fetchStats]);
 
-  if (!stats) return <div className="text-center py-12 text-[#999]">Loading statistics...</div>;
+  if (!stats) return <div className="text-center py-12 text-[#D4A030]/40 font-['Cinzel']">Loading statistics...</div>;
 
   return (
     <div className="space-y-6" data-testid="stats-tab">
-      {/* Stat Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: "Total Codes", value: stats.total_codes, color: "#8B5CF6", icon: Users },
-          { label: "Used", value: stats.used_codes, color: "#EF4444", icon: Check },
-          { label: "Available", value: stats.unused_codes, color: "#10B981", icon: Gift },
-          { label: "Total Draws", value: stats.total_draws, color: "#06B6D4", icon: BarChart3 },
+          { label: "Total Codes", value: stats.total_codes, color: "#D4A030", icon: Users },
+          { label: "Used", value: stats.used_codes, color: "#9B1B30", icon: Check },
+          { label: "Available", value: stats.unused_codes, color: "#DAA520", icon: Gift },
+          { label: "Total Draws", value: stats.total_draws, color: "#FFD700", icon: BarChart3 },
         ].map((s, i) => (
           <motion.div
             key={i}
-            className="neo-card p-5 text-center"
+            className="dragon-card p-5 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
             data-testid={`stat-card-${i}`}
           >
             <s.icon className="w-8 h-8 mx-auto mb-2" style={{ color: s.color }} />
-            <p className="text-3xl font-bold font-['Fredoka']" style={{ color: s.color }}>{s.value}</p>
-            <p className="text-xs font-bold uppercase tracking-widest text-[#999] mt-1">{s.label}</p>
+            <p className="text-3xl font-bold font-['Cinzel']" style={{ color: s.color }}>{s.value}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#D4A030]/40 mt-1 font-['Cinzel']">{s.label}</p>
           </motion.div>
         ))}
       </div>
 
-      {/* Prize Distribution */}
       {stats.prize_distribution && stats.prize_distribution.length > 0 && (
-        <div className="neo-card p-6">
-          <h4 className="text-xl font-bold font-['Fredoka'] text-[#1F1F1F] mb-4">Prize Distribution</h4>
+        <div className="dragon-card p-6">
+          <h4 className="text-xl font-bold font-['Cinzel'] gold-text mb-4">Prize Distribution</h4>
           <div className="space-y-3">
             {stats.prize_distribution.map((pd, i) => (
               <div key={i} className="flex items-center gap-4" data-testid={`distribution-item-${i}`}>
-                <span className="font-bold text-[#1F1F1F] w-32 truncate">{pd._id}</span>
-                <div className="flex-1 h-8 bg-[#FDF8F6] rounded-full overflow-hidden border-2 border-[#1F1F1F]/10">
+                <span className="font-bold text-[#FFF8E7] w-32 truncate text-sm font-['Cinzel']">{pd._id}</span>
+                <div className="flex-1 h-6 bg-[#1a0a0a] rounded-lg overflow-hidden border border-[#D4A030]/15">
                   <motion.div
-                    className="h-full rounded-full"
-                    style={{ backgroundColor: "#8B5CF6", width: `${Math.max(5, (pd.count / stats.total_draws) * 100)}%` }}
+                    className="h-full rounded-lg bg-gradient-to-r from-[#9B1B30] to-[#D4A030]"
+                    style={{ width: `${Math.max(5, (pd.count / stats.total_draws) * 100)}%` }}
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.max(5, (pd.count / stats.total_draws) * 100)}%` }}
                     transition={{ delay: i * 0.1, duration: 0.5 }}
                   />
                 </div>
-                <span className="font-bold text-[#8B5CF6] w-12 text-right">{pd.count}x</span>
+                <span className="font-bold text-[#FFD700] w-12 text-right text-sm">{pd.count}x</span>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* History Table */}
-      <div className="neo-card p-6">
-        <h4 className="text-xl font-bold font-['Fredoka'] text-[#1F1F1F] mb-4">
+      <div className="dragon-card p-6">
+        <h4 className="text-xl font-bold font-['Cinzel'] gold-text mb-4">
           Draw History ({stats.history?.length || 0})
         </h4>
         <div className="overflow-x-auto max-h-[400px] overflow-y-auto">
           <table className="w-full text-left" data-testid="history-table">
-            <thead className="sticky top-0 bg-white">
-              <tr className="border-b-2 border-[#1F1F1F]">
-                <th className="py-3 px-4 font-bold text-sm uppercase tracking-widest text-[#999]">User</th>
-                <th className="py-3 px-4 font-bold text-sm uppercase tracking-widest text-[#999]">Prize</th>
-                <th className="py-3 px-4 font-bold text-sm uppercase tracking-widest text-[#999]">Points</th>
-                <th className="py-3 px-4 font-bold text-sm uppercase tracking-widest text-[#999]">Date</th>
+            <thead className="sticky top-0 bg-[#2a0e0e]">
+              <tr className="border-b border-[#D4A030]/30">
+                <th className="py-3 px-4 font-bold text-xs uppercase tracking-[0.15em] text-[#D4A030]/50 font-['Cinzel']">User</th>
+                <th className="py-3 px-4 font-bold text-xs uppercase tracking-[0.15em] text-[#D4A030]/50 font-['Cinzel']">Prize</th>
+                <th className="py-3 px-4 font-bold text-xs uppercase tracking-[0.15em] text-[#D4A030]/50 font-['Cinzel']">Points</th>
+                <th className="py-3 px-4 font-bold text-xs uppercase tracking-[0.15em] text-[#D4A030]/50 font-['Cinzel']">Date</th>
               </tr>
             </thead>
             <tbody>
               {(stats.history || []).map((h, i) => (
-                <tr key={i} className="border-b border-[#1F1F1F]/10 hover:bg-[#FDF8F6] transition-colors" data-testid={`history-row-${i}`}>
-                  <td className="py-3 px-4 font-bold">{h.username}</td>
+                <tr key={i} className="border-b border-[#D4A030]/10 hover:bg-[#D4A030]/5 transition-colors" data-testid={`history-row-${i}`}>
+                  <td className="py-3 px-4 font-bold text-[#FFF8E7] text-sm">{h.username}</td>
                   <td className="py-3 px-4">
-                    <span className="px-3 py-1 rounded-full text-white text-sm font-bold" style={{ backgroundColor: h.prize_color || "#8B5CF6" }}>
+                    <span className="px-3 py-1 rounded-lg text-[#FFD700] text-sm font-bold border border-[#D4A030]/30 bg-[#9B1B30]/20">
                       {h.prize_label}
                     </span>
                   </td>
-                  <td className="py-3 px-4 font-bold">{h.prize_points}</td>
-                  <td className="py-3 px-4 text-sm text-[#666]">{new Date(h.drawn_at).toLocaleString()}</td>
+                  <td className="py-3 px-4 font-bold text-[#D4A030]">{h.prize_points}</td>
+                  <td className="py-3 px-4 text-sm text-[#D4A030]/40">{new Date(h.drawn_at).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           {(!stats.history || stats.history.length === 0) && (
-            <p className="text-center text-[#999] py-8 font-medium">No draws yet</p>
+            <p className="text-center text-[#D4A030]/30 py-8 font-medium">No draws yet</p>
           )}
         </div>
       </div>
@@ -468,7 +469,6 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (token) {
-      // Verify token by making a request
       axios.get(`${API}/admin/codes`, { headers: { Authorization: `Bearer ${token}` } })
         .then(() => setIsAuth(true))
         .catch(() => {
@@ -494,23 +494,22 @@ export default function AdminPage() {
   if (!isAuth) return <AdminLogin onLogin={handleLogin} />;
 
   return (
-    <div className="min-h-screen bg-[#FDF8F6]" data-testid="admin-dashboard">
-      {/* Header */}
+    <div className="min-h-screen bg-[#1a0a0a] dragon-pattern" data-testid="admin-dashboard">
       <motion.header
-        className="px-6 md:px-12 py-6 flex items-center justify-between"
+        className="px-6 md:px-12 py-6 flex items-center justify-between border-b border-[#D4A030]/15"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex items-center gap-3">
-          <Shield className="w-8 h-8 text-[#8B5CF6]" />
-          <h1 className="text-2xl md:text-3xl font-bold font-['Fredoka'] text-[#1F1F1F]">
-            Admin Panel
+          <Shield className="w-8 h-8 text-[#D4A030]" />
+          <h1 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
+            Dragon's Lair
           </h1>
         </div>
         <div className="flex items-center gap-3">
           <a
             href="/"
-            className="text-sm font-bold text-[#8B5CF6] hover:underline"
+            className="text-sm font-bold text-[#D4A030]/50 hover:text-[#FFD700] transition-colors font-['Cinzel'] tracking-wider"
             data-testid="admin-back-to-main"
           >
             <ArrowLeft className="inline w-4 h-4 mr-1" />
@@ -518,7 +517,7 @@ export default function AdminPage() {
           </a>
           <motion.button
             onClick={handleLogout}
-            className="neo-btn bg-[#EF4444] text-white px-4 py-2 text-sm flex items-center gap-1"
+            className="dragon-btn bg-[#9B1B30]/30 text-[#FF6B6B] px-4 py-2 text-sm flex items-center gap-1"
             whileHover={{ scale: 1.02 }}
             data-testid="admin-logout-button"
           >
@@ -527,33 +526,32 @@ export default function AdminPage() {
         </div>
       </motion.header>
 
-      {/* Dashboard */}
-      <main className="px-6 md:px-12 pb-12">
+      <main className="px-6 md:px-12 pb-12 pt-6">
         <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="codes" className="admin-tabs">
-            <TabsList className="w-full flex bg-white border-2 border-[#1F1F1F] rounded-full p-1 mb-8 shadow-[4px_4px_0px_0px_#1F1F1F]">
+            <TabsList className="w-full flex bg-[#2a0e0e] border border-[#D4A030]/25 rounded-xl p-1 mb-8 shadow-[0_0_20px_rgba(212,160,48,0.08)]">
               <TabsTrigger
                 value="codes"
-                className="flex-1 rounded-full py-3 font-bold font-['Fredoka'] text-base transition-all data-[state=active]:shadow-none"
+                className="flex-1 rounded-lg py-3 font-bold font-['Cinzel'] text-sm tracking-wider transition-all text-[#D4A030]/60 data-[state=active]:text-[#FFD700]"
                 data-testid="tab-codes"
               >
-                <Users className="w-5 h-5 mr-2 inline" />
+                <Users className="w-4 h-4 mr-2 inline" />
                 Codes
               </TabsTrigger>
               <TabsTrigger
                 value="prizes"
-                className="flex-1 rounded-full py-3 font-bold font-['Fredoka'] text-base transition-all data-[state=active]:shadow-none"
+                className="flex-1 rounded-lg py-3 font-bold font-['Cinzel'] text-sm tracking-wider transition-all text-[#D4A030]/60 data-[state=active]:text-[#FFD700]"
                 data-testid="tab-prizes"
               >
-                <Gift className="w-5 h-5 mr-2 inline" />
+                <Gift className="w-4 h-4 mr-2 inline" />
                 Prizes
               </TabsTrigger>
               <TabsTrigger
                 value="stats"
-                className="flex-1 rounded-full py-3 font-bold font-['Fredoka'] text-base transition-all data-[state=active]:shadow-none"
+                className="flex-1 rounded-lg py-3 font-bold font-['Cinzel'] text-sm tracking-wider transition-all text-[#D4A030]/60 data-[state=active]:text-[#FFD700]"
                 data-testid="tab-stats"
               >
-                <BarChart3 className="w-5 h-5 mr-2 inline" />
+                <BarChart3 className="w-4 h-4 mr-2 inline" />
                 Stats
               </TabsTrigger>
             </TabsList>
