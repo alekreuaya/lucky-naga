@@ -110,9 +110,10 @@ export default function MainPage() {
                 Spin the dragon wheel and claim your fortune
               </p>
 
-              <div className="mb-8 relative">
+              <div className="mb-8 relative flex items-center justify-center" style={{ minHeight: '460px' }}>
                 <DragonSVG />
-                <LuckyWheel
+                <div className="relative z-10">
+                  <LuckyWheel
                   ref={wheelRef}
                   prizes={prizes}
                   spinning={spinning}
