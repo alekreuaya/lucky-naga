@@ -263,10 +263,10 @@ class LuckyWheelAPITester:
             self.log_test("Get codes with filters", False, error_msg=str(e))
         return False
 
-    def test_spin_valid_code(self, codes):
-        """Test POST /api/spin with valid unused code"""
+    def test_spin_returns_no_points(self, codes):
+        """Test POST /api/spin returns prize without points field"""
         if not codes or len(codes) == 0:
-            self.log_test("Spin with valid code", False, error_msg="No test codes available")
+            self.log_test("Spin returns no points", False, error_msg="No test codes available")
             return False
         
         try:
@@ -278,7 +278,7 @@ class LuckyWheelAPITester:
                     break
             
             if not unused_code:
-                self.log_test("Spin with valid code", False, error_msg="No unused codes available")
+                self.log_test("Spin returns no points", False, error_msg="No unused codes available")
                 return False
             
             payload = {
@@ -288,15 +288,19 @@ class LuckyWheelAPITester:
             response = requests.post(f"{self.base_url}/spin", json=payload, timeout=10)
             if response.status_code == 200:
                 data = response.json()
-                if "prize" in data:
-                    self.log_test("Spin with valid code", True, f"Won: {data['prize']['label']}")
+                prize = data.get("prize", {})
+                if "prize" in data and "points" not in prize:
+                    self.log_test("Spin returns no points", True, f"Won: {prize.get('label')} (no points field)")
                     return True
                 else:
-                    self.log_test("Spin with valid code", False, error_msg="No prize in response")
+                    issues = []
+                    if "prize" not in data: issues.append("missing prize")
+                    if "points" in prize: issues.append("still has points field")
+                    self.log_test("Spin returns no points", False, error_msg=f"Prize structure issues: {', '.join(issues)}")
             else:
-                self.log_test("Spin with valid code", False, error_msg=f"Status code: {response.status_code}")
+                self.log_test("Spin returns no points", False, error_msg=f"Status code: {response.status_code}")
         except Exception as e:
-            self.log_test("Spin with valid code", False, error_msg=str(e))
+            self.log_test("Spin returns no points", False, error_msg=str(e))
         return False
 
     def test_spin_used_code(self, codes):
