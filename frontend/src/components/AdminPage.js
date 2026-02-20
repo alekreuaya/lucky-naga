@@ -226,7 +226,12 @@ function PrizesTab({ token }) {
   const fetchPrizes = useCallback(async () => {
     try {
       const res = await axios.get(`${API}/admin/prizes`, { headers });
-      setPrizes(res.data.prizes || []);
+      // Convert 0-1 probabilities from backend to 1-100 weight scale for slider UI
+      const loaded = (res.data.prizes || []).map(p => ({
+        ...p,
+        probability: p.probability <= 1 ? Math.round(p.probability * 100) || 1 : Math.round(p.probability)
+      }));
+      setPrizes(loaded);
     } catch (err) {
       toast.error("Failed to fetch prizes");
     }
