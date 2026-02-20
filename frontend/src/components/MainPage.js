@@ -11,6 +11,8 @@ import DragonSVG from "@/components/DragonSVG";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
+const LOGO_GIF = "https://customer-assets.emergentagent.com/job_fortune-wheel-hub/artifacts/0p68npsx_gif%20naga1001.gif";
+
 export default function MainPage() {
   const [prizes, setPrizes] = useState([]);
   const [history, setHistory] = useState([]);
