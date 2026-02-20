@@ -195,48 +195,72 @@ class LuckyWheelAPITester:
             self.log_test("Delete admin", False, error_msg=str(e))
         return False
 
-    def test_generate_codes(self):
-        """Test POST /api/admin/generate-codes"""
-        if not self.admin_token:
-            self.log_test("Generate codes", False, error_msg="No admin token available")
+    def test_generate_codes_exact_usernames(self):
+        """Test POST /api/admin/generate-codes with exact usernames (no _number suffix)"""
+        if not self.master_token:
+            self.log_test("Generate codes (exact usernames)", False, error_msg="No master token available")
             return False
         
         try:
-            headers = {"Authorization": f"Bearer {self.admin_token}"}
-            payload = {"count": 2, "prefix": "TEST"}
+            headers = {"Authorization": f"Bearer {self.master_token}"}
+            test_usernames = ["dragon_king", "lucky_player", "test_user"]
+            payload = {"usernames": test_usernames}
             response = requests.post(f"{self.base_url}/admin/generate-codes", json=payload, headers=headers, timeout=10)
             if response.status_code == 200:
                 data = response.json()
                 codes = data.get("codes", [])
-                if len(codes) == 2:
-                    self.log_test("Generate codes", True, f"Generated {len(codes)} codes")
+                # Check that usernames match exactly (no _number suffix)
+                generated_usernames = [code["username"] for code in codes]
+                exact_match = all(username in test_usernames for username in generated_usernames)
+                if exact_match and len(codes) > 0:
+                    self.log_test("Generate codes (exact usernames)", True, f"Generated {len(codes)} codes with exact usernames")
                     return codes
                 else:
-                    self.log_test("Generate codes", False, error_msg=f"Expected 2 codes, got {len(codes)}")
+                    self.log_test("Generate codes (exact usernames)", False, error_msg=f"Usernames don't match exactly: {generated_usernames}")
             else:
-                self.log_test("Generate codes", False, error_msg=f"Status code: {response.status_code}")
+                self.log_test("Generate codes (exact usernames)", False, error_msg=f"Status code: {response.status_code}")
         except Exception as e:
-            self.log_test("Generate codes", False, error_msg=str(e))
+            self.log_test("Generate codes (exact usernames)", False, error_msg=str(e))
         return False
 
-    def test_get_codes(self):
-        """Test GET /api/admin/codes"""
-        if not self.admin_token:
-            self.log_test("Get codes", False, error_msg="No admin token available")
+    def test_get_codes_with_filters(self):
+        """Test GET /api/admin/codes with status filters"""
+        if not self.master_token:
+            self.log_test("Get codes with filters", False, error_msg="No master token available")
             return False
         
         try:
-            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            headers = {"Authorization": f"Bearer {self.master_token}"}
+            
+            # Test all codes
             response = requests.get(f"{self.base_url}/admin/codes", headers=headers, timeout=10)
             if response.status_code == 200:
-                data = response.json()
-                codes = data.get("codes", [])
-                self.log_test("Get codes", True, f"Retrieved {len(codes)} codes")
-                return codes
+                all_codes = response.json().get("codes", [])
+                self.log_test("Get all codes", True, f"Retrieved {len(all_codes)} total codes")
             else:
-                self.log_test("Get codes", False, error_msg=f"Status code: {response.status_code}")
+                self.log_test("Get all codes", False, error_msg=f"Status code: {response.status_code}")
+                return False
+            
+            # Test used codes filter
+            response = requests.get(f"{self.base_url}/admin/codes?status=used", headers=headers, timeout=10)
+            if response.status_code == 200:
+                used_codes = response.json().get("codes", [])
+                self.log_test("Get used codes", True, f"Retrieved {len(used_codes)} used codes")
+            else:
+                self.log_test("Get used codes", False, error_msg=f"Status code: {response.status_code}")
+                return False
+            
+            # Test unused codes filter
+            response = requests.get(f"{self.base_url}/admin/codes?status=unused", headers=headers, timeout=10)
+            if response.status_code == 200:
+                unused_codes = response.json().get("codes", [])
+                self.log_test("Get unused codes", True, f"Retrieved {len(unused_codes)} unused codes")
+                return unused_codes
+            else:
+                self.log_test("Get unused codes", False, error_msg=f"Status code: {response.status_code}")
+                
         except Exception as e:
-            self.log_test("Get codes", False, error_msg=str(e))
+            self.log_test("Get codes with filters", False, error_msg=str(e))
         return False
 
     def test_spin_valid_code(self, codes):
