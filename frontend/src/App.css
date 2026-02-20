@@ -1,34 +1,70 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Lucky Wheel App Styles */
+.wheel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.wheel-pointer {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-top: 36px solid #1F1F1F;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.wheel-canvas {
+  border-radius: 50%;
+  border: 6px solid #1F1F1F;
+  box-shadow: 0 0 0 6px #FDF8F6, 0 0 0 10px #1F1F1F, 0 0 40px rgba(139, 92, 246, 0.3);
 }
 
-.App-link {
-    color: #61dafb;
+@keyframes spin-wheel {
+  from { transform: rotate(var(--start-angle, 0deg)); }
+  to { transform: rotate(var(--end-angle, 3600deg)); }
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.spinning {
+  animation: spin-wheel var(--spin-duration, 4s) cubic-bezier(0.17, 0.67, 0.12, 0.99) forwards;
+}
+
+/* Winner badge animation */
+@keyframes winner-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.winner-badge {
+  animation: winner-bounce 0.6s ease-in-out infinite;
+}
+
+/* Stagger animation for lists */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-item {
+  animation: slide-up 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* Tab styling override */
+.admin-tabs [data-state="active"] {
+  background: #8B5CF6 !important;
+  color: white !important;
+  border-color: #1F1F1F !important;
 }
