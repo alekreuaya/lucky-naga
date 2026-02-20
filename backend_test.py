@@ -4,7 +4,7 @@ from datetime import datetime
 import json
 
 class LuckyWheelAPITester:
-    def __init__(self, base_url="https://fortune-wheel-hub.preview.emergentagent.com/api"):
+    def __init__(self, base_url="https://naga-spin.preview.emergentagent.com/api"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0
