@@ -449,39 +449,55 @@ class LuckyWheelAPITester:
 
     def run_all_tests(self):
         """Run all backend API tests"""
-        print("🧪 Starting Lucky Wheel Backend API Tests")
-        print("=" * 50)
+        print("🧪 Starting Lucky Wheel Backend API Tests (New Features)")
+        print("=" * 60)
         
         # Test basic endpoints first
         self.test_get_prizes()
         self.test_get_history()
         
-        # Test admin authentication
-        self.test_admin_login_wrong()
-        self.test_admin_login_correct()
+        # Test new admin authentication system
+        self.test_wrong_credentials()
+        self.test_master_admin_login()
+        self.test_sub_admin_login()
         
-        # Test admin-only endpoints (requires token)
-        if self.admin_token:
-            generated_codes = self.test_generate_codes()
-            all_codes = self.test_get_codes()
+        # Test admin management (master only)
+        if self.master_token:
+            self.test_create_admin_with_master()
+            self.test_list_admins()
             
-            # Test spinning functionality
-            if all_codes:
-                self.test_spin_valid_code(all_codes)
+            # Test that sub-admin login works after creation
+            self.test_sub_admin_login()
+            
+            # Test admin permissions
+            self.test_create_admin_with_sub_admin()
+            self.test_delete_admin()
+            
+            # Test code generation with exact usernames
+            generated_codes = self.test_generate_codes_exact_usernames()
+            
+            # Test code filtering
+            unused_codes = self.test_get_codes_with_filters()
+            
+            # Test spinning functionality with new structure
+            if unused_codes:
+                self.test_spin_returns_no_points(unused_codes)
                 # Refresh codes to get updated status
-                updated_codes = self.test_get_codes()
+                updated_codes = self.test_get_codes_with_filters()
                 if updated_codes:
                     self.test_spin_used_code(updated_codes)
             
             self.test_spin_invalid_credentials()
-            self.test_update_prizes()
+            self.test_update_prizes_new_structure()
             self.test_get_stats()
         else:
-            print("⚠️ Skipping admin tests - no token available")
+            print("⚠️ Skipping admin tests - no master token available")
         
         # Print summary
-        print("\n" + "=" * 50)
+        print("\n" + "=" * 60)
         print(f"📊 Backend API Test Results: {self.tests_passed}/{self.tests_run} passed")
+        success_rate = round((self.tests_passed / self.tests_run) * 100, 2) if self.tests_run > 0 else 0
+        print(f"📈 Success Rate: {success_rate}%")
         
         if self.tests_passed < self.tests_run:
             print("\n❌ Failed Tests:")
