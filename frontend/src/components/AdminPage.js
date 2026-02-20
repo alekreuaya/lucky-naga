@@ -6,7 +6,7 @@ import axios from "axios";
 import {
   Shield, LogOut, Plus, Trash2, Save, Users, Gift, BarChart3,
   Copy, Check, KeyRound, RefreshCw, ArrowLeft, User, UserPlus,
-  Filter, Image
+  Filter, Image, Settings, Lock
 } from "lucide-react";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
