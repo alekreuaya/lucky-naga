@@ -411,12 +411,12 @@ class LuckyWheelAPITester:
 
     def test_get_stats(self):
         """Test GET /api/admin/stats"""
-        if not self.admin_token:
-            self.log_test("Get stats", False, error_msg="No admin token available")
+        if not self.master_token:
+            self.log_test("Get stats", False, error_msg="No master token available")
             return False
         
         try:
-            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            headers = {"Authorization": f"Bearer {self.master_token}"}
             response = requests.get(f"{self.base_url}/admin/stats", headers=headers, timeout=10)
             if response.status_code == 200:
                 data = response.json()
@@ -431,6 +431,20 @@ class LuckyWheelAPITester:
                 self.log_test("Get stats", False, error_msg=f"Status code: {response.status_code}")
         except Exception as e:
             self.log_test("Get stats", False, error_msg=str(e))
+        return False
+
+    def test_wrong_credentials(self):
+        """Test admin login with wrong credentials"""
+        try:
+            payload = {"username": "wrong", "password": "wrong"}
+            response = requests.post(f"{self.base_url}/admin/login", json=payload, timeout=10)
+            if response.status_code == 401:
+                self.log_test("Admin login (wrong credentials)", True, "Correctly returned 401")
+                return True
+            else:
+                self.log_test("Admin login (wrong credentials)", False, error_msg=f"Expected 401, got {response.status_code}")
+        except Exception as e:
+            self.log_test("Admin login (wrong credentials)", False, error_msg=str(e))
         return False
 
     def run_all_tests(self):
