@@ -6,6 +6,7 @@ from datetime import datetime
 class LuckyWheelAPITester:
     def __init__(self, base_url="https://fortune-wheel-hub.preview.emergentagent.com/api"):
         self.base_url = base_url
+        self.master_token = None
         self.admin_token = None
         self.tests_run = 0
         self.tests_passed = 0
