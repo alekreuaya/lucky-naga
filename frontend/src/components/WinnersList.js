@@ -22,6 +22,11 @@ export default function WinnersList({ history }) {
     return d.toLocaleDateString();
   };
 
+  const getInitials = (name) => {
+    if (!name) return "?";
+    return name.charAt(0).toUpperCase();
+  };
+
   return (
     <div className="dragon-card p-6 md:p-8" data-testid="winners-list">
       <div className="flex items-center gap-3 mb-6">
@@ -41,17 +46,28 @@ export default function WinnersList({ history }) {
             transition={{ delay: index * 0.05 }}
             data-testid={`winner-item-${index}`}
           >
+            {/* Initial Avatar */}
             <div
-              className="w-10 h-10 rounded-full flex items-center justify-center text-[#FFD700] font-bold text-xs shrink-0 border border-[#D4A030]/30"
-              style={{ backgroundColor: "#9B1B30" }}
+              className="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold shrink-0 font-['Cinzel']"
+              style={{
+                backgroundColor: item.prize_color || "#9B1B30",
+                color: "#FFD700",
+                border: "2px solid rgba(212, 160, 48, 0.4)"
+              }}
+              data-testid={`winner-avatar-${index}`}
             >
-              {item.prize_points}
+              {getInitials(item.username)}
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-bold text-[#FFF8E7] truncate font-['Cinzel'] text-sm">{item.username}</p>
-              <p className="text-sm font-semibold text-[#D4A030]">
-                {item.prize_label}
-              </p>
+              <div className="flex items-center gap-2">
+                {item.prize_image_url && (
+                  <img src={item.prize_image_url} alt="" className="w-4 h-4 rounded object-cover" />
+                )}
+                <p className="text-sm font-semibold text-[#D4A030]">
+                  {item.prize_label}
+                </p>
+              </div>
             </div>
             <div className="flex items-center gap-1 text-xs text-[#D4A030]/40 shrink-0">
               <Clock className="w-3 h-3" />

@@ -78,10 +78,14 @@ export default function WinModal({ show, prize, onClose }) {
                 transition={{ repeat: Infinity, duration: 1.5 }}
                 data-testid="prize-display"
               >
-                <p className="text-4xl md:text-6xl font-bold font-['Cinzel'] gold-text">
-                  {prize.points}
-                </p>
-                <p className="text-lg font-bold text-[#FFF8E7] mt-1 font-['Cinzel']">
+                {prize.image_url && (
+                  <img
+                    src={prize.image_url}
+                    alt={prize.label}
+                    className="w-24 h-24 object-cover rounded-xl mx-auto mb-4 border-2 border-[#D4A030]/40"
+                  />
+                )}
+                <p className="text-2xl md:text-4xl font-bold font-['Cinzel'] gold-text">
                   {prize.label}
                 </p>
               </motion.div>
