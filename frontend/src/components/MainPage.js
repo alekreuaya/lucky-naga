@@ -109,12 +109,11 @@ export default function MainPage() {
                 <span className="gold-text">Try Your Luck</span>
               </motion.h2>
               <p className="text-base md:text-lg text-[#D4A030]/50 font-medium text-center mb-8 tracking-wider">
-                Spin the dragon wheel and claim your fortune
+                Spin the wheel and claim your fortune
               </p>
 
-              <div className="mb-8 relative flex items-center justify-center" style={{ minHeight: '460px' }}>
-                <DragonSVG />
-                <div className="relative z-10">
+              <div className="mb-8 relative flex items-center justify-center" style={{ minHeight: '480px', minWidth: '480px' }}>
+                <div className="relative z-[1]">
                   <LuckyWheel
                     ref={wheelRef}
                     prizes={prizes}
@@ -123,6 +122,7 @@ export default function MainPage() {
                     onSpinEnd={handleSpinEnd}
                   />
                 </div>
+                <DragonSVG />
               </div>
             </motion.div>
 
