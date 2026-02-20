@@ -114,12 +114,13 @@ export default function MainPage() {
                 <DragonSVG />
                 <div className="relative z-10">
                   <LuckyWheel
-                  ref={wheelRef}
-                  prizes={prizes}
-                  spinning={spinning}
-                  setSpinning={setSpinning}
-                  onSpinEnd={handleSpinEnd}
-                />
+                    ref={wheelRef}
+                    prizes={prizes}
+                    spinning={spinning}
+                    setSpinning={setSpinning}
+                    onSpinEnd={handleSpinEnd}
+                  />
+                </div>
               </div>
             </motion.div>
 
