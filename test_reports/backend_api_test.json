@@ -1,62 +1,122 @@
 {
-  "timestamp": "2026-02-20T08:28:49.033331",
-  "total_tests": 12,
-  "passed_tests": 12,
-  "success_rate": 100.0,
+  "timestamp": "2026-02-20T10:18:04.005975",
+  "total_tests": 22,
+  "passed_tests": 21,
+  "success_rate": 95.45,
   "detailed_results": [
     {
-      "test": "GET /api/prizes (8 segments)",
+      "test": "GET /api/prizes (new structure)",
       "success": true,
-      "response": "Found 8 segments",
+      "response": "Found 8 prizes with correct fields",
       "error": null
     },
     {
       "test": "Get history",
       "success": true,
-      "response": "Retrieved 1 history items",
+      "response": "Retrieved 9 history items",
       "error": null
     },
     {
-      "test": "Admin login (wrong password)",
+      "test": "Admin login (wrong credentials)",
       "success": true,
       "response": "Correctly returned 401",
       "error": null
     },
     {
-      "test": "Admin login (correct password)",
+      "test": "Master admin login",
       "success": true,
-      "response": "Token received",
+      "response": "Master token received with correct role",
       "error": null
     },
     {
-      "test": "Generate codes",
+      "test": "Sub-admin login",
       "success": true,
-      "response": "Generated 2 codes",
+      "response": "Sub-admin token received with correct role",
       "error": null
     },
     {
-      "test": "Get codes",
+      "test": "Create admin (master)",
       "success": true,
-      "response": "Retrieved 4 codes",
+      "response": "Admin already exists - that's fine",
       "error": null
     },
     {
-      "test": "Spin with valid code",
+      "test": "List admins",
       "success": true,
-      "response": "Won: 250 Points",
+      "response": "Found 2 admins including master",
       "error": null
     },
     {
-      "test": "Get codes",
+      "test": "Sub-admin login",
       "success": true,
-      "response": "Retrieved 4 codes",
+      "response": "Sub-admin token received with correct role",
+      "error": null
+    },
+    {
+      "test": "Create admin (sub-admin forbidden)",
+      "success": true,
+      "response": "Correctly forbidden for sub-admin",
+      "error": null
+    },
+    {
+      "test": "Delete admin",
+      "success": true,
+      "response": "Admin deleted successfully",
+      "error": null
+    },
+    {
+      "test": "Generate codes (exact usernames)",
+      "success": true,
+      "response": "Generated 1 codes with exact usernames",
+      "error": null
+    },
+    {
+      "test": "Get all codes",
+      "success": true,
+      "response": "Retrieved 20 total codes",
+      "error": null
+    },
+    {
+      "test": "Get used codes",
+      "success": true,
+      "response": "Retrieved 9 used codes",
+      "error": null
+    },
+    {
+      "test": "Get unused codes",
+      "success": true,
+      "response": "Retrieved 11 unused codes",
+      "error": null
+    },
+    {
+      "test": "Spin returns no points",
+      "success": true,
+      "response": "Won: Dragon Gem (no points field)",
+      "error": null
+    },
+    {
+      "test": "Get all codes",
+      "success": true,
+      "response": "Retrieved 20 total codes",
+      "error": null
+    },
+    {
+      "test": "Get used codes",
+      "success": true,
+      "response": "Retrieved 10 used codes",
+      "error": null
+    },
+    {
+      "test": "Get unused codes",
+      "success": true,
+      "response": "Retrieved 10 unused codes",
       "error": null
     },
     {
       "test": "Spin with used code",
-      "success": true,
-      "response": "Correctly rejected used code",
-      "error": null
+      "success": false,
+      "response": null,
+      "error": "Expected 400, got 200"
     },
     {
       "test": "Spin with invalid credentials",
@@ -65,9 +125,9 @@
       "error": null
     },
     {
-      "test": "Update prizes",
+      "test": "Update prizes (new structure)",
       "success": true,
-      "response": "Prize pool updated successfully",
+      "response": "Prize pool updated with new structure",
       "error": null
     },
     {
