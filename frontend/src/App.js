@@ -6,7 +6,7 @@ import AdminPage from "@/components/AdminPage";
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#FDF8F6]">
+    <div className="min-h-screen bg-[#1a0a0a] dragon-pattern">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />} />

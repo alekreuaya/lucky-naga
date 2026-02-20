@@ -15,41 +15,41 @@ export default function SpinForm({ onSpin, spinning }) {
   return (
     <motion.form
       onSubmit={handleSubmit}
-      className="neo-card p-6 md:p-8 space-y-5"
+      className="dragon-card ornate-corners p-6 md:p-8 space-y-5"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
       data-testid="spin-form"
     >
-      <h3 className="text-2xl md:text-3xl font-bold font-['Fredoka'] text-[#1F1F1F]">
-        Spin to Win!
+      <h3 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
+        Spin to Win
       </h3>
-      <p className="text-sm font-semibold text-[#666] uppercase tracking-widest">
+      <p className="text-sm font-semibold text-[#D4A030]/60 uppercase tracking-[0.2em]">
         Enter your credentials to spin
       </p>
 
       <div className="space-y-4">
         <div className="relative">
-          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8B5CF6]" />
+          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#D4A030]" />
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
-            className="neo-input w-full pl-12"
+            className="dragon-input w-full pl-12"
             disabled={spinning}
             data-testid="username-input"
           />
         </div>
 
         <div className="relative">
-          <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#F472B6]" />
+          <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9B1B30]" />
           <input
             type="text"
             value={redeemCode}
             onChange={(e) => setRedeemCode(e.target.value)}
             placeholder="Redeem Code"
-            className="neo-input w-full pl-12"
+            className="dragon-input w-full pl-12"
             disabled={spinning}
             data-testid="redeem-code-input"
           />
@@ -59,7 +59,7 @@ export default function SpinForm({ onSpin, spinning }) {
       <motion.button
         type="submit"
         disabled={spinning || !username.trim() || !redeemCode.trim()}
-        className="neo-btn w-full py-4 px-8 text-xl bg-[#8B5CF6] text-white disabled:opacity-50 disabled:cursor-not-allowed"
+        className="dragon-btn fire-glow w-full py-4 px-8 text-xl bg-gradient-to-r from-[#9B1B30] to-[#7A1526] text-[#FFD700] disabled:opacity-40 disabled:cursor-not-allowed"
         whileHover={!spinning ? { scale: 1.02 } : {}}
         whileTap={!spinning ? { scale: 0.98 } : {}}
         data-testid="spin-button"

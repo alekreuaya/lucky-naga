@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const SEGMENT_COLORS = [
-  "#8B5CF6", "#F472B6", "#06B6D4", "#10B981",
-  "#F59E0B", "#EF4444", "#3B82F6", "#EC4899"
+  "#9B1B30", "#D4A030", "#7A1526", "#B8860B",
+  "#8B0000", "#DAA520", "#5C0A1A", "#C5943A"
 ];
 
 export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning }) {
@@ -39,11 +39,12 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
       ctx.arc(0, 0, radius, startAngle, endAngle);
       ctx.closePath();
 
-      const color = prizes[i]?.color || SEGMENT_COLORS[i % SEGMENT_COLORS.length];
+      const color = SEGMENT_COLORS[i % SEGMENT_COLORS.length];
       ctx.fillStyle = color;
       ctx.fill();
 
-      ctx.strokeStyle = "rgba(255,255,255,0.3)";
+      // Gold separator lines
+      ctx.strokeStyle = "rgba(212, 160, 48, 0.6)";
       ctx.lineWidth = 2;
       ctx.stroke();
 
@@ -54,8 +55,11 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
       ctx.translate(radius * 0.62, 0);
       ctx.rotate(Math.PI / 2);
 
-      ctx.fillStyle = "#FFFFFF";
-      ctx.font = `bold ${Math.max(11, Math.floor(radius / 12))}px Fredoka, sans-serif`;
+      // Gold text with shadow
+      ctx.shadowColor = "rgba(0,0,0,0.5)";
+      ctx.shadowBlur = 4;
+      ctx.fillStyle = "#FFD700";
+      ctx.font = `bold ${Math.max(11, Math.floor(radius / 12))}px Cinzel, serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
@@ -68,14 +72,24 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
       ctx.restore();
     }
 
-    // Center circle
+    // Ornate center circle - gold ring
     ctx.beginPath();
-    ctx.arc(0, 0, radius * 0.12, 0, Math.PI * 2);
-    ctx.fillStyle = "#1F1F1F";
+    ctx.arc(0, 0, radius * 0.15, 0, Math.PI * 2);
+    ctx.fillStyle = "#D4A030";
+    ctx.shadowColor = "rgba(212, 160, 48, 0.5)";
+    ctx.shadowBlur = 15;
     ctx.fill();
+    ctx.shadowBlur = 0;
+
     ctx.beginPath();
-    ctx.arc(0, 0, radius * 0.08, 0, Math.PI * 2);
-    ctx.fillStyle = "#FDF8F6";
+    ctx.arc(0, 0, radius * 0.10, 0, Math.PI * 2);
+    ctx.fillStyle = "#1a0a0a";
+    ctx.fill();
+
+    // Inner gold dot
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.04, 0, Math.PI * 2);
+    ctx.fillStyle = "#FFD700";
     ctx.fill();
 
     ctx.restore();
@@ -102,7 +116,6 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     } else {
       setRotation(targetRotation);
       setSpinning(false);
-      // Calculate which prize was won based on final rotation
       const normalizedAngle = ((360 - (targetRotation % 360)) + 360) % 360;
       const winIndex = Math.floor(normalizedAngle / segmentAngle) % segmentCount;
       if (onSpinEnd) onSpinEnd(winIndex);
@@ -122,15 +135,13 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
 
   const startSpin = (prizeIndex) => {
     if (spinning) return;
-    // Calculate target angle to land on the given prize index
     const targetAngle = 360 - (prizeIndex * segmentAngle + segmentAngle / 2);
-    const fullSpins = 5 + Math.floor(Math.random() * 3); // 5-7 full rotations
+    const fullSpins = 5 + Math.floor(Math.random() * 3);
     const target = rotation + fullSpins * 360 + targetAngle - (rotation % 360) + (Math.random() * segmentAngle * 0.4 - segmentAngle * 0.2);
     setTargetRotation(target);
     setSpinning(true);
   };
 
-  // Expose startSpin via ref
   useEffect(() => {
     if (canvasRef.current) {
       canvasRef.current.startSpin = startSpin;

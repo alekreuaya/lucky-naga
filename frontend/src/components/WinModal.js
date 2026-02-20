@@ -33,7 +33,7 @@ export default function WinModal({ show, prize, onClose }) {
               height={windowSize.height}
               numberOfPieces={500}
               recycle={false}
-              colors={["#8B5CF6", "#F472B6", "#06B6D4", "#10B981", "#F59E0B", "#EF4444", "#3B82F6", "#EC4899"]}
+              colors={["#FFD700", "#D4A030", "#9B1B30", "#B8860B", "#DAA520", "#FF4444", "#FFA500", "#FFEC8B"]}
               data-testid="confetti-animation"
             />
           )}
@@ -44,9 +44,9 @@ export default function WinModal({ show, prize, onClose }) {
             exit={{ opacity: 0 }}
             data-testid="win-modal-overlay"
           >
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
             <motion.div
-              className="relative neo-card p-8 md:p-12 max-w-md w-full text-center z-10"
+              className="relative dragon-card ornate-corners p-8 md:p-12 max-w-md w-full text-center z-10"
               initial={{ scale: 0.5, y: 50 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.5, y: 50 }}
@@ -55,50 +55,49 @@ export default function WinModal({ show, prize, onClose }) {
             >
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#FDF8F6] border-2 border-[#1F1F1F] flex items-center justify-center hover:bg-[#EEE] transition-colors"
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#1a0a0a] border border-[#D4A030]/30 flex items-center justify-center hover:border-[#D4A030]/60 transition-colors"
                 data-testid="win-modal-close"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4 text-[#D4A030]" />
               </button>
 
               <motion.div
                 animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.2, 1] }}
                 transition={{ repeat: Infinity, duration: 2 }}
               >
-                <Sparkles className="w-16 h-16 mx-auto mb-4 text-[#F59E0B]" />
+                <Sparkles className="w-16 h-16 mx-auto mb-4 text-[#FFD700]" />
               </motion.div>
 
-              <h2 className="text-3xl md:text-5xl font-bold font-['Fredoka'] mb-2" style={{ color: prize.color }}>
+              <h2 className="text-3xl md:text-5xl font-bold font-['Cinzel'] gold-text mb-2">
                 YOU WON!
               </h2>
 
               <motion.div
-                className="my-6 py-6 px-4 rounded-3xl border-2 border-[#1F1F1F]"
-                style={{ backgroundColor: prize.color + "15" }}
-                animate={{ scale: [1, 1.05, 1] }}
+                className="my-6 py-6 px-4 rounded-2xl border border-[#D4A030]/40 bg-[#9B1B30]/15"
+                animate={{ scale: [1, 1.03, 1] }}
                 transition={{ repeat: Infinity, duration: 1.5 }}
                 data-testid="prize-display"
               >
-                <p className="text-4xl md:text-6xl font-bold font-['Fredoka']" style={{ color: prize.color }}>
+                <p className="text-4xl md:text-6xl font-bold font-['Cinzel'] gold-text">
                   {prize.points}
                 </p>
-                <p className="text-lg font-bold text-[#1F1F1F] mt-1">
+                <p className="text-lg font-bold text-[#FFF8E7] mt-1 font-['Cinzel']">
                   {prize.label}
                 </p>
               </motion.div>
 
-              <p className="text-[#666] font-medium mb-6">
-                Congratulations on your amazing win!
+              <p className="text-[#D4A030]/60 font-medium mb-6">
+                Congratulations on your magnificent victory!
               </p>
 
               <motion.button
                 onClick={onClose}
-                className="neo-btn bg-[#10B981] text-white px-8 py-3 text-lg"
+                className="dragon-btn bg-gradient-to-r from-[#D4A030] to-[#B8860B] text-[#1a0a0a] px-8 py-3 text-lg"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 data-testid="win-modal-ok"
               >
-                Awesome!
+                Claim Victory
               </motion.button>
             </motion.div>
           </motion.div>
