@@ -219,13 +219,13 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     }
   });
 
-  // Calculate canvas size to fit inside the dragon golden ring (approximately 38% of container)
+  // Calculate canvas size to fit inside the dragon golden ring (approximately 42% of container)
   const getCanvasSize = () => {
-    if (typeof window === 'undefined') return 160;
+    if (typeof window === 'undefined') return 180;
     const width = window.innerWidth;
-    if (width < 640) return 160;  // Mobile: 420 * 0.38
-    if (width < 768) return 190;  // Tablet: 500 * 0.38
-    return 205;                   // Desktop: 540 * 0.38
+    if (width < 640) return 180;  // Mobile: 420 * 0.42
+    if (width < 768) return 210;  // Tablet: 500 * 0.42
+    return 230;                   // Desktop: 540 * 0.42
   };
   const canvasSize = getCanvasSize();
 
