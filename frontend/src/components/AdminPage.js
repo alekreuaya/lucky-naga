@@ -910,12 +910,16 @@ export default function AdminPage() {
                   <Shield className="w-4 h-4 mr-2 inline" />Admins
                 </TabsTrigger>
               )}
+              <TabsTrigger value="settings" className="flex-1 rounded-lg py-3 font-bold font-['Cinzel'] text-sm tracking-wider transition-all text-[#D4A030]/60 data-[state=active]:text-[#FFD700]" data-testid="tab-settings">
+                <Settings className="w-4 h-4 mr-2 inline" />Settings
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="codes"><CodesTab token={token} /></TabsContent>
             <TabsContent value="prizes"><PrizesTab token={token} /></TabsContent>
             <TabsContent value="stats"><StatsTab token={token} /></TabsContent>
             {isMaster && <TabsContent value="admins"><AdminsTab token={token} /></TabsContent>}
+            <TabsContent value="settings"><SettingsTab token={token} /></TabsContent>
           </Tabs>
         </div>
       </main>
