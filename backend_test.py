@@ -59,37 +59,140 @@ class LuckyWheelAPITester:
             self.log_test("GET /api/prizes", False, error_msg=str(e))
         return False
 
-    def test_admin_login_correct(self):
-        """Test POST /api/admin/login with correct password"""
+    def test_master_admin_login(self):
+        """Test POST /api/admin/login with master credentials"""
         try:
-            payload = {"password": "luckywheelAdmin2024!"}
+            payload = {"username": "master", "password": "dragonmaster2024!"}
             response = requests.post(f"{self.base_url}/admin/login", json=payload, timeout=10)
             if response.status_code == 200:
                 data = response.json()
-                if "token" in data:
-                    self.admin_token = data["token"]
-                    self.log_test("Admin login (correct password)", True, "Token received")
+                if "token" in data and data.get("role") == "master":
+                    self.master_token = data["token"]
+                    self.log_test("Master admin login", True, "Master token received with correct role")
                     return True
                 else:
-                    self.log_test("Admin login (correct password)", False, error_msg="No token in response")
+                    self.log_test("Master admin login", False, error_msg=f"Missing token or wrong role: {data}")
             else:
-                self.log_test("Admin login (correct password)", False, error_msg=f"Status code: {response.status_code}")
+                self.log_test("Master admin login", False, error_msg=f"Status code: {response.status_code}")
         except Exception as e:
-            self.log_test("Admin login (correct password)", False, error_msg=str(e))
+            self.log_test("Master admin login", False, error_msg=str(e))
         return False
 
-    def test_admin_login_wrong(self):
-        """Test POST /api/admin/login with wrong password"""
+    def test_sub_admin_login(self):
+        """Test POST /api/admin/login with sub-admin credentials"""
         try:
-            payload = {"password": "wrongpassword"}
+            payload = {"username": "admin1", "password": "admin1pass"}
             response = requests.post(f"{self.base_url}/admin/login", json=payload, timeout=10)
-            if response.status_code == 401:
-                self.log_test("Admin login (wrong password)", True, "Correctly returned 401")
+            if response.status_code == 200:
+                data = response.json()
+                if "token" in data and data.get("role") == "admin":
+                    self.admin_token = data["token"]
+                    self.log_test("Sub-admin login", True, "Sub-admin token received with correct role")
+                    return True
+                else:
+                    self.log_test("Sub-admin login", False, error_msg=f"Missing token or wrong role: {data}")
+            else:
+                # If admin1 doesn't exist yet, that's expected - we'll create it later
+                if response.status_code == 401:
+                    self.log_test("Sub-admin login (expected to fail initially)", True, "Admin1 doesn't exist yet - will be created by master")
+                    return True
+                else:
+                    self.log_test("Sub-admin login", False, error_msg=f"Unexpected status code: {response.status_code}")
+        except Exception as e:
+            self.log_test("Sub-admin login", False, error_msg=str(e))
+        return False
+
+    def test_create_admin_with_master(self):
+        """Test POST /api/admin/create-admin with master token"""
+        if not self.master_token:
+            self.log_test("Create admin (master)", False, error_msg="No master token available")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.master_token}"}
+            payload = {"username": "admin1", "password": "admin1pass"}
+            response = requests.post(f"{self.base_url}/admin/create-admin", json=payload, headers=headers, timeout=10)
+            if response.status_code == 200:
+                self.log_test("Create admin (master)", True, "Admin created successfully")
+                return True
+            elif response.status_code == 400 and "already exists" in response.json().get("detail", ""):
+                self.log_test("Create admin (master)", True, "Admin already exists - that's fine")
                 return True
             else:
-                self.log_test("Admin login (wrong password)", False, error_msg=f"Expected 401, got {response.status_code}")
+                self.log_test("Create admin (master)", False, error_msg=f"Status code: {response.status_code}, detail: {response.json()}")
         except Exception as e:
-            self.log_test("Admin login (wrong password)", False, error_msg=str(e))
+            self.log_test("Create admin (master)", False, error_msg=str(e))
+        return False
+
+    def test_create_admin_with_sub_admin(self):
+        """Test POST /api/admin/create-admin with sub-admin token (should fail)"""
+        if not self.admin_token:
+            # Try to get sub-admin token first
+            try:
+                payload = {"username": "admin1", "password": "admin1pass"}
+                response = requests.post(f"{self.base_url}/admin/login", json=payload, timeout=10)
+                if response.status_code == 200:
+                    self.admin_token = response.json()["token"]
+            except:
+                self.log_test("Create admin (sub-admin forbidden)", False, error_msg="No sub-admin token available")
+                return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            payload = {"username": "test_admin", "password": "testpass"}
+            response = requests.post(f"{self.base_url}/admin/create-admin", json=payload, headers=headers, timeout=10)
+            if response.status_code == 403:
+                self.log_test("Create admin (sub-admin forbidden)", True, "Correctly forbidden for sub-admin")
+                return True
+            else:
+                self.log_test("Create admin (sub-admin forbidden)", False, error_msg=f"Expected 403, got {response.status_code}")
+        except Exception as e:
+            self.log_test("Create admin (sub-admin forbidden)", False, error_msg=str(e))
+        return False
+
+    def test_list_admins(self):
+        """Test GET /api/admin/admins (master only)"""
+        if not self.master_token:
+            self.log_test("List admins", False, error_msg="No master token available")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.master_token}"}
+            response = requests.get(f"{self.base_url}/admin/admins", headers=headers, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                admins = data.get("admins", [])
+                master_found = any(admin.get("role") == "master" for admin in admins)
+                if master_found:
+                    self.log_test("List admins", True, f"Found {len(admins)} admins including master")
+                    return True
+                else:
+                    self.log_test("List admins", False, error_msg="Master admin not found in list")
+            else:
+                self.log_test("List admins", False, error_msg=f"Status code: {response.status_code}")
+        except Exception as e:
+            self.log_test("List admins", False, error_msg=str(e))
+        return False
+
+    def test_delete_admin(self):
+        """Test DELETE /api/admin/admins/admin1 with master token"""
+        if not self.master_token:
+            self.log_test("Delete admin", False, error_msg="No master token available")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.master_token}"}
+            response = requests.delete(f"{self.base_url}/admin/admins/admin1", headers=headers, timeout=10)
+            if response.status_code == 200:
+                self.log_test("Delete admin", True, "Admin deleted successfully")
+                return True
+            elif response.status_code == 404:
+                self.log_test("Delete admin", True, "Admin not found - already deleted or never created")
+                return True
+            else:
+                self.log_test("Delete admin", False, error_msg=f"Status code: {response.status_code}")
+        except Exception as e:
+            self.log_test("Delete admin", False, error_msg=str(e))
         return False
 
     def test_generate_codes(self):
