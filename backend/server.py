@@ -64,6 +64,10 @@ class SpinRequest(BaseModel):
     username: str
     redeem_code: str
 
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+
 # --- Auth helpers ---
 def create_token(data: dict):
     payload = {**data, "exp": datetime.now(timezone.utc) + timedelta(hours=24)}
