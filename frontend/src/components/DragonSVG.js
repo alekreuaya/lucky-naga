@@ -14,8 +14,8 @@ export default function DragonFrame() {
       <img
         src={DRAGON_IMAGE}
         alt="Dragon Frame"
-        className="absolute w-[380px] h-[380px] sm:w-[460px] sm:h-[460px] md:w-[520px] md:h-[520px] object-contain drop-shadow-[0_0_30px_rgba(212,160,48,0.3)]"
-        style={{ imageRendering: "auto" }}
+        className="absolute w-[360px] h-[360px] sm:w-[440px] sm:h-[440px] md:w-[490px] md:h-[490px] object-contain"
+        style={{ imageRendering: "auto", filter: "drop-shadow(0 0 20px rgba(212,160,48,0.25))" }}
         draggable={false}
       />
     </motion.div>
