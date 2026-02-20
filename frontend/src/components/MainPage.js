@@ -7,6 +7,7 @@ import LuckyWheel from "@/components/LuckyWheel";
 import SpinForm from "@/components/SpinForm";
 import WinnersList from "@/components/WinnersList";
 import WinModal from "@/components/WinModal";
+import DragonSVG from "@/components/DragonSVG";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -75,7 +76,7 @@ export default function MainPage() {
     <div className="min-h-screen bg-[#1a0a0a] dragon-pattern" data-testid="main-page">
       {/* Header */}
       <motion.header
-        className="px-6 md:px-12 py-6 flex items-center justify-between border-b border-[#D4A030]/15"
+        className="px-6 md:px-12 py-6 flex items-center justify-center border-b border-[#D4A030]/15"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -85,13 +86,6 @@ export default function MainPage() {
             Dragon Wheel
           </h1>
         </div>
-        <a
-          href="/admin"
-          className="text-sm font-bold text-[#D4A030]/60 hover:text-[#FFD700] transition-colors flex items-center gap-1 font-['Cinzel'] tracking-wider"
-          data-testid="admin-link"
-        >
-          Admin
-        </a>
       </motion.header>
 
       {/* Main Content */}
@@ -116,7 +110,8 @@ export default function MainPage() {
                 Spin the dragon wheel and claim your fortune
               </p>
 
-              <div className="mb-8">
+              <div className="mb-8 relative">
+                <DragonSVG />
                 <LuckyWheel
                   ref={wheelRef}
                   prizes={prizes}
