@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, History } from "lucide-react";
+import { History } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
 import LuckyWheel from "@/components/LuckyWheel";
