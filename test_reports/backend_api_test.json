@@ -1,0 +1,80 @@
+{
+  "timestamp": "2026-02-20T08:28:49.033331",
+  "total_tests": 12,
+  "passed_tests": 12,
+  "success_rate": 100.0,
+  "detailed_results": [
+    {
+      "test": "GET /api/prizes (8 segments)",
+      "success": true,
+      "response": "Found 8 segments",
+      "error": null
+    },
+    {
+      "test": "Get history",
+      "success": true,
+      "response": "Retrieved 1 history items",
+      "error": null
+    },
+    {
+      "test": "Admin login (wrong password)",
+      "success": true,
+      "response": "Correctly returned 401",
+      "error": null
+    },
+    {
+      "test": "Admin login (correct password)",
+      "success": true,
+      "response": "Token received",
+      "error": null
+    },
+    {
+      "test": "Generate codes",
+      "success": true,
+      "response": "Generated 2 codes",
+      "error": null
+    },
+    {
+      "test": "Get codes",
+      "success": true,
+      "response": "Retrieved 4 codes",
+      "error": null
+    },
+    {
+      "test": "Spin with valid code",
+      "success": true,
+      "response": "Won: 250 Points",
+      "error": null
+    },
+    {
+      "test": "Get codes",
+      "success": true,
+      "response": "Retrieved 4 codes",
+      "error": null
+    },
+    {
+      "test": "Spin with used code",
+      "success": true,
+      "response": "Correctly rejected used code",
+      "error": null
+    },
+    {
+      "test": "Spin with invalid credentials",
+      "success": true,
+      "response": "Correctly rejected invalid credentials",
+      "error": null
+    },
+    {
+      "test": "Update prizes",
+      "success": true,
+      "response": "Prize pool updated successfully",
+      "error": null
+    },
+    {
+      "test": "Get stats",
+      "success": true,
+      "response": "Retrieved stats with all required fields",
+      "error": null
+    }
+  ]
+}
