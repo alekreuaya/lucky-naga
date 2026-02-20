@@ -1,0 +1,134 @@
+{
+  "project_name": "Lucky Wheel - Vibrant Play Edition",
+  "identity": "E1: The Anti-AI Designer",
+  "design_philosophy": {
+    "core_principle": "Fusion over Imitation. Mix Arcade Aesthetics with Modern SaaS Precision.",
+    "emotional_driver": "Dopamine. Every spin, win, and interaction must feel juicy and rewarding.",
+    "visual_style": "Neo-Brutalist Candy. High saturation, heavy borders, rounded corners, 3D assets.",
+    "anti_patterns": [
+      "No generic 'SaaS Blue'",
+      "No boring tables without visual hierarchy",
+      "No standard 'alert' popups - use festive modals",
+      "No flat gradients - use texture or solid blocks"
+    ]
+  },
+  "typography": {
+    "primary_font": "Fredoka",
+    "secondary_font": "Nunito",
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-bold tracking-tight",
+      "h2": "text-3xl md:text-5xl font-bold",
+      "h3": "text-2xl md:text-3xl font-semibold",
+      "body": "text-base md:text-lg font-medium leading-relaxed",
+      "caption": "text-sm font-bold uppercase tracking-widest"
+    },
+    "instructions": "Use Fredoka for all headings to give a friendly, rounded feel. Use Nunito for body text for readability with personality."
+  },
+  "colors": {
+    "palette": {
+      "mode": "light",
+      "background": "#FDF8F6",
+      "foreground": "#1F1F1F",
+      "primary": "#8B5CF6",
+      "primary_foreground": "#FFFFFF",
+      "secondary": "#F472B6",
+      "accent": "#06B6D4",
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "destructive": "#EF4444",
+      "card": "#FFFFFF",
+      "border": "#1F1F1F"
+    },
+    "usage": {
+      "wheel_segments": [
+        "#8B5CF6",
+        "#F472B6",
+        "#06B6D4",
+        "#10B981",
+        "#F59E0B",
+        "#EF4444",
+        "#3B82F6",
+        "#EC4899"
+      ],
+      "rules": "Use high contrast. Text on colored backgrounds must be white or dark grey depending on accessibility. Borders should be distinct (2px solid black or dark grey) to create the 'sticker' look."
+    }
+  },
+  "layout_strategy": {
+    "grid_system": "Bento Grid (Mode A for Landing, Mode B for Admin)",
+    "mobile": "Single column, wheel takes 50vh, controls below.",
+    "desktop": "Split screen. Left 60% for Wheel (Hero), Right 40% for Controls and History.",
+    "spacing": "Generous. Use p-8 to p-12 for containers. Gap-6 to Gap-8 for grids.",
+    "radius": "rounded-3xl (24px) for cards, rounded-full for buttons."
+  },
+  "components": {
+    "wheel": {
+      "library": "react-custom-roulette",
+      "styling": "Must be centered. Add a 'stopper' image at the top. Container should have a subtle 'glow' or 'shadow-2xl'.",
+      "behavior": "Spin duration: 3-5s. Ease-out."
+    },
+    "confetti": {
+      "library": "react-confetti",
+      "usage": "Full screen overlay on win. Recycles: false. NumberOfPieces: 500."
+    },
+    "cards": {
+      "style": "Neo-Brutalist. White background, 2px solid black border, hard shadow (box-shadow: 4px 4px 0px 0px #000).",
+      "padding": "p-6 md:p-8"
+    },
+    "buttons": {
+      "primary": "bg-primary text-white rounded-full px-8 py-4 font-bold text-xl hover:scale-105 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none",
+      "secondary": "bg-white text-black border-2 border-black rounded-full px-6 py-3 font-bold hover:bg-gray-50"
+    },
+    "inputs": {
+      "style": "border-2 border-black rounded-xl px-4 py-3 focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all text-lg font-medium"
+    }
+  },
+  "assets": {
+    "images": [
+      {
+        "category": "trophy",
+        "url": "https://images.pexels.com/photos/7005685/pexels-photo-7005685.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Golden Winner Trophy"
+      },
+      {
+        "category": "gift_box",
+        "url": "https://images.pexels.com/photos/264985/pexels-photo-264985.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Colorful Gift Boxes"
+      },
+      {
+        "category": "coins",
+        "url": "https://images.pexels.com/photos/12198523/pexels-photo-12198523.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "3D Gold Coins"
+      },
+      {
+        "category": "background_pattern",
+        "url": "https://images.pexels.com/photos/8459419/pexels-photo-8459419.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Confetti Background Texture"
+      }
+    ],
+    "icons": "Lucide React (Trophy, History, User, Lock, Sparkles, Zap)"
+  },
+  "motion": {
+    "libraries": [
+      "framer-motion"
+    ],
+    "guidelines": "Use spring animations for popups. Stagger children for lists (History). Wheel spin must be smooth.",
+    "hover": "Scale 1.02 or 1.05. Buttons should have 'press' state."
+  },
+  "universal_guidelines": [
+    "Do not use gradients for text.",
+    "Do not center align the app container globally.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "All interactive elements MUST include data-testid.",
+    "Use sonner for toasts.",
+    "Use shadcn components for logic, but customize styling to match Neo-Brutalist look."
+  ],
+  "implementation_steps": [
+    "1. Setup Tailwind Colors and Fonts (Fredoka/Nunito).",
+    "2. Install dependencies: react-custom-roulette, react-confetti, framer-motion, axios.",
+    "3. Create Layout Components (Split Screen).",
+    "4. Build the Wheel Component using the library and customized data.",
+    "5. Build the Interaction Panel (Tabs for Spin / History).",
+    "6. Build Admin Dashboard with Table component.",
+    "7. Integrate API."
+  ]
+}
