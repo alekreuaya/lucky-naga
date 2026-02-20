@@ -193,6 +193,21 @@ async def admin_login(req: AdminLoginRequest):
     token = create_token({"role": admin["role"], "username": req.username})
     return {"token": token, "role": admin["role"], "message": "Login successful"}
 
+@api_router.post("/admin/change-password")
+async def change_password(req: ChangePasswordRequest, admin=Depends(verify_admin)):
+    username = admin.get("username")
+    account = await db.admins.find_one({"username": username})
+    if not account or not verify_password(req.current_password, account["password_hash"]):
+        raise HTTPException(status_code=400, detail="Current password is incorrect")
+    if len(req.new_password) < 6:
+        raise HTTPException(status_code=400, detail="New password must be at least 6 characters")
+    await db.admins.update_one(
+        {"username": username},
+        {"$set": {"password_hash": hash_password(req.new_password)}}
+    )
+    return {"message": "Password changed successfully"}
+
+
 @api_router.post("/admin/create-admin")
 async def create_admin(req: CreateAdminRequest, master=Depends(verify_master)):
     existing = await db.admins.find_one({"username": req.username})
