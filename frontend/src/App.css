@@ -3,21 +3,21 @@
 /* Background container for wheel with dragon image */
 .wheel-background-container {
   position: relative;
-  width: 420px;
-  height: 420px;
+  width: 520px;
+  height: 520px;
 }
 
 @media (min-width: 640px) {
   .wheel-background-container {
-    width: 500px;
-    height: 500px;
+    width: 620px;
+    height: 620px;
   }
 }
 
 @media (min-width: 768px) {
   .wheel-background-container {
-    width: 540px;
-    height: 540px;
+    width: 680px;
+    height: 680px;
   }
 }
 

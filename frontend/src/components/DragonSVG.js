@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const DRAGON_IMAGE = "https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/1jopxgos_watermarked-d2698214-2b91-46d5-b7e2-c2a8cea08b57%20%281%29.jpg";
+const DRAGON_IMAGE = "https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/03sid3wy_watermarked-d2698214-2b91-46d5-b7e2-c2a8cea08b57__1_-removebg-preview.png";
 
 export default function DragonFrame() {
   return (
