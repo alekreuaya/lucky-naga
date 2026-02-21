@@ -1,6 +1,6 @@
 {
-  "buildCommand": "CI=false npx react-scripts build",
+  "buildCommand": "CI=false yarn build",
   "outputDirectory": "build",
-  "installCommand": "npm install --legacy-peer-deps",
+  "installCommand": "yarn install",
   "framework": "create-react-app"
 }
