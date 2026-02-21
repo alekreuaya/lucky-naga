@@ -1,11 +1,6 @@
 {
-  "buildCommand": "CI=false react-scripts build",
+  "buildCommand": "CI=false npx react-scripts build",
   "outputDirectory": "build",
   "installCommand": "npm install --legacy-peer-deps",
-  "framework": "create-react-app",
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  "framework": "create-react-app"
 }
