@@ -314,10 +314,11 @@ async def get_stats(admin=Depends(verify_admin)):
 
 app.include_router(api_router)
 
+# CORS configuration - allow all origins for now
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
