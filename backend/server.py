@@ -314,11 +314,18 @@ async def get_stats(admin=Depends(verify_admin)):
 
 app.include_router(api_router)
 
-# CORS configuration - allow all origins for now
+# CORS configuration
+allowed_origins = [
+    "https://lucky-naga.pages.dev",
+    "https://naga-spin.preview.emergentagent.com",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
