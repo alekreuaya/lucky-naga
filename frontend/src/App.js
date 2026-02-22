@@ -1,8 +1,8 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Toaster } from "@/components/ui/sonner";
-import MainPage from "@/components/MainPage";
-import AdminPage from "@/components/AdminPage";
+import { Toaster } from "../components/ui/sonner";
+import MainPage from "../components/MainPage";
+import AdminPage from "../components/AdminPage";
 
 function App() {
   return (

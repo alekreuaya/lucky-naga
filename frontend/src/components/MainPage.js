@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 import { History } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
-import LuckyWheel from "@/components/LuckyWheel";
-import SpinForm from "@/components/SpinForm";
-import WinnersList from "@/components/WinnersList";
-import WinModal from "@/components/WinModal";
-import DragonSVG from "@/components/DragonSVG";
+import LuckyWheel from "../components/LuckyWheel";
+import SpinForm from "../components/SpinForm";
+import WinnersList from "../components/WinnersList";
+import WinModal from "../components/WinModal";
+import DragonSVG from "../components/DragonSVG";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
