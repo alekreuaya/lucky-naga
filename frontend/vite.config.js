@@ -13,6 +13,6 @@ export default defineConfig({
     outDir: 'build',
   },
   define: {
-    'process.env': process.env
+    'process.env.REACT_APP_BACKEND_URL': JSON.stringify(process.env.REACT_APP_BACKEND_URL || '')
   }
 })
