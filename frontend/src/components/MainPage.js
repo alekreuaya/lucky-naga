@@ -108,9 +108,20 @@ export default function MainPage() {
               >
                 <span className="gold-text">Try Your Luck</span>
               </motion.h2>
-              <p className="text-base md:text-lg text-[#D4A030]/50 font-medium text-center mb-8 tracking-wider">
+              <p className="text-base md:text-lg text-[#D4A030]/50 font-medium text-center mb-4 tracking-wider">
                 Spin the wheel and claim your fortune
               </p>
+              
+              {/* Mobile-only button */}
+              <a
+                href="https://okenaga.com/supernaga"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="md:hidden mb-6 px-8 py-3 bg-gradient-to-r from-[#D4A030] to-[#F4D03F] text-[#1a0a0a] font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                data-testid="mobile-naga-button"
+              >
+                MASUK NAGA1001
+              </a>
 
               <div className="mb-8 relative flex items-center justify-center wheel-background-container" data-testid="wheel-background-container">
                 <DragonSVG />
