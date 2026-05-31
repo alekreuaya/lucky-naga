@@ -122,7 +122,7 @@ export default function MainPage() {
                 MASUK NAGA1001
               </a>
 
-              <div className="mb-8 relative flex items-center justify-center" data-testid="wheel-container">
+              <div className="mb-8 relative flex items-center justify-center" data-testid="wheel-container" style={{ minHeight: '520px' }}>
                 {/* Dragon background */}
                 <img 
                   src="https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/zini58es_ChatGPT%20Image%20May%2031%2C%202026%2C%2008_13_40%20PM.png"
@@ -130,7 +130,7 @@ export default function MainPage() {
                   className="absolute w-[520px] h-[520px] object-contain pointer-events-none z-0"
                   style={{ filter: "drop-shadow(0 0 20px rgba(218,165,32,0.3))" }}
                 />
-                <div className="relative z-10">
+                <div className="relative z-10" style={{ marginTop: '25px' }}>
                   <LuckyWheel
                     ref={wheelRef}
                     prizes={prizes}
