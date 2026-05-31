@@ -35,40 +35,14 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
 
     ctx.clearRect(0, 0, size, size);
 
-    // Outer gold ring
-    ctx.beginPath();
-    ctx.arc(center, center, radius + 6, 0, Math.PI * 2);
-    const outerGrad = ctx.createRadialGradient(center, center, radius - 5, center, center, radius + 8);
-    outerGrad.addColorStop(0, "#DAA520");
-    outerGrad.addColorStop(0.5, "#FFD700");
-    outerGrad.addColorStop(1, "#B8860B");
-    ctx.fillStyle = outerGrad;
-    ctx.fill();
-
-    // Inner gold ring
-    ctx.beginPath();
-    ctx.arc(center, center, radius + 2, 0, Math.PI * 2);
-    ctx.strokeStyle = "#8B6914";
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
     ctx.save();
     ctx.translate(center, center);
     ctx.rotate((currentRotation * Math.PI) / 180);
 
-    // Draw segments - alternating white/cream
+    // Draw segments - transparent background, only lines and text
     for (let i = 0; i < segmentCount; i++) {
       const startAngle = (i * segmentAngle * Math.PI) / 180 - Math.PI / 2;
       const endAngle = ((i + 1) * segmentAngle * Math.PI) / 180 - Math.PI / 2;
-
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.arc(0, 0, radius - 2, startAngle, endAngle);
-      ctx.closePath();
-
-      // Alternating white and very light cream
-      ctx.fillStyle = i % 2 === 0 ? "#FFFFFF" : "#FFF9F0";
-      ctx.fill();
 
       // Gold divider lines
       ctx.beginPath();
@@ -76,8 +50,8 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
       const lineX = Math.cos(startAngle) * (radius - 2);
       const lineY = Math.sin(startAngle) * (radius - 2);
       ctx.lineTo(lineX, lineY);
-      ctx.strokeStyle = "rgba(218, 165, 32, 0.6)";
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = "#DAA520";
+      ctx.lineWidth = 2;
       ctx.stroke();
 
       // Draw text along the segment
@@ -87,11 +61,13 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
       ctx.translate(radius * 0.6, 0);
       ctx.rotate(Math.PI / 2);
 
-      // Dark text for readability on white
-      ctx.shadowColor = "rgba(0,0,0,0.1)";
-      ctx.shadowBlur = 2;
-      ctx.fillStyle = "#2D1810";
-      ctx.font = `bold ${Math.max(10, Math.floor(radius / 14))}px Cinzel, serif`;
+      // Gold text for visibility on transparent background
+      ctx.shadowColor = "rgba(0,0,0,0.5)";
+      ctx.shadowBlur = 4;
+      ctx.fillStyle = "#FFD700";
+      ctx.strokeStyle = "#8B6914";
+      ctx.lineWidth = 2;
+      ctx.font = `bold ${Math.max(12, Math.floor(radius / 12))}px Cinzel, serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
@@ -101,9 +77,11 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
         const mid = label.lastIndexOf(' ', maxLen) || maxLen;
         const lines = [label.slice(0, mid), label.slice(mid + 1)];
         lines.forEach((line, li) => {
+          ctx.strokeText(line, 0, (li - (lines.length - 1) / 2) * 14);
           ctx.fillText(line, 0, (li - (lines.length - 1) / 2) * 14);
         });
       } else {
+        ctx.strokeText(label, 0, 0);
         ctx.fillText(label, 0, 0);
       }
       ctx.restore();
@@ -114,8 +92,8 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(Math.cos(lastAngle) * (radius - 2), Math.sin(lastAngle) * (radius - 2));
-    ctx.strokeStyle = "rgba(218, 165, 32, 0.6)";
-    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = "#DAA520";
+    ctx.lineWidth = 2;
     ctx.stroke();
 
     // Large center with logo
