@@ -6,8 +6,8 @@ export default function WinnersList({ history }) {
     return (
       <div className="dragon-card p-6 md:p-8 text-center" data-testid="winners-list-empty">
         <Trophy className="w-12 h-12 mx-auto mb-3 text-[#D4A030]" />
-        <p className="text-lg font-bold font-['Cinzel'] text-[#D4A030]/60">No winners yet</p>
-        <p className="text-sm text-[#D4A030]/30">Be the first to spin!</p>
+        <p className="text-lg font-bold font-['Cinzel'] text-[#D4A030]/60">Belum ada pemenang</p>
+        <p className="text-sm text-[#D4A030]/30">Jadilah yang pertama memutar!</p>
       </div>
     );
   }
@@ -16,9 +16,9 @@ export default function WinnersList({ history }) {
     const d = new Date(dateStr);
     const now = new Date();
     const diff = (now - d) / 1000;
-    if (diff < 60) return "Just now";
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    if (diff < 60) return "Baru saja";
+    if (diff < 3600) return `${Math.floor(diff / 60)} menit lalu`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)} jam lalu`;
     return d.toLocaleDateString();
   };
 
@@ -32,7 +32,7 @@ export default function WinnersList({ history }) {
       <div className="flex items-center gap-3 mb-6">
         <Trophy className="w-7 h-7 text-[#FFD700]" />
         <h3 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
-          Recent Winners
+          Pemenang Terbaru
         </h3>
       </div>
 

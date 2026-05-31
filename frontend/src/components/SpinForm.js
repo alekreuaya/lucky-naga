@@ -21,11 +21,11 @@ export default function SpinForm({ onSpin, spinning }) {
       transition={{ delay: 0.2 }}
       data-testid="spin-form"
     >
-      <h3 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
-        Spin to Win
+    <h3 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
+        Putar & Menang
       </h3>
       <p className="text-sm font-semibold text-[#D4A030]/60 uppercase tracking-[0.2em]">
-        Enter your credentials to spin
+        Masukkan data anda untuk memutar
       </p>
 
       <div className="space-y-4">
@@ -66,7 +66,7 @@ export default function SpinForm({ onSpin, spinning }) {
       >
         <span className="flex items-center justify-center gap-2">
           <Zap className="w-6 h-6" />
-          {spinning ? "Spinning..." : "SPIN THE WHEEL"}
+          {spinning ? "Memutar..." : "PUTAR RODA"}
         </span>
       </motion.button>
     </motion.form>

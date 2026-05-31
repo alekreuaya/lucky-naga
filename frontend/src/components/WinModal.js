@@ -69,7 +69,7 @@ export default function WinModal({ show, prize, onClose }) {
               </motion.div>
 
               <h2 className="text-3xl md:text-5xl font-bold font-['Cinzel'] gold-text mb-2">
-                YOU WON!
+                ANDA MENANG!
               </h2>
 
               <motion.div
@@ -114,7 +114,7 @@ export default function WinModal({ show, prize, onClose }) {
                 whileTap={{ scale: 0.95 }}
                 data-testid="win-modal-ok"
               >
-                Claim Victory
+                Klaim Hadiah
               </motion.a>
             </motion.div>
           </motion.div>

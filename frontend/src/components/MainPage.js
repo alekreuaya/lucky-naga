@@ -106,10 +106,10 @@ export default function MainPage() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <span className="gold-text">Try Your Luck</span>
+                <span className="gold-text">Coba Keberuntunganmu</span>
               </motion.h2>
               <p className="text-base md:text-lg text-[#D4A030]/50 font-medium text-center mb-4 tracking-wider">
-                Spin the wheel and claim your fortune
+                Putar roda dan raih hadiahmu
               </p>
               
               {/* Mobile-only button */}
@@ -144,7 +144,7 @@ export default function MainPage() {
               <div className="flex items-center gap-2 -mb-4">
                 <History className="w-5 h-5 text-[#D4A030]" />
                 <span className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4A030]/60 font-['Cinzel']">
-                  Live Winners
+                  Pemenang Terbaru
                 </span>
               </div>
               <WinnersList history={history} />
