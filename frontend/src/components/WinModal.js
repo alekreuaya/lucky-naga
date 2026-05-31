@@ -90,9 +90,19 @@ export default function WinModal({ show, prize, onClose }) {
                 </p>
               </motion.div>
 
-              <p className="text-[#D4A030]/60 font-medium mb-6">
-                Congratulations on your magnificent victory!
+              <p className="text-[#D4A030]/80 font-medium mb-4 text-lg">
+                Selamat Anda Mendapatkan {prize.label}
               </p>
+              
+              <div className="text-left text-[#D4A030]/70 text-sm mb-6 bg-[#1a0a0a]/50 p-4 rounded-lg border border-[#D4A030]/20">
+                <p className="font-bold text-[#D4A030] mb-2">Cara Klaim :</p>
+                <ol className="list-decimal list-inside space-y-1">
+                  <li>Fotokan gambar ini</li>
+                  <li>Share Gambar ini ke Group Facebook NAGA1001</li>
+                  <li>Gunakan #KlaimLuckySpin #LuckyspinNaga1001 #klaimNaga1001</li>
+                  <li>Berikan Bukti Sudah Share ke Admin Livechat</li>
+                </ol>
+              </div>
 
               <motion.a
                 href="https://direct.lc.chat/18986333/"
