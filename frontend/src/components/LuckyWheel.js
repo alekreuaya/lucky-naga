@@ -44,14 +44,14 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
       const startAngle = (i * segmentAngle * Math.PI) / 180 - Math.PI / 2;
       const endAngle = ((i + 1) * segmentAngle * Math.PI) / 180 - Math.PI / 2;
 
-      // Gold divider lines
+      // White divider lines
       ctx.beginPath();
       ctx.moveTo(0, 0);
       const lineX = Math.cos(startAngle) * (radius - 2);
       const lineY = Math.sin(startAngle) * (radius - 2);
       ctx.lineTo(lineX, lineY);
-      ctx.strokeStyle = "#DAA520";
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 7;
       ctx.stroke();
 
       // Draw text along the segment
@@ -92,8 +92,8 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(Math.cos(lastAngle) * (radius - 2), Math.sin(lastAngle) * (radius - 2));
-    ctx.strokeStyle = "#DAA520";
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.lineWidth = 7;
     ctx.stroke();
 
     // Large center with logo
