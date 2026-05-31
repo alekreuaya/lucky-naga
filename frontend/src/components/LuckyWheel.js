@@ -196,7 +196,7 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
   });
 
   // Fixed canvas size for wheel
-  const canvasSize = 375;
+  const canvasSize = 325;
 
   return (
     <div className="wheel-container" data-testid="wheel-container">
