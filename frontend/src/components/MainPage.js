@@ -130,7 +130,7 @@ export default function MainPage() {
                   className="absolute w-[520px] h-[520px] object-contain pointer-events-none z-0"
                   style={{ filter: "drop-shadow(0 0 20px rgba(218,165,32,0.3))" }}
                 />
-                <div className="relative z-10" style={{ marginTop: '25px' }}>
+                <div className="relative z-10" style={{ marginTop: '40px' }}>
                   <LuckyWheel
                     ref={wheelRef}
                     prizes={prizes}
