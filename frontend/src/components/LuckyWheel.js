@@ -61,11 +61,11 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
       ctx.translate(radius * 0.6, 0);
       ctx.rotate(Math.PI / 2);
 
-      // Gold text for visibility on transparent background
-      ctx.shadowColor = "rgba(0,0,0,0.5)";
+      // White text for visibility on transparent background
+      ctx.shadowColor = "rgba(0,0,0,0.7)";
       ctx.shadowBlur = 4;
-      ctx.fillStyle = "#FFD700";
-      ctx.strokeStyle = "#8B6914";
+      ctx.fillStyle = "#FFFFFF";
+      ctx.strokeStyle = "#000000";
       ctx.lineWidth = 2;
       ctx.font = `bold ${Math.max(12, Math.floor(radius / 12))}px Cinzel, serif`;
       ctx.textAlign = "center";
