@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 
+const CENTER_LOGO_URL = "https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/7zt5x325_logo%20naga1001.jpeg";
+
 export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning }) {
   const canvasRef = useRef(null);
   const [rotation, setRotation] = useState(0);
@@ -8,6 +10,17 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
   const animationRef = useRef(null);
   const startTimeRef = useRef(null);
   const startRotRef = useRef(0);
+  const logoImageRef = useRef(null);
+
+  // Load logo image
+  useEffect(() => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      logoImageRef.current = img;
+    };
+    img.src = CENTER_LOGO_URL;
+  }, []);
 
   const segmentCount = prizes.length || 8;
   const segmentAngle = 360 / segmentCount;
@@ -105,8 +118,8 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Large gold center medallion
-    const medalRadius = radius * 0.18;
+    // Large center with logo
+    const medalRadius = radius * 0.22;
 
     // Outer medallion ring
     ctx.beginPath();
@@ -121,46 +134,31 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    // Medallion face
-    ctx.beginPath();
-    ctx.arc(0, 0, medalRadius, 0, Math.PI * 2);
-    const medalGrad = ctx.createRadialGradient(-medalRadius * 0.3, -medalRadius * 0.3, 0, 0, 0, medalRadius);
-    medalGrad.addColorStop(0, "#FFE44D");
-    medalGrad.addColorStop(0.4, "#FFD700");
-    medalGrad.addColorStop(0.8, "#DAA520");
-    medalGrad.addColorStop(1, "#B8860B");
-    ctx.fillStyle = medalGrad;
-    ctx.fill();
-
-    // Concentric rings on medallion
-    ctx.beginPath();
-    ctx.arc(0, 0, medalRadius * 0.75, 0, Math.PI * 2);
-    ctx.strokeStyle = "rgba(139, 105, 20, 0.4)";
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(0, 0, medalRadius * 0.5, 0, Math.PI * 2);
-    ctx.strokeStyle = "rgba(139, 105, 20, 0.3)";
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    // Dragon emblem in center (simplified)
-    ctx.fillStyle = "rgba(139, 105, 20, 0.5)";
-    ctx.font = `bold ${Math.floor(medalRadius * 0.8)}px serif`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText("\u9F8D", 0, 2); // Dragon kanji character
-
-    // Radiating lines from medallion
-    for (let i = 0; i < 8; i++) {
-      const angle = (i * 45 * Math.PI) / 180;
+    // Draw logo image in center (circular clip)
+    if (logoImageRef.current) {
+      ctx.save();
       ctx.beginPath();
-      ctx.moveTo(Math.cos(angle) * medalRadius * 0.8, Math.sin(angle) * medalRadius * 0.8);
-      ctx.lineTo(Math.cos(angle) * (medalRadius + 3), Math.sin(angle) * (medalRadius + 3));
-      ctx.strokeStyle = "rgba(139, 105, 20, 0.3)";
-      ctx.lineWidth = 1;
-      ctx.stroke();
+      ctx.arc(0, 0, medalRadius, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.drawImage(
+        logoImageRef.current,
+        -medalRadius,
+        -medalRadius,
+        medalRadius * 2,
+        medalRadius * 2
+      );
+      ctx.restore();
+    } else {
+      // Fallback if logo not loaded
+      ctx.beginPath();
+      ctx.arc(0, 0, medalRadius, 0, Math.PI * 2);
+      const medalGrad = ctx.createRadialGradient(-medalRadius * 0.3, -medalRadius * 0.3, 0, 0, 0, medalRadius);
+      medalGrad.addColorStop(0, "#FFE44D");
+      medalGrad.addColorStop(0.4, "#FFD700");
+      medalGrad.addColorStop(0.8, "#DAA520");
+      medalGrad.addColorStop(1, "#B8860B");
+      ctx.fillStyle = medalGrad;
+      ctx.fill();
     }
 
     ctx.restore();
