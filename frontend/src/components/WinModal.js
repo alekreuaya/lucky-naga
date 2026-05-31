@@ -94,15 +94,18 @@ export default function WinModal({ show, prize, onClose }) {
                 Congratulations on your magnificent victory!
               </p>
 
-              <motion.button
+              <motion.a
+                href="https://direct.lc.chat/18986333/"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={onClose}
-                className="dragon-btn bg-gradient-to-r from-[#D4A030] to-[#B8860B] text-[#1a0a0a] px-8 py-3 text-lg"
+                className="dragon-btn bg-gradient-to-r from-[#D4A030] to-[#B8860B] text-[#1a0a0a] px-8 py-3 text-lg inline-block"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 data-testid="win-modal-ok"
               >
                 Claim Victory
-              </motion.button>
+              </motion.a>
             </motion.div>
           </motion.div>
         </>
