@@ -106,7 +106,7 @@ export default function MainPage() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <span className="gold-text">Coba Keberuntunganmu</span>
+                <span className="gold-text">Coba Kehokianmu</span>
               </motion.h2>
               <p className="text-base md:text-lg text-[#D4A030]/50 font-medium text-center mb-4 tracking-wider">
                 Putar roda dan raih hadiahmu
