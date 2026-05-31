@@ -7,7 +7,6 @@ import LuckyWheel from "@/components/LuckyWheel";
 import SpinForm from "@/components/SpinForm";
 import WinnersList from "@/components/WinnersList";
 import WinModal from "@/components/WinModal";
-import DragonSVG from "@/components/DragonSVG";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -123,9 +122,7 @@ export default function MainPage() {
                 MASUK NAGA1001
               </a>
 
-              <div className="mb-8 relative flex items-center justify-center wheel-background-container" data-testid="wheel-background-container">
-                <DragonSVG />
-                <div className="wheel-inner-position">
+              <div className="mb-8 relative flex items-center justify-center" data-testid="wheel-container">
                   <LuckyWheel
                     ref={wheelRef}
                     prizes={prizes}
@@ -133,7 +130,6 @@ export default function MainPage() {
                     setSpinning={setSpinning}
                     onSpinEnd={handleSpinEnd}
                   />
-                </div>
               </div>
             </motion.div>
 
