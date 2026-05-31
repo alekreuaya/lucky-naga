@@ -127,7 +127,7 @@ export default function MainPage() {
                 <img 
                   src="https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/zini58es_ChatGPT%20Image%20May%2031%2C%202026%2C%2008_13_40%20PM.png"
                   alt="Dragon Frame"
-                  className="absolute w-[420px] h-[420px] object-contain pointer-events-none z-0"
+                  className="absolute w-[520px] h-[520px] object-contain pointer-events-none z-0"
                   style={{ filter: "drop-shadow(0 0 20px rgba(218,165,32,0.3))" }}
                 />
                 <div className="relative z-10">
