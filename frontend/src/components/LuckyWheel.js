@@ -195,8 +195,8 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     }
   });
 
-  // Fixed canvas size to fit inside dragon circle (about 42% of 520px background)
-  const canvasSize = 220;
+  // Fixed canvas size for wheel
+  const canvasSize = 375;
 
   return (
     <div className="wheel-container" data-testid="wheel-container">
