@@ -123,10 +123,10 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
                   y1={y1}
                   x2={x2}
                   y2={y2}
-                  stroke="#8B6914"
+                  stroke="#B8860B"
                   strokeWidth="2"
                   strokeLinecap="round"
-                  style={{ filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.3))' }}
+                  style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.5))' }}
                 />
               );
             })}
