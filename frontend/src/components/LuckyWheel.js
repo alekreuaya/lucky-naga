@@ -111,6 +111,39 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
           draggable={false}
         />
 
+        {/* Divider lines between segments */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          viewBox={`0 0 ${wheelSize} ${wheelSize}`}
+        >
+          {prizes.map((_, index) => {
+            const angle = (index * segmentAngle - 90) * (Math.PI / 180);
+            const centerX = wheelSize / 2;
+            const centerY = wheelSize / 2;
+            const innerRadius = wheelSize * 0.12;
+            const outerRadius = wheelSize * 0.46;
+            
+            const x1 = centerX + Math.cos(angle) * innerRadius;
+            const y1 = centerY + Math.sin(angle) * innerRadius;
+            const x2 = centerX + Math.cos(angle) * outerRadius;
+            const y2 = centerY + Math.sin(angle) * outerRadius;
+
+            return (
+              <line
+                key={index}
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke="#8B6914"
+                strokeWidth="2"
+                strokeLinecap="round"
+                style={{ filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.3))' }}
+              />
+            );
+          })}
+        </svg>
+
         {/* Prize labels overlay */}
         <div className="absolute inset-0" style={{ width: wheelSize, height: wheelSize }}>
           {prizes.map((prize, index) => {
