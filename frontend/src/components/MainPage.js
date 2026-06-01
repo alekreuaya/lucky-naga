@@ -184,10 +184,10 @@ export default function MainPage() {
                     position: 'absolute',
                     zIndex: 30,
                     left: '50%',
-                    top: '55px',
+                    top: '75px',
                     width: '50px',
                     height: 'auto',
-                    transform: 'translateX(-50%) translateX(20px)',
+                    transform: 'translateX(-50%)',
                     filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
                   }}
                   data-testid="wheel-indicator"
