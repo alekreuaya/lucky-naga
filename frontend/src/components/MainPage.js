@@ -126,18 +126,21 @@ export default function MainPage() {
               <div 
                 className="dragon-container relative flex items-center justify-center mb-8"
                 style={{ 
-                  width: '510px', 
-                  height: '510px',
+                  width: '500px', 
+                  height: '500px',
                 }}
                 data-testid="dragon-container"
               >
-                {/* Wheel Container - locked behind dragon at computed transparent-hole center */}
+                {/* Wheel Container - mathematically centered behind dragon */}
                 <div 
                   className="wheel-wrapper absolute flex items-center justify-center"
                   style={{
-                    top: '50%',
+                    width: '320px',
+                    height: '320px',
                     left: '50%',
-                    transform: 'translate(calc(-50% - 7px), calc(-50% + 3px))',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%) translateY(8px)',
+                    zIndex: 10,
                   }}
                   data-testid="wheel-wrapper"
                 >
@@ -150,7 +153,7 @@ export default function MainPage() {
                   />
                 </div>
 
-                {/* Dragon frame - on top layer so head & claws overlap the wheel */}
+                {/* Dragon frame - TOP layer (head & claws overlap wheel) */}
                 <img
                   src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
                   alt="Dragon Frame"
@@ -159,6 +162,23 @@ export default function MainPage() {
                     zIndex: 20,
                     filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
                   }}
+                />
+
+                {/* Pointer/Indicator - TOP-most layer (z:30) */}
+                <img
+                  src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/4c4ed96ac90549aeae1993d4ed25237d_indicator.png"
+                  alt="Indicator"
+                  className="absolute pointer-events-none"
+                  style={{
+                    zIndex: 30,
+                    left: '50%',
+                    top: 'calc(50% - 168px)',
+                    transform: 'translateX(-50%)',
+                    width: '60px',
+                    height: 'auto',
+                    filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.5))'
+                  }}
+                  data-testid="wheel-indicator"
                 />
               </div>
             </motion.div>

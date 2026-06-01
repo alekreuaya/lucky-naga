@@ -1,13 +1,13 @@
 # NAGA1001 Lucky Wheel - Product Requirements
 
 ## Original Problem Statement
-Build a lucky wheel website "NAGA1001" with red/gold dragon theme. Users enter username + redeem code to spin. Admin panel (master + admin roles) to manage users, codes, prizes (name, image, probability), and view history. Public history of recent draws. Confetti animations and win modals directing to livechat. Mobile responsive.
+Lucky wheel website "NAGA1001" with red/gold dragon theme. Users enter username + redeem code to spin. Admin panel (master + admin) manages users, codes, prizes, history. Public draw history. Confetti + win modal → livechat. Mobile responsive.
 
-**Language**: Respond in Bahasa Indonesia.
+**Language**: Bahasa Indonesia.
 
 ## Tech Stack
-- Frontend: React + Tailwind + framer-motion (deployed on Cloudflare Pages)
-- Backend: FastAPI + JWT auth (deployed on Render)
+- Frontend: React + Tailwind + framer-motion (Cloudflare Pages)
+- Backend: FastAPI + JWT (Render)
 - Database: MongoDB Atlas
 
 ## DB Schema
@@ -23,17 +23,20 @@ Build a lucky wheel website "NAGA1001" with red/gold dragon theme. Users enter u
 - GET /api/history
 
 ## Completed
-- Backend + Frontend functional with full admin system
-- All UI text translated to Indonesian
-- Custom dragon-frame + wheel image assets integrated
+- Full backend + admin system with JWT auth
+- All UI Indonesian; custom NAGA1001 branding (title/favicon/meta), Emergent watermark removed
 - Mobile-only "MASUK NAGA1001" button + Livechat claim link
-- Title/favicon/meta updated; Emergent watermark removed
-- Deployment on Cloudflare Pages + Render with --legacy-peer-deps fix
-- **[2026-02-01]** Z-index layering fixed: dragon head & claws now on top (z:20), wheel spins behind (no z-index), indicator visible above (z:30 floats through). Dragon img has pointer-events:none.
+- Cloudflare Pages + Render deploy with `--legacy-peer-deps`
+- **[2026-02-01]** Wheel layering finalized to user's exact spec:
+  - dragon-container: 500×500
+  - wheel-wrapper: 320×320, `position:absolute; left:50%; top:50%; transform: translate(-50%,-50%) translateY(8px); z-index:10`
+  - dragon img: `z-index:20; pointer-events:none` (head & claws overlap wheel)
+  - indicator: `z-index:30` (top-most layer)
+  - Wheel internal size synced to 320px
 
 ## Test Credentials
 - Spin: username `previewtest`, redeem code `BXY8NQU1`
 - Admin: username `master`, password `masterdragon2024!`
 
 ## Backlog
-- None currently. Visual layering complete per user reference.
+- None — visual layering matches user spec.

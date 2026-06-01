@@ -16,8 +16,8 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
   const segmentCount = prizes.length || 8;
   const segmentAngle = 360 / segmentCount;
 
-  // Wheel size - sized to fit snugly within dragon's claw opening (hole bbox ~289x309)
-  const wheelSize = 270;
+  // Wheel size - matches wheel-wrapper bounds (320px)
+  const wheelSize = 320;
 
   const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
 
@@ -75,22 +75,6 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
       data-testid="wheel-container"
       ref={wheelRef}
     >
-      {/* Indicator at the top */}
-      <img
-        src={INDICATOR_IMAGE_URL}
-        alt="Indicator"
-        className="absolute z-30 pointer-events-none"
-        style={{
-          top: '-25px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '60px',
-          height: 'auto',
-          filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.5))'
-        }}
-        data-testid="wheel-indicator"
-      />
-
       {/* Spinning wheel with image */}
       <motion.div
         className="relative"
