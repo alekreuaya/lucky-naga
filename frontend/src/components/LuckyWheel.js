@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback, forwardRef, useImperativeHandle } from "react";
 import { motion } from "framer-motion";
 
-const WHEEL_IMAGE_URL = "https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/0a1939a425cf471284cb46614a79cf81_wheel.png";
+const WHEEL_IMAGE_URL = "/wheel-centered.png";
 const CENTER_LOGO_URL = "https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/7zt5x325_logo%20naga1001.jpeg";
 
 const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning }, ref) {
@@ -14,8 +14,8 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
   const segmentCount = prizes.length || 8;
   const segmentAngle = 360 / segmentCount;
 
-  // Wheel size - matches wheel-wrapper bounds (330px)
-  const wheelSize = 330;
+  // Wheel size - matches wheel-wrapper bounds (325px)
+  const wheelSize = 325;
 
   const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
 
@@ -77,14 +77,15 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
         animate={spinning ? { scale: [1, 1.02, 1] } : {}}
         transition={{ repeat: spinning ? Infinity : 0, duration: 0.5 }}
       >
-        {/* Inner wrapper - handles rotation via plain inline transform */}
+        {/* Inner wrapper - handles rotation; transform-origin locked to center */}
         <div
-          className="relative"
+          className="absolute inset-0 flex items-center justify-center"
           style={{
             width: wheelSize,
             height: wheelSize,
             transform: `rotate(${rotation}deg)`,
             transformOrigin: 'center center',
+            willChange: 'transform',
           }}
         >
           {/* Wheel background image - rotates with parent */}

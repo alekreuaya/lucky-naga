@@ -135,16 +135,16 @@ export default function MainPage() {
                 }}
                 data-testid="dragon-container"
               >
-                {/* Wheel Container - user-calibrated final position */}
+                {/* Wheel Container - NATURAL center, no offsets */}
                 <div 
                   className="wheel-wrapper absolute flex items-center justify-center"
                   style={{
                     position: 'absolute',
-                    width: '330px',
-                    height: '330px',
+                    width: '325px',
+                    height: '325px',
                     left: '50%',
                     top: '50%',
-                    transform: 'translate(-50%, -50%) translateX(22px) translateY(34px)',
+                    transform: 'translate(-50%, -50%)',
                     zIndex: 10,
                   }}
                   data-testid="wheel-wrapper"
@@ -158,7 +158,7 @@ export default function MainPage() {
                   />
                 </div>
 
-                {/* Dragon frame - shifted 20px Southeast */}
+                {/* Dragon frame - shifted to match wheel's natural center */}
                 <img
                   src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
                   alt="Dragon Frame"
@@ -170,12 +170,12 @@ export default function MainPage() {
                     height: '100%',
                     objectFit: 'contain',
                     zIndex: 20,
-                    transform: 'translate(23px, 14px)',
+                    transform: 'translate(-30px, -15px)',
                     filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
                   }}
                 />
 
-                {/* Pointer/Indicator - synced with dragon head shift */}
+                {/* Pointer/Indicator - at natural top-center of wheel */}
                 <img
                   src="/shard-indicator.png"
                   alt="Indicator"
@@ -184,10 +184,10 @@ export default function MainPage() {
                     position: 'absolute',
                     zIndex: 30,
                     left: '50%',
-                    top: '126px',
+                    top: '75px',
                     width: '50px',
                     height: 'auto',
-                    transform: 'translateX(-50%) translateX(15px)',
+                    transform: 'translateX(-50%)',
                     filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
                   }}
                   data-testid="wheel-indicator"
