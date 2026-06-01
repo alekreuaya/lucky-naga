@@ -171,12 +171,13 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
         <div
           className="absolute rounded-full overflow-hidden border-4 border-yellow-500"
           style={{
-            width: wheelSize * 0.22,
-            height: wheelSize * 0.22,
+            width: '71.5px',
+            height: '71.5px',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            boxShadow: '0 0 15px rgba(218,165,32,0.6)',
+            boxShadow: '0 0 15px rgba(218, 165, 32, 0.6)',
+            zIndex: 15,
           }}
         >
           <img
