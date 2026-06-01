@@ -86,12 +86,15 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
         animate={spinning ? { scale: [1, 1.02, 1] } : {}}
         transition={{ repeat: spinning ? Infinity : 0, duration: 0.5 }}
       >
-        {/* Wheel background image */}
+        {/* Wheel background image - shifted to align PNG visual center with rotation center */}
         <img
           src={WHEEL_IMAGE_URL}
           alt="Wheel"
           className="absolute inset-0 w-full h-full"
-          style={{ filter: 'drop-shadow(0 0 15px rgba(218,165,32,0.4))' }}
+          style={{ 
+            filter: 'drop-shadow(0 0 15px rgba(218,165,32,0.4))',
+            transform: 'translate(1.5px, -6.5px)',
+          }}
           draggable={false}
         />
 
