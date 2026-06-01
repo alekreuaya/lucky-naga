@@ -135,15 +135,16 @@ export default function MainPage() {
                 }}
                 data-testid="dragon-container"
               >
-                {/* Wheel Container - centered; offset is applied inside wheel-container */}
+                {/* Wheel Container - user-calibrated final position */}
                 <div 
                   className="wheel-wrapper absolute flex items-center justify-center"
                   style={{
-                    width: '325px',
-                    height: '325px',
+                    position: 'absolute',
+                    width: '330px',
+                    height: '330px',
                     left: '50%',
                     top: '50%',
-                    transform: 'translate(-50%, -50%)',
+                    transform: 'translate(-50%, -50%) translateX(22px) translateY(34px)',
                     zIndex: 10,
                   }}
                   data-testid="wheel-wrapper"
@@ -157,7 +158,7 @@ export default function MainPage() {
                   />
                 </div>
 
-                {/* Dragon frame - shifted to align with wheel */}
+                {/* Dragon frame - NO transform (reset) */}
                 <img
                   src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
                   alt="Dragon Frame"
@@ -169,23 +170,24 @@ export default function MainPage() {
                     height: '100%',
                     objectFit: 'contain',
                     zIndex: 20,
-                    transform: 'translate(36px, 22px)',
+                    transform: 'none',
                     filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
                   }}
                 />
 
-                {/* Pointer/Indicator - positioned at top-center of wheel */}
+                {/* Pointer/Indicator - matches wheel horizontal shift, sits on rim */}
                 <img
                   src="/shard-indicator.png"
                   alt="Indicator"
                   className="absolute pointer-events-none"
                   style={{
+                    position: 'absolute',
                     zIndex: 30,
                     left: '50%',
-                    top: '50%',
-                    transform: 'translateX(-50%) translate(-14px, -60px)',
+                    top: '112px',
                     width: '50px',
                     height: 'auto',
+                    transform: 'translateX(-50%) translateX(22px)',
                     filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
                   }}
                   data-testid="wheel-indicator"

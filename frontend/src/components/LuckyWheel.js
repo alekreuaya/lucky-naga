@@ -14,8 +14,8 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
   const segmentCount = prizes.length || 8;
   const segmentAngle = 360 / segmentCount;
 
-  // Wheel size - matches wheel-wrapper bounds (325px)
-  const wheelSize = 325;
+  // Wheel size - matches wheel-wrapper bounds (330px)
+  const wheelSize = 330;
 
   const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
 
