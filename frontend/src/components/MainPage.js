@@ -133,7 +133,12 @@ export default function MainPage() {
               >
                 {/* Wheel Container - behind the dragon (spins through the transparent hole) */}
                 <div 
-                  className="wheel-wrapper relative flex items-center justify-center"
+                  className="wheel-wrapper absolute flex items-center justify-center"
+                  style={{
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(calc(-50% + 6px), calc(-50% - 28px))',
+                  }}
                   data-testid="wheel-wrapper"
                 >
                   <LuckyWheel
