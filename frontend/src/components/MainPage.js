@@ -131,21 +131,9 @@ export default function MainPage() {
                 }}
                 data-testid="dragon-container"
               >
-                {/* Dragon frame - background layer */}
-                <img
-                  src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
-                  alt="Dragon Frame"
-                  className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-                  style={{ 
-                    zIndex: 1,
-                    filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.3))'
-                  }}
-                />
-                
-                {/* Wheel Container - on top of dragon */}
+                {/* Wheel Container - behind the dragon (spins through the transparent hole) */}
                 <div 
                   className="wheel-wrapper relative flex items-center justify-center"
-                  style={{ zIndex: 10 }}
                   data-testid="wheel-wrapper"
                 >
                   <LuckyWheel
@@ -156,6 +144,17 @@ export default function MainPage() {
                     onSpinEnd={handleSpinEnd}
                   />
                 </div>
+
+                {/* Dragon frame - on top layer so head & claws overlap the wheel */}
+                <img
+                  src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
+                  alt="Dragon Frame"
+                  className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                  style={{ 
+                    zIndex: 20,
+                    filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
+                  }}
+                />
               </div>
             </motion.div>
 
