@@ -67,7 +67,11 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
   return (
     <div 
       className="wheel-container relative flex items-center justify-center" 
-      style={{ width: wheelSize, height: wheelSize }}
+      style={{ 
+        width: wheelSize, 
+        height: wheelSize,
+        transform: 'translate(32px, 47px)',
+      }}
       data-testid="wheel-container"
     >
       {/* Spinning wheel with image */}
@@ -81,14 +85,13 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
         animate={spinning ? { scale: [1, 1.02, 1] } : {}}
         transition={{ repeat: spinning ? Infinity : 0, duration: 0.5 }}
       >
-        {/* Wheel background image - shifted to align PNG visual center with rotation center */}
+        {/* Wheel background image - clean, no transform (parent moves whole assembly) */}
         <img
           src={WHEEL_IMAGE_URL}
           alt="Wheel"
           className="absolute inset-0 w-full h-full"
           style={{ 
             filter: 'drop-shadow(0 0 15px rgba(218,165,32,0.4))',
-            transform: 'translate(1.5px, -6.5px)',
           }}
           draggable={false}
         />

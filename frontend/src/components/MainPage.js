@@ -135,7 +135,7 @@ export default function MainPage() {
                 }}
                 data-testid="dragon-container"
               >
-                {/* Wheel Container - exact positioning per user spec */}
+                {/* Wheel Container - centered; offset is applied inside wheel-container */}
                 <div 
                   className="wheel-wrapper absolute flex items-center justify-center"
                   style={{
@@ -143,7 +143,7 @@ export default function MainPage() {
                     height: '325px',
                     left: '50%',
                     top: '50%',
-                    transform: 'translate(-50%, -50%) translateX(12px) translateY(32px)',
+                    transform: 'translate(-50%, -50%)',
                     zIndex: 10,
                   }}
                   data-testid="wheel-wrapper"
@@ -173,7 +173,7 @@ export default function MainPage() {
                   }}
                 />
 
-                {/* Pointer/Indicator - neon purple shard */}
+                {/* Pointer/Indicator - synced 32px horizontal shift to match wheel */}
                 <img
                   src="/shard-indicator.png"
                   alt="Indicator"
@@ -182,7 +182,7 @@ export default function MainPage() {
                     zIndex: 30,
                     left: '50%',
                     top: '95px',
-                    transform: 'translateX(-50%) translateX(12px)',
+                    transform: 'translateX(-50%) translateX(32px)',
                     width: '50px',
                     height: 'auto',
                     filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
