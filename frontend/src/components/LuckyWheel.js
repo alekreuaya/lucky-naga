@@ -1,150 +1,23 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 
+const WHEEL_IMAGE_URL = "https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/0a1939a425cf471284cb46614a79cf81_wheel.png";
+const INDICATOR_IMAGE_URL = "https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/4c4ed96ac90549aeae1993d4ed25237d_indicator.png";
 const CENTER_LOGO_URL = "https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/7zt5x325_logo%20naga1001.jpeg";
 
 export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning }) {
-  const canvasRef = useRef(null);
   const [rotation, setRotation] = useState(0);
   const [targetRotation, setTargetRotation] = useState(0);
   const animationRef = useRef(null);
   const startTimeRef = useRef(null);
   const startRotRef = useRef(0);
-  const logoImageRef = useRef(null);
-
-  // Load logo image
-  useEffect(() => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      logoImageRef.current = img;
-    };
-    img.src = CENTER_LOGO_URL;
-  }, []);
+  const wheelRef = useRef(null);
 
   const segmentCount = prizes.length || 8;
   const segmentAngle = 360 / segmentCount;
 
-  const drawWheel = useCallback((currentRotation) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const size = canvas.width;
-    const center = size / 2;
-    const radius = center - 12;
-
-    ctx.clearRect(0, 0, size, size);
-
-    ctx.save();
-    ctx.translate(center, center);
-    ctx.rotate((currentRotation * Math.PI) / 180);
-
-    // Draw segments - transparent background, only lines and text
-    for (let i = 0; i < segmentCount; i++) {
-      const startAngle = (i * segmentAngle * Math.PI) / 180 - Math.PI / 2;
-      const endAngle = ((i + 1) * segmentAngle * Math.PI) / 180 - Math.PI / 2;
-
-      // White divider lines
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      const lineX = Math.cos(startAngle) * (radius - 2);
-      const lineY = Math.sin(startAngle) * (radius - 2);
-      ctx.lineTo(lineX, lineY);
-      ctx.strokeStyle = "#FFFFFF";
-      ctx.lineWidth = 7;
-      ctx.stroke();
-
-      // Draw text along the segment
-      ctx.save();
-      const midAngle = (startAngle + endAngle) / 2;
-      ctx.rotate(midAngle);
-      ctx.translate(radius * 0.6, 0);
-      ctx.rotate(Math.PI / 2);
-
-      // White text for visibility on transparent background
-      ctx.shadowColor = "rgba(0,0,0,0.7)";
-      ctx.shadowBlur = 4;
-      ctx.fillStyle = "#FFFFFF";
-      ctx.strokeStyle = "#000000";
-      ctx.lineWidth = 2;
-      ctx.font = `bold ${Math.max(12, Math.floor(radius / 12))}px Cinzel, serif`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      const label = prizes[i]?.label || `Prize ${i + 1}`;
-      const maxLen = 12;
-      if (label.length > maxLen) {
-        const mid = label.lastIndexOf(' ', maxLen) || maxLen;
-        const lines = [label.slice(0, mid), label.slice(mid + 1)];
-        lines.forEach((line, li) => {
-          ctx.strokeText(line, 0, (li - (lines.length - 1) / 2) * 14);
-          ctx.fillText(line, 0, (li - (lines.length - 1) / 2) * 14);
-        });
-      } else {
-        ctx.strokeText(label, 0, 0);
-        ctx.fillText(label, 0, 0);
-      }
-      ctx.restore();
-    }
-
-    // Last divider line
-    const lastAngle = (segmentCount * segmentAngle * Math.PI) / 180 - Math.PI / 2;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(Math.cos(lastAngle) * (radius - 2), Math.sin(lastAngle) * (radius - 2));
-    ctx.strokeStyle = "#FFFFFF";
-    ctx.lineWidth = 7;
-    ctx.stroke();
-
-    // Large center with logo
-    const medalRadius = radius * 0.22;
-
-    // Outer medallion ring
-    ctx.beginPath();
-    ctx.arc(0, 0, medalRadius + 4, 0, Math.PI * 2);
-    const medalOuterGrad = ctx.createRadialGradient(0, 0, medalRadius - 2, 0, 0, medalRadius + 4);
-    medalOuterGrad.addColorStop(0, "#FFD700");
-    medalOuterGrad.addColorStop(0.5, "#DAA520");
-    medalOuterGrad.addColorStop(1, "#8B6914");
-    ctx.fillStyle = medalOuterGrad;
-    ctx.shadowColor = "rgba(0,0,0,0.3)";
-    ctx.shadowBlur = 10;
-    ctx.fill();
-    ctx.shadowBlur = 0;
-
-    // Draw logo image in center (circular clip)
-    if (logoImageRef.current) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(0, 0, medalRadius, 0, Math.PI * 2);
-      ctx.clip();
-      ctx.drawImage(
-        logoImageRef.current,
-        -medalRadius,
-        -medalRadius,
-        medalRadius * 2,
-        medalRadius * 2
-      );
-      ctx.restore();
-    } else {
-      // Fallback if logo not loaded
-      ctx.beginPath();
-      ctx.arc(0, 0, medalRadius, 0, Math.PI * 2);
-      const medalGrad = ctx.createRadialGradient(-medalRadius * 0.3, -medalRadius * 0.3, 0, 0, 0, medalRadius);
-      medalGrad.addColorStop(0, "#FFE44D");
-      medalGrad.addColorStop(0.4, "#FFD700");
-      medalGrad.addColorStop(0.8, "#DAA520");
-      medalGrad.addColorStop(1, "#B8860B");
-      ctx.fillStyle = medalGrad;
-      ctx.fill();
-    }
-
-    ctx.restore();
-  }, [prizes, segmentCount, segmentAngle]);
-
-  useEffect(() => {
-    drawWheel(rotation);
-  }, [rotation, drawWheel]);
+  // Wheel size
+  const wheelSize = 325;
 
   const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
 
@@ -178,7 +51,7 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
-  }, [spinning, animateSpin]);
+  }, [spinning, animateSpin, rotation]);
 
   const startSpin = (prizeIndex) => {
     if (spinning) return;
@@ -190,30 +63,107 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
   };
 
   useEffect(() => {
-    if (canvasRef.current) {
-      canvasRef.current.startSpin = startSpin;
+    if (wheelRef.current) {
+      wheelRef.current.startSpin = startSpin;
     }
   });
 
-  // Fixed canvas size for wheel
-  const canvasSize = 325;
-
   return (
-    <div className="wheel-container" data-testid="wheel-container">
-      {/* Purple pointer */}
-      <div className="wheel-pointer-gem" data-testid="wheel-pointer" />
+    <div 
+      className="wheel-container relative flex items-center justify-center" 
+      style={{ width: wheelSize, height: wheelSize }}
+      data-testid="wheel-container"
+      ref={wheelRef}
+    >
+      {/* Indicator at the top */}
+      <img
+        src={INDICATOR_IMAGE_URL}
+        alt="Indicator"
+        className="absolute z-30 pointer-events-none"
+        style={{
+          top: '-25px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '60px',
+          height: 'auto',
+          filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.5))'
+        }}
+        data-testid="wheel-indicator"
+      />
+
+      {/* Spinning wheel with image */}
       <motion.div
-        className="wheel-glow"
+        className="relative"
+        style={{
+          width: wheelSize,
+          height: wheelSize,
+          transform: `rotate(${rotation}deg)`,
+        }}
         animate={spinning ? { scale: [1, 1.02, 1] } : {}}
-        transition={{ repeat: Infinity, duration: 0.5 }}
+        transition={{ repeat: spinning ? Infinity : 0, duration: 0.5 }}
       >
-        <canvas
-          ref={canvasRef}
-          width={canvasSize}
-          height={canvasSize}
-          className="wheel-canvas-new"
-          data-testid="wheel-canvas"
+        {/* Wheel background image */}
+        <img
+          src={WHEEL_IMAGE_URL}
+          alt="Wheel"
+          className="absolute inset-0 w-full h-full"
+          style={{ filter: 'drop-shadow(0 0 15px rgba(218,165,32,0.4))' }}
+          draggable={false}
         />
+
+        {/* Prize labels overlay */}
+        <div className="absolute inset-0" style={{ width: wheelSize, height: wheelSize }}>
+          {prizes.map((prize, index) => {
+            const angle = index * segmentAngle + segmentAngle / 2 - 90;
+            const radians = (angle * Math.PI) / 180;
+            const labelRadius = wheelSize * 0.35;
+            const x = Math.cos(radians) * labelRadius + wheelSize / 2;
+            const y = Math.sin(radians) * labelRadius + wheelSize / 2;
+
+            return (
+              <div
+                key={index}
+                className="absolute text-center"
+                style={{
+                  left: x,
+                  top: y,
+                  transform: `translate(-50%, -50%) rotate(${angle + 90}deg)`,
+                  width: '80px',
+                }}
+              >
+                <span
+                  className="text-white font-bold text-xs"
+                  style={{
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.5)',
+                    fontFamily: 'Cinzel, serif',
+                  }}
+                >
+                  {prize.label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Center logo */}
+        <div
+          className="absolute rounded-full overflow-hidden border-4 border-yellow-500"
+          style={{
+            width: wheelSize * 0.22,
+            height: wheelSize * 0.22,
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            boxShadow: '0 0 15px rgba(218,165,32,0.6)',
+          }}
+        >
+          <img
+            src={CENTER_LOGO_URL}
+            alt="Logo"
+            className="w-full h-full object-cover"
+            style={{ transform: `rotate(${-rotation}deg)` }}
+          />
+        </div>
       </motion.div>
     </div>
   );

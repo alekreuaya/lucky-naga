@@ -128,7 +128,7 @@ export default function MainPage() {
                 style={{ 
                   width: '510px', 
                   height: '510px',
-                  backgroundImage: 'url(https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/zini58es_ChatGPT%20Image%20May%2031%2C%202026%2C%2008_13_40%20PM.png)',
+                  backgroundImage: 'url(https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png)',
                   backgroundSize: 'contain',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
@@ -139,7 +139,6 @@ export default function MainPage() {
                 {/* Wheel Container - positioned inside the dragon's circle */}
                 <div 
                   className="wheel-container absolute flex items-center justify-center"
-                  style={{ marginTop: '40px' }}
                   data-testid="wheel-container"
                 >
                   <LuckyWheel
