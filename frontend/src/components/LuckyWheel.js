@@ -99,34 +99,25 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
             draggable={false}
           />
 
-          {/* Divider lines between segments */}
+          {/* Divider lines between segments - bright gold, full reach to center */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none"
-            viewBox={`0 0 ${wheelSize} ${wheelSize}`}
+            preserveAspectRatio="none"
           >
-            {prizes.map((_, index) => {
-              const angle = (index * segmentAngle - 90) * (Math.PI / 180);
-              const centerX = wheelSize / 2;
-              const centerY = wheelSize / 2;
-              const innerRadius = wheelSize * 0.12;
-              const outerRadius = wheelSize * 0.46;
-              
-              const x1 = centerX + Math.cos(angle) * innerRadius;
-              const y1 = centerY + Math.sin(angle) * innerRadius;
-              const x2 = centerX + Math.cos(angle) * outerRadius;
-              const y2 = centerY + Math.sin(angle) * outerRadius;
-
+            {prizes.map((_, i) => {
+              const angle = (i * 360) / prizes.length;
               return (
                 <line
-                  key={index}
-                  x1={x1}
-                  y1={y1}
-                  x2={x2}
-                  y2={y2}
-                  stroke="#B8860B"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.5))' }}
+                  key={i}
+                  x1="50%" y1="50%"
+                  x2="50%" y2="0%"
+                  stroke="#FFD700"
+                  strokeWidth="3"
+                  style={{
+                    transform: `rotate(${angle}deg)`,
+                    transformOrigin: '50% 50%',
+                    filter: 'drop-shadow(0 0 3px rgba(218, 165, 32, 0.8))',
+                  }}
                 />
               );
             })}
