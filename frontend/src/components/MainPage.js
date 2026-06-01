@@ -170,7 +170,7 @@ export default function MainPage() {
                     height: '100%',
                     objectFit: 'contain',
                     zIndex: 20,
-                    transform: 'translate(22px, 15px)',
+                    transform: 'translate(23px, 14px)',
                     filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
                   }}
                 />
@@ -184,10 +184,10 @@ export default function MainPage() {
                     position: 'absolute',
                     zIndex: 30,
                     left: '50%',
-                    top: '127px',
+                    top: '126px',
                     width: '50px',
                     height: 'auto',
-                    transform: 'translateX(-50%) translateX(44px)',
+                    transform: 'translateX(-50%) translateX(45px)',
                     filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
                   }}
                   data-testid="wheel-indicator"
