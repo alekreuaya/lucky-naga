@@ -70,96 +70,103 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
       style={{ width: wheelSize, height: wheelSize }}
       data-testid="wheel-container"
     >
-      {/* Spinning wheel with image */}
+      {/* Outer wrapper - handles scale pulse via Framer Motion */}
       <motion.div
         className="relative"
-        style={{
-          width: wheelSize,
-          height: wheelSize,
-          transform: `rotate(${rotation}deg)`,
-        }}
+        style={{ width: wheelSize, height: wheelSize }}
         animate={spinning ? { scale: [1, 1.02, 1] } : {}}
         transition={{ repeat: spinning ? Infinity : 0, duration: 0.5 }}
       >
-        {/* Wheel background image - clean, no transform (parent moves whole assembly) */}
-        <img
-          src={WHEEL_IMAGE_URL}
-          alt="Wheel"
-          className="absolute inset-0 w-full h-full"
-          style={{ 
-            filter: 'drop-shadow(0 0 15px rgba(218,165,32,0.4))',
+        {/* Inner wrapper - handles rotation via plain inline transform */}
+        <div
+          className="relative"
+          style={{
+            width: wheelSize,
+            height: wheelSize,
+            transform: `rotate(${rotation}deg)`,
+            transformOrigin: 'center center',
           }}
-          draggable={false}
-        />
-
-        {/* Divider lines between segments */}
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          viewBox={`0 0 ${wheelSize} ${wheelSize}`}
         >
-          {prizes.map((_, index) => {
-            const angle = (index * segmentAngle - 90) * (Math.PI / 180);
-            const centerX = wheelSize / 2;
-            const centerY = wheelSize / 2;
-            const innerRadius = wheelSize * 0.12;
-            const outerRadius = wheelSize * 0.46;
-            
-            const x1 = centerX + Math.cos(angle) * innerRadius;
-            const y1 = centerY + Math.sin(angle) * innerRadius;
-            const x2 = centerX + Math.cos(angle) * outerRadius;
-            const y2 = centerY + Math.sin(angle) * outerRadius;
+          {/* Wheel background image - rotates with parent */}
+          <img
+            src={WHEEL_IMAGE_URL}
+            alt="Wheel"
+            className="absolute inset-0 w-full h-full"
+            style={{ 
+              filter: 'drop-shadow(0 0 15px rgba(218,165,32,0.4))',
+            }}
+            draggable={false}
+          />
 
-            return (
-              <line
-                key={index}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke="#8B6914"
-                strokeWidth="2"
-                strokeLinecap="round"
-                style={{ filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.3))' }}
-              />
-            );
-          })}
-        </svg>
+          {/* Divider lines between segments */}
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            viewBox={`0 0 ${wheelSize} ${wheelSize}`}
+          >
+            {prizes.map((_, index) => {
+              const angle = (index * segmentAngle - 90) * (Math.PI / 180);
+              const centerX = wheelSize / 2;
+              const centerY = wheelSize / 2;
+              const innerRadius = wheelSize * 0.12;
+              const outerRadius = wheelSize * 0.46;
+              
+              const x1 = centerX + Math.cos(angle) * innerRadius;
+              const y1 = centerY + Math.sin(angle) * innerRadius;
+              const x2 = centerX + Math.cos(angle) * outerRadius;
+              const y2 = centerY + Math.sin(angle) * outerRadius;
 
-        {/* Prize labels overlay */}
-        <div className="absolute inset-0" style={{ width: wheelSize, height: wheelSize }}>
-          {prizes.map((prize, index) => {
-            const angle = index * segmentAngle + segmentAngle / 2 - 90;
-            const radians = (angle * Math.PI) / 180;
-            const labelRadius = wheelSize * 0.35;
-            const x = Math.cos(radians) * labelRadius + wheelSize / 2;
-            const y = Math.sin(radians) * labelRadius + wheelSize / 2;
+              return (
+                <line
+                  key={index}
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke="#8B6914"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  style={{ filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.3))' }}
+                />
+              );
+            })}
+          </svg>
 
-            return (
-              <div
-                key={index}
-                className="absolute text-center"
-                style={{
-                  left: x,
-                  top: y,
-                  transform: `translate(-50%, -50%) rotate(${angle + 90}deg)`,
-                  width: '80px',
-                }}
-              >
-                <span
-                  className="text-white font-bold text-xs"
+          {/* Prize labels overlay - rotate with parent */}
+          <div className="absolute inset-0" style={{ width: wheelSize, height: wheelSize }}>
+            {prizes.map((prize, index) => {
+              const angle = index * segmentAngle + segmentAngle / 2 - 90;
+              const radians = (angle * Math.PI) / 180;
+              const labelRadius = wheelSize * 0.35;
+              const x = Math.cos(radians) * labelRadius + wheelSize / 2;
+              const y = Math.sin(radians) * labelRadius + wheelSize / 2;
+
+              return (
+                <div
+                  key={index}
+                  className="absolute text-center"
                   style={{
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.5)',
-                    fontFamily: 'Cinzel, serif',
+                    left: x,
+                    top: y,
+                    transform: `translate(-50%, -50%) rotate(${angle + 90}deg)`,
+                    width: '80px',
                   }}
                 >
-                  {prize.label}
-                </span>
-              </div>
-            );
-          })}
+                  <span
+                    className="text-white font-bold text-xs"
+                    style={{
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.5)',
+                      fontFamily: 'Cinzel, serif',
+                    }}
+                  >
+                    {prize.label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Center logo */}
+        {/* Center logo - OUTSIDE the rotating div, stays stationary */}
         <div
           className="absolute rounded-full overflow-hidden border-4 border-yellow-500"
           style={{
@@ -175,7 +182,6 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
             src={CENTER_LOGO_URL}
             alt="Logo"
             className="w-full h-full object-cover"
-            style={{ transform: `rotate(${-rotation}deg)` }}
           />
         </div>
       </motion.div>
