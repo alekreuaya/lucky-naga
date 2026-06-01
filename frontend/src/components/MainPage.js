@@ -139,7 +139,7 @@ export default function MainPage() {
                     height: '325px',
                     left: '50%',
                     top: '50%',
-                    transform: 'translate(-50%, -50%) translateX(6px) translateY(22px)',
+                    transform: 'translate(-50%, -50%) translateX(12px) translateY(32px)',
                     zIndex: 10,
                   }}
                   data-testid="wheel-wrapper"
@@ -153,34 +153,35 @@ export default function MainPage() {
                   />
                 </div>
 
-                {/* Dragon frame - centered absolutely on top of wheel */}
+                {/* Dragon frame - 100% width/height object-contain */}
                 <img
                   src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
                   alt="Dragon Frame"
-                  className="absolute object-contain pointer-events-none"
+                  className="absolute pointer-events-none"
                   style={{ 
                     top: 0,
                     left: 0,
                     width: '100%',
                     height: '100%',
+                    objectFit: 'contain',
                     zIndex: 20,
                     filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
                   }}
                 />
 
-                {/* Pointer/Indicator - golden claw with purple gem */}
+                {/* Pointer/Indicator - neon purple shard */}
                 <img
-                  src="/claw-indicator-gem.png"
+                  src="/shard-indicator.png"
                   alt="Indicator"
                   className="absolute pointer-events-none"
                   style={{
                     zIndex: 30,
                     left: '50%',
-                    top: '85px',
-                    transform: 'translateX(-50%) translateX(6px)',
-                    width: '45px',
+                    top: '95px',
+                    transform: 'translateX(-50%) translateX(12px)',
+                    width: '50px',
                     height: 'auto',
-                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,.6))'
+                    filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
                   }}
                   data-testid="wheel-indicator"
                 />
