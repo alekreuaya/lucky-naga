@@ -126,8 +126,8 @@ export default function MainPage() {
               <div 
                 className="dragon-container relative flex items-center justify-center mb-8"
                 style={{ 
-                  width: '520px', 
-                  height: '520px',
+                  width: '510px', 
+                  height: '510px',
                   backgroundImage: 'url(https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/zini58es_ChatGPT%20Image%20May%2031%2C%202026%2C%2008_13_40%20PM.png)',
                   backgroundSize: 'contain',
                   backgroundPosition: 'center',
