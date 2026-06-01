@@ -170,7 +170,7 @@ export default function MainPage() {
                     height: '100%',
                     objectFit: 'contain',
                     zIndex: 20,
-                    transform: 'translate(20px, 20px)',
+                    transform: 'translate(20px, 17px)',
                     filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
                   }}
                 />
@@ -184,7 +184,7 @@ export default function MainPage() {
                     position: 'absolute',
                     zIndex: 30,
                     left: '50%',
-                    top: '132px',
+                    top: '129px',
                     width: '50px',
                     height: 'auto',
                     transform: 'translateX(-50%) translateX(42px)',
