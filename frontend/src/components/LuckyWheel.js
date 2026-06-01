@@ -1,17 +1,15 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, forwardRef, useImperativeHandle } from "react";
 import { motion } from "framer-motion";
 
 const WHEEL_IMAGE_URL = "https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/0a1939a425cf471284cb46614a79cf81_wheel.png";
-const INDICATOR_IMAGE_URL = "https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/4c4ed96ac90549aeae1993d4ed25237d_indicator.png";
 const CENTER_LOGO_URL = "https://customer-assets.emergentagent.com/job_dc52c29e-a80c-443c-b910-34fef7a5ad1f/artifacts/7zt5x325_logo%20naga1001.jpeg";
 
-export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning }) {
+const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning }, ref) {
   const [rotation, setRotation] = useState(0);
-  const [targetRotation, setTargetRotation] = useState(0);
+  const targetRotationRef = useRef(0);
   const animationRef = useRef(null);
   const startTimeRef = useRef(null);
   const startRotRef = useRef(0);
-  const wheelRef = useRef(null);
 
   const segmentCount = prizes.length || 8;
   const segmentAngle = 360 / segmentCount;
@@ -28,52 +26,49 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
     const progress = Math.min(elapsed / duration, 1);
     const eased = easeOutQuart(progress);
 
-    const current = startRotRef.current + (targetRotation - startRotRef.current) * eased;
+    const target = targetRotationRef.current;
+    const current = startRotRef.current + (target - startRotRef.current) * eased;
     setRotation(current);
 
     if (progress < 1) {
       animationRef.current = requestAnimationFrame(animateSpin);
     } else {
-      setRotation(targetRotation);
+      setRotation(target);
       setSpinning(false);
-      const normalizedAngle = ((360 - (targetRotation % 360)) + 360) % 360;
+      const normalizedAngle = ((360 - (target % 360)) + 360) % 360;
       const winIndex = Math.floor(normalizedAngle / segmentAngle) % segmentCount;
       if (onSpinEnd) onSpinEnd(winIndex);
     }
-  }, [targetRotation, segmentAngle, segmentCount, onSpinEnd, setSpinning]);
+  }, [segmentAngle, segmentCount, onSpinEnd, setSpinning]);
+
+  const startSpin = useCallback((prizeIndex) => {
+    const targetAngle = 360 - (prizeIndex * segmentAngle + segmentAngle / 2);
+    const fullSpins = 5 + Math.floor(Math.random() * 3);
+    const currentRot = rotation;
+    const target = currentRot + fullSpins * 360 + targetAngle - (currentRot % 360) + (Math.random() * segmentAngle * 0.4 - segmentAngle * 0.2);
+    targetRotationRef.current = target;
+    startTimeRef.current = null;
+    startRotRef.current = currentRot;
+    setSpinning(true);
+    if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    animationRef.current = requestAnimationFrame(animateSpin);
+  }, [rotation, segmentAngle, setSpinning, animateSpin]);
+
+  useImperativeHandle(ref, () => ({
+    startSpin,
+  }), [startSpin]);
 
   useEffect(() => {
-    if (spinning) {
-      startTimeRef.current = null;
-      startRotRef.current = rotation;
-      animationRef.current = requestAnimationFrame(animateSpin);
-    }
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
-  }, [spinning, animateSpin, rotation]);
-
-  const startSpin = (prizeIndex) => {
-    if (spinning) return;
-    const targetAngle = 360 - (prizeIndex * segmentAngle + segmentAngle / 2);
-    const fullSpins = 5 + Math.floor(Math.random() * 3);
-    const target = rotation + fullSpins * 360 + targetAngle - (rotation % 360) + (Math.random() * segmentAngle * 0.4 - segmentAngle * 0.2);
-    setTargetRotation(target);
-    setSpinning(true);
-  };
-
-  useEffect(() => {
-    if (wheelRef.current) {
-      wheelRef.current.startSpin = startSpin;
-    }
-  });
+  }, []);
 
   return (
     <div 
       className="wheel-container relative flex items-center justify-center" 
       style={{ width: wheelSize, height: wheelSize }}
       data-testid="wheel-container"
-      ref={wheelRef}
     >
       {/* Spinning wheel with image */}
       <motion.div
@@ -187,4 +182,6 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
       </motion.div>
     </div>
   );
-}
+});
+
+export default LuckyWheel;

@@ -50,11 +50,17 @@ export default function MainPage() {
       const prize = res.data.prize;
       const prizeIndex = prizes.findIndex(p => p.label === prize.label);
       const idx = prizeIndex >= 0 ? prizeIndex : 0;
-      const canvas = document.querySelector('[data-testid="wheel-canvas"]');
-      if (canvas && canvas.startSpin) {
-        canvas.startSpin(idx);
-      }
       setWonPrize(prize);
+      if (wheelRef.current && wheelRef.current.startSpin) {
+        wheelRef.current.startSpin(idx);
+      } else {
+        // Fallback: if wheel ref not ready, still show modal after short delay
+        console.warn("Wheel ref not available, showing modal directly");
+        setTimeout(() => {
+          setShowWin(true);
+          fetchHistory();
+        }, 500);
+      }
     } catch (err) {
       const msg = err.response?.data?.detail || "Failed to spin. Please try again.";
       toast.error(msg);
@@ -62,10 +68,8 @@ export default function MainPage() {
   };
 
   const handleSpinEnd = () => {
-    if (wonPrize) {
-      setShowWin(true);
-      fetchHistory();
-    }
+    setShowWin(true);
+    fetchHistory();
   };
 
   const handleCloseWin = () => {
