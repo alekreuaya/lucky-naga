@@ -16,8 +16,8 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
   const segmentCount = prizes.length || 8;
   const segmentAngle = 360 / segmentCount;
 
-  // Wheel size
-  const wheelSize = 325;
+  // Wheel size - sized to fit snugly within dragon's claw opening (hole bbox ~289x309)
+  const wheelSize = 270;
 
   const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
 

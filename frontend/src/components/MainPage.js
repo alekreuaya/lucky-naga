@@ -131,13 +131,13 @@ export default function MainPage() {
                 }}
                 data-testid="dragon-container"
               >
-                {/* Wheel Container - behind the dragon (spins through the transparent hole) */}
+                {/* Wheel Container - locked behind dragon at computed transparent-hole center */}
                 <div 
                   className="wheel-wrapper absolute flex items-center justify-center"
                   style={{
                     top: '50%',
                     left: '50%',
-                    transform: 'translate(calc(-50% + 6px), calc(-50% - 28px))',
+                    transform: 'translate(calc(-50% - 7px), calc(-50% + 3px))',
                   }}
                   data-testid="wheel-wrapper"
                 >
