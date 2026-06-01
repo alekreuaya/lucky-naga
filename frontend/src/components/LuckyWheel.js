@@ -67,11 +67,7 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
   return (
     <div 
       className="wheel-container relative flex items-center justify-center" 
-      style={{ 
-        width: wheelSize, 
-        height: wheelSize,
-        transform: 'translate(32px, 47px)',
-      }}
+      style={{ width: wheelSize, height: wheelSize }}
       data-testid="wheel-container"
     >
       {/* Spinning wheel with image */}

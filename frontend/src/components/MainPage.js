@@ -157,7 +157,7 @@ export default function MainPage() {
                   />
                 </div>
 
-                {/* Dragon frame - 100% width/height object-contain */}
+                {/* Dragon frame - shifted to align with wheel */}
                 <img
                   src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
                   alt="Dragon Frame"
@@ -169,11 +169,12 @@ export default function MainPage() {
                     height: '100%',
                     objectFit: 'contain',
                     zIndex: 20,
+                    transform: 'translate(36px, 22px)',
                     filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
                   }}
                 />
 
-                {/* Pointer/Indicator - synced 32px horizontal shift to match wheel */}
+                {/* Pointer/Indicator - positioned at top-center of wheel */}
                 <img
                   src="/shard-indicator.png"
                   alt="Indicator"
@@ -181,8 +182,8 @@ export default function MainPage() {
                   style={{
                     zIndex: 30,
                     left: '50%',
-                    top: '95px',
-                    transform: 'translateX(-50%) translateX(32px)',
+                    top: '50%',
+                    transform: 'translateX(-50%) translate(-14px, -60px)',
                     width: '50px',
                     height: 'auto',
                     filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
