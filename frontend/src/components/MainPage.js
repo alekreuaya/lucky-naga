@@ -139,7 +139,7 @@ export default function MainPage() {
                     height: '325px',
                     left: '50%',
                     top: '50%',
-                    transform: 'translate(-50%, -50%) translateY(16px)',
+                    transform: 'translate(-50%, -50%) translateX(-4px) translateY(16px)',
                     zIndex: 10,
                   }}
                   data-testid="wheel-wrapper"
@@ -164,17 +164,17 @@ export default function MainPage() {
                   }}
                 />
 
-                {/* Pointer/Indicator - top-most layer, tip overlapping wheel edge */}
+                {/* Pointer/Indicator - golden dragon claw (transparent bg) */}
                 <img
-                  src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/4c4ed96ac90549aeae1993d4ed25237d_indicator.png"
+                  src="/claw-indicator.png"
                   alt="Indicator"
                   className="absolute pointer-events-none"
                   style={{
                     zIndex: 30,
                     left: '50%',
-                    top: '78px',
+                    top: '70px',
                     transform: 'translateX(-50%)',
-                    width: '34px',
+                    width: '45px',
                     height: 'auto',
                     filter: 'drop-shadow(0 2px 2px rgba(0,0,0,.5))'
                   }}
