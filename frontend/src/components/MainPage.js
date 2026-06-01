@@ -128,18 +128,25 @@ export default function MainPage() {
                 style={{ 
                   width: '510px', 
                   height: '510px',
-                  backgroundImage: 'url(https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png)',
-                  backgroundSize: 'contain',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',
-                  filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.3))'
                 }}
                 data-testid="dragon-container"
               >
-                {/* Wheel Container - positioned inside the dragon's circle */}
+                {/* Dragon frame - background layer */}
+                <img
+                  src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
+                  alt="Dragon Frame"
+                  className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                  style={{ 
+                    zIndex: 1,
+                    filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.3))'
+                  }}
+                />
+                
+                {/* Wheel Container - on top of dragon */}
                 <div 
-                  className="wheel-container absolute flex items-center justify-center"
-                  data-testid="wheel-container"
+                  className="wheel-wrapper relative flex items-center justify-center"
+                  style={{ zIndex: 10 }}
+                  data-testid="wheel-wrapper"
                 >
                   <LuckyWheel
                     ref={wheelRef}
