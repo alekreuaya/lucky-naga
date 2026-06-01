@@ -187,7 +187,7 @@ export default function MainPage() {
                     top: '126px',
                     width: '50px',
                     height: 'auto',
-                    transform: 'translateX(-50%) translateX(40px)',
+                    transform: 'translateX(-50%) translateX(-5px)',
                     filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
                   }}
                   data-testid="wheel-indicator"
