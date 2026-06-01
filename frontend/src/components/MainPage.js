@@ -124,7 +124,7 @@ export default function MainPage() {
 
               {/* Dragon Container with wheel inside */}
               <div 
-                className="dragon-container relative flex items-center justify-center mb-8"
+                className="dragon-container relative mb-8"
                 style={{ 
                   width: '500px', 
                   height: '500px',
@@ -139,7 +139,7 @@ export default function MainPage() {
                     height: '325px',
                     left: '50%',
                     top: '50%',
-                    transform: 'translate(-50%, -50%) translateX(-4px) translateY(16px)',
+                    transform: 'translate(-50%, -50%) translateX(6px) translateY(22px)',
                     zIndex: 10,
                   }}
                   data-testid="wheel-wrapper"
@@ -153,30 +153,34 @@ export default function MainPage() {
                   />
                 </div>
 
-                {/* Dragon frame - TOP layer (head & claws overlap wheel) */}
+                {/* Dragon frame - centered absolutely on top of wheel */}
                 <img
                   src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
                   alt="Dragon Frame"
-                  className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                  className="absolute object-contain pointer-events-none"
                   style={{ 
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
                     zIndex: 20,
                     filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
                   }}
                 />
 
-                {/* Pointer/Indicator - golden dragon claw (transparent bg) */}
+                {/* Pointer/Indicator - golden claw with purple gem */}
                 <img
-                  src="/claw-indicator.png"
+                  src="/claw-indicator-gem.png"
                   alt="Indicator"
                   className="absolute pointer-events-none"
                   style={{
                     zIndex: 30,
                     left: '50%',
-                    top: '70px',
-                    transform: 'translateX(-50%)',
+                    top: '85px',
+                    transform: 'translateX(-50%) translateX(6px)',
                     width: '45px',
                     height: 'auto',
-                    filter: 'drop-shadow(0 2px 2px rgba(0,0,0,.5))'
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,.6))'
                   }}
                   data-testid="wheel-indicator"
                 />
