@@ -131,15 +131,15 @@ export default function MainPage() {
                 }}
                 data-testid="dragon-container"
               >
-                {/* Wheel Container - mathematically centered behind dragon */}
+                {/* Wheel Container - exact positioning per user spec */}
                 <div 
                   className="wheel-wrapper absolute flex items-center justify-center"
                   style={{
-                    width: '320px',
-                    height: '320px',
+                    width: '325px',
+                    height: '325px',
                     left: '50%',
                     top: '50%',
-                    transform: 'translate(-50%, -50%) translateY(8px)',
+                    transform: 'translate(-50%, -50%) translateY(16px)',
                     zIndex: 10,
                   }}
                   data-testid="wheel-wrapper"
@@ -164,7 +164,7 @@ export default function MainPage() {
                   }}
                 />
 
-                {/* Pointer/Indicator - TOP-most layer (z:30) */}
+                {/* Pointer/Indicator - top-most layer, tip overlapping wheel edge */}
                 <img
                   src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/4c4ed96ac90549aeae1993d4ed25237d_indicator.png"
                   alt="Indicator"
@@ -172,11 +172,11 @@ export default function MainPage() {
                   style={{
                     zIndex: 30,
                     left: '50%',
-                    top: 'calc(50% - 168px)',
+                    top: '78px',
                     transform: 'translateX(-50%)',
-                    width: '60px',
+                    width: '34px',
                     height: 'auto',
-                    filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.5))'
+                    filter: 'drop-shadow(0 2px 2px rgba(0,0,0,.5))'
                   }}
                   data-testid="wheel-indicator"
                 />

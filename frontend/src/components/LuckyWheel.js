@@ -16,8 +16,8 @@ export default function LuckyWheel({ prizes, onSpinEnd, spinning, setSpinning })
   const segmentCount = prizes.length || 8;
   const segmentAngle = 360 / segmentCount;
 
-  // Wheel size - matches wheel-wrapper bounds (320px)
-  const wheelSize = 320;
+  // Wheel size - matches wheel-wrapper bounds (325px)
+  const wheelSize = 325;
 
   const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
 
