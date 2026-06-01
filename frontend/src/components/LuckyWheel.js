@@ -175,7 +175,7 @@ const LuckyWheel = forwardRef(function LuckyWheel({ prizes, onSpinEnd, spinning,
             height: '71.5px',
             top: '50%',
             left: '50%',
-            transform: 'translate(-50%, -50%)',
+            transform: 'translate(-50%, -50%) translate(-8px, -1px)',
             boxShadow: '0 0 15px rgba(218, 165, 32, 0.6)',
             zIndex: 15,
           }}
