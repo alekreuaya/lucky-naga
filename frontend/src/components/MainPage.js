@@ -208,6 +208,83 @@ export default function MainPage() {
               <WinnersList history={history} />
             </div>
           </div>
+
+          {/* Informational sections - Cara Bermain & Syarat Ketentuan */}
+          <motion.section
+            className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            data-testid="info-sections"
+          >
+            {/* Cara Bermain */}
+            <div
+              className="relative rounded-2xl border border-[#D4A030]/30 bg-gradient-to-br from-[#1a0a0a] to-[#2a0f0f] p-6 md:p-8 shadow-[0_0_30px_rgba(218,165,32,0.08)]"
+              data-testid="cara-bermain-section"
+            >
+              <div className="flex items-center gap-3 mb-5">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#D4A030] to-[#B8860B] text-[#1a0a0a] font-bold font-['Cinzel'] text-lg shadow-md">
+                  ?
+                </span>
+                <h3 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
+                  Cara Bermain
+                </h3>
+              </div>
+              <p className="text-[#D4A030]/70 italic text-sm md:text-base mb-5">
+                Langkah Mudah Mengikuti Lucky Spin NAGA1001:
+              </p>
+              <ol className="space-y-4">
+                {[
+                  { t: "Login", d: "Masukkan Username resmi Anda yang terdaftar." },
+                  { t: "Kode Redeem", d: "Masukkan 8 digit Kode Redeem yang Anda dapatkan dari Admin atau Customer Service." },
+                  { t: "Putar Roda", d: "Klik tombol 'PUTAR RODA' dan tunggu hingga naga berhenti memberikan keberuntungan Anda." },
+                  { t: "Klaim Hadiah", d: "Jika Anda menang, ambil screenshot hasil kemenangan dan hubungi Livechat kami untuk klaim." },
+                ].map((step, i) => (
+                  <li key={i} className="flex gap-4 items-start">
+                    <span className="shrink-0 w-8 h-8 rounded-full bg-[#9B1B30]/40 border border-[#D4A030]/50 flex items-center justify-center text-[#D4A030] font-bold font-['Cinzel']">
+                      {i + 1}
+                    </span>
+                    <div className="flex-1">
+                      <p className="font-bold text-[#FFD700] mb-1">{step.t}:</p>
+                      <p className="text-[#F5E6C8]/80 text-sm md:text-base leading-relaxed">{step.d}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* Syarat & Ketentuan */}
+            <div
+              className="relative rounded-2xl border border-[#D4A030]/30 bg-gradient-to-br from-[#1a0a0a] to-[#2a0f0f] p-6 md:p-8 shadow-[0_0_30px_rgba(218,165,32,0.08)]"
+              data-testid="syarat-ketentuan-section"
+            >
+              <div className="flex items-center gap-3 mb-5">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#D4A030] to-[#B8860B] text-[#1a0a0a] font-bold font-['Cinzel'] text-lg shadow-md">
+                  !
+                </span>
+                <h3 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
+                  Syarat &amp; Ketentuan
+                </h3>
+              </div>
+              <p className="text-[#D4A030]/70 italic text-sm md:text-base mb-5">
+                Peraturan Event Lucky Spin:
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Setiap kode redeem hanya dapat digunakan satu kali per akun.",
+                  "Pemenang wajib melakukan screenshot saat mendapatkan hadiah.",
+                  "Hadiah tidak dapat diuangkan dan harus diklaim dalam waktu 1x24 jam.",
+                  "Keputusan manajemen NAGA1001 bersifat mutlak dan tidak dapat diganggu gugat.",
+                ].map((rule, i) => (
+                  <li key={i} className="flex gap-3 items-start">
+                    <span className="shrink-0 mt-1.5 w-2 h-2 rounded-full bg-[#FFD700] shadow-[0_0_6px_rgba(255,215,0,0.6)]" />
+                    <p className="text-[#F5E6C8]/85 text-sm md:text-base leading-relaxed">{rule}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.section>
         </div>
       </main>
 
