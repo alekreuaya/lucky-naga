@@ -10,7 +10,7 @@ import WinModal from "@/components/WinModal";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const LOGO_GIF = "https://customer-assets.emergentagent.com/job_fortune-wheel-hub/artifacts/0p68npsx_gif%20naga1001.gif";
-const DRAGON_FRAME = "https://res.cloudinary.com/dagep4x49/image/upload/v1782910248/wheel_naga_ysebf0.webp";
+const DRAGON_FRAME = "https://res.cloudinary.com/dagep4x49/image/upload/v1782912552/wheel_naga_b64j7d.png";
 
 // Ukuran frame dragon dan wheel harus proporsional
 // Frame: 1254x1254, lingkaran roda ada di tengah
