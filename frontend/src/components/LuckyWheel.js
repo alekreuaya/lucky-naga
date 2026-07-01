@@ -162,10 +162,10 @@ function drawWheel(canvas, prizes) {
 
 // ─── Main component ──────────────────────────────────────────────────────────
 const LuckyWheel = forwardRef(function LuckyWheel(
-  { prizes, onSpinEnd, spinning, setSpinning },
+  { prizes, onSpinEnd, spinning, setSpinning, size },
   ref
 ) {
-  const WHEEL_SIZE = 340;
+  const WHEEL_SIZE = size || 340;
   const canvasRef = useRef(null);
   const rotationRef = useRef(0);          // actual current rotation (degrees)
   const [rotateDeg, setRotateDeg] = useState(0);
