@@ -10,15 +10,14 @@ import WinModal from "@/components/WinModal";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const LOGO_GIF = "https://customer-assets.emergentagent.com/job_fortune-wheel-hub/artifacts/0p68npsx_gif%20naga1001.gif";
-const DRAGON_FRAME = "https://res.cloudinary.com/dagep4x49/image/upload/v1782912552/wheel_naga_b64j7d.png";
 
 // Ukuran frame dragon dan wheel harus proporsional
 // Frame: 1254x1254, lingkaran roda ada di tengah
 // Kita tampilkan frame di 500x500px → rasio = 500/1254 = 0.3987
 // Diameter lingkaran roda di dalam frame kira-kira 58% dari lebar frame
 // → 500 * 0.58 = 290px → kita set wheel 290px agar pas di dalam lingkaran
-const FRAME_SIZE = 500;   // ukuran frame dragon yang ditampilkan (px)
-const WHEEL_SIZE = 260;   // 650/1254 * 500 = 259px → tepat di dalam lingkaran dragon
+const FRAME_SIZE = 420;   // ukuran container wheel
+const WHEEL_SIZE = 400;   // wheel besar, tanpa dragon frame
 
 export default function MainPage() {
   const [prizes, setPrizes] = useState([]);
@@ -197,19 +196,6 @@ export default function MainPage() {
                   />
                 </div>
 
-                {/* ── DRAGON FRAME — di atas wheel, pointer-events-none ── */}
-                <img
-                  src={DRAGON_FRAME}
-                  alt="Dragon Frame"
-                  className="absolute inset-0 w-full h-full pointer-events-none select-none"
-                  style={{
-                    objectFit: 'contain',
-                    zIndex: 20,
-                    filter: 'drop-shadow(0 0 24px rgba(218,165,32,0.35))',
-                  }}
-                  draggable={false}
-                  data-testid="dragon-frame"
-                />
               </div>
 
               {/* Mobile CTA */}
