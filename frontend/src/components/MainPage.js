@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { History } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
@@ -9,7 +9,6 @@ import WinnersList from "@/components/WinnersList";
 import WinModal from "@/components/WinModal";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
-
 const LOGO_GIF = "https://customer-assets.emergentagent.com/job_fortune-wheel-hub/artifacts/0p68npsx_gif%20naga1001.gif";
 
 export default function MainPage() {
@@ -51,18 +50,13 @@ export default function MainPage() {
       const prizeIndex = prizes.findIndex(p => p.label === prize.label);
       const idx = prizeIndex >= 0 ? prizeIndex : 0;
       setWonPrize(prize);
-      if (wheelRef.current && wheelRef.current.startSpin) {
+      if (wheelRef.current?.startSpin) {
         wheelRef.current.startSpin(idx);
       } else {
-        // Fallback: if wheel ref not ready, still show modal after short delay
-        console.warn("Wheel ref not available, showing modal directly");
-        setTimeout(() => {
-          setShowWin(true);
-          fetchHistory();
-        }, 500);
+        setTimeout(() => { setShowWin(true); fetchHistory(); }, 500);
       }
     } catch (err) {
-      const msg = err.response?.data?.detail || "Failed to spin. Please try again.";
+      const msg = err.response?.data?.detail || "Gagal spin. Coba lagi.";
       toast.error(msg);
     }
   };
@@ -78,176 +72,164 @@ export default function MainPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a0a0a] dragon-pattern" data-testid="main-page">
-      {/* Header */}
+    <div className="min-h-screen bg-[#0f0505]" style={{ backgroundImage: 'radial-gradient(ellipse at 50% 0%, rgba(155,27,48,0.18) 0%, transparent 65%)' }} data-testid="main-page">
+
+      {/* ── HEADER ── */}
       <motion.header
-        className="px-6 md:px-12 py-6 flex items-center justify-center border-b border-[#D4A030]/15"
-        initial={{ opacity: 0, y: -20 }}
+        className="px-6 md:px-12 py-5 flex items-center justify-between border-b border-[#D4A030]/12"
+        initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex items-center gap-3">
-          <img src={LOGO_GIF} alt="NAGA1001" className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
-          <h1 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
-            NAGA1001
-          </h1>
+          <img src={LOGO_GIF} alt="NAGA1001" className="w-10 h-10 object-contain" />
+          <span className="text-xl font-bold font-['Cinzel'] gold-text tracking-widest">NAGA1001</span>
         </div>
+        <a
+          href="https://okenaga.com/nagalogin"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold font-['Cinzel'] tracking-wider transition-all duration-300"
+          style={{ background: 'linear-gradient(135deg,#D4A030,#B8860B)', color: '#0f0505' }}
+        >
+          MASUK NAGA1001
+        </a>
       </motion.header>
 
-      {/* Main Content */}
-      <main className="px-6 md:px-12 pb-12">
+      {/* ── MAIN ── */}
+      <main className="px-4 md:px-10 pb-16 pt-4">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-            {/* Left: Wheel */}
+
+          {/* Title */}
+          <motion.div
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-['Cinzel'] gold-text leading-tight">
+              Lucky Spin
+            </h1>
+            <p className="text-[#D4A030]/50 text-sm sm:text-base tracking-widest mt-2 uppercase font-medium">
+              Putar roda &amp; raih hadiahmu
+            </p>
+          </motion.div>
+
+          {/* Content grid */}
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start justify-center">
+
+            {/* ── WHEEL SECTION ── */}
             <motion.div
-              className="flex-1 flex flex-col items-center justify-center py-8"
-              initial={{ opacity: 0, scale: 0.9 }}
+              className="flex-1 flex flex-col items-center"
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 }}
+              transition={{ delay: 0.15 }}
             >
-              <motion.h2
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold font-['Cinzel'] text-center mb-2"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
+              {/* Wheel card */}
+              <div
+                className="relative flex items-center justify-center"
+                style={{
+                  width: 380,
+                  height: 380,
+                  maxWidth: '100%',
+                }}
+                data-testid="wheel-section"
               >
-                <span className="gold-text">Coba Kehokianmu</span>
-              </motion.h2>
-              <p className="text-base md:text-lg text-[#D4A030]/50 font-medium text-center mb-4 tracking-wider">
-                Putar roda dan raih hadiahmu
-              </p>
-              
-              {/* Mobile-only button */}
+                {/* Decorative rings */}
+                <div className="absolute inset-0 rounded-full pointer-events-none"
+                  style={{ background: 'radial-gradient(circle, transparent 42%, rgba(212,160,48,0.08) 43%, transparent 56%)' }}
+                />
+                <div className="absolute inset-0 rounded-full pointer-events-none"
+                  style={{ boxShadow: '0 0 60px rgba(155,27,48,0.3), 0 0 120px rgba(155,27,48,0.12)' }}
+                />
+
+                {/* Spinning ring when active */}
+                <AnimatePresence>
+                  {spinning && (
+                    <motion.div
+                      className="absolute rounded-full pointer-events-none"
+                      style={{
+                        inset: -8,
+                        border: '2px solid transparent',
+                        borderTopColor: '#FFD700',
+                        borderRightColor: '#D4A030',
+                      }}
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+                    />
+                  )}
+                </AnimatePresence>
+
+                {/* The wheel — dead center, no offsets */}
+                <LuckyWheel
+                  ref={wheelRef}
+                  prizes={prizes}
+                  spinning={spinning}
+                  setSpinning={setSpinning}
+                  onSpinEnd={handleSpinEnd}
+                />
+              </div>
+
+              {/* Mobile CTA */}
               <a
-                href="https://okenaga.com/supernaga"
+                href="https://okenaga.com/nagalogin"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="md:hidden mb-6 px-8 py-3 bg-gradient-to-r from-[#D4A030] to-[#F4D03F] text-[#1a0a0a] font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="md:hidden mt-6 px-8 py-3 rounded-full font-bold text-base font-['Cinzel'] tracking-wider transition-all"
+                style={{ background: 'linear-gradient(135deg,#D4A030,#B8860B)', color: '#0f0505' }}
                 data-testid="mobile-naga-button"
               >
                 MASUK NAGA1001
               </a>
-
-              {/* Dragon Container with wheel inside */}
-              <div 
-                className="dragon-container relative mb-8"
-                style={{ 
-                  width: '500px', 
-                  height: '500px',
-                }}
-                data-testid="dragon-container"
-              >
-                {/* Wheel Container - NATURAL center, no offsets */}
-                <div 
-                  className="wheel-wrapper absolute flex items-center justify-center"
-                  style={{
-                    position: 'absolute',
-                    width: '325px',
-                    height: '325px',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: 10,
-                  }}
-                  data-testid="wheel-wrapper"
-                >
-                  <LuckyWheel
-                    ref={wheelRef}
-                    prizes={prizes}
-                    spinning={spinning}
-                    setSpinning={setSpinning}
-                    onSpinEnd={handleSpinEnd}
-                  />
-                </div>
-
-                {/* Dragon frame - shifted to match wheel's natural center */}
-                <img
-                  src="https://customer-assets.emergentagent.com/wingman/c27e33be-75fc-4a30-9656-213581633813/attachments/d335098d229e40a7a93ad2d2bbf1b1f0_dragon.png"
-                  alt="Dragon Frame"
-                  className="absolute pointer-events-none"
-                  style={{ 
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    zIndex: 20,
-                    transform: 'translate(-5px, -35px)',
-                    filter: 'drop-shadow(0 0 20px rgba(218,165,32,0.5))'
-                  }}
-                />
-
-                {/* Pointer/Indicator - at natural top-center of wheel */}
-                <img
-                  src="/shard-indicator.png"
-                  alt="Indicator"
-                  className="absolute pointer-events-none"
-                  style={{
-                    position: 'absolute',
-                    zIndex: 30,
-                    left: '50%',
-                    top: '75px',
-                    width: '50px',
-                    height: 'auto',
-                    transform: 'translateX(-50%)',
-                    filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
-                  }}
-                  data-testid="wheel-indicator"
-                />
-              </div>
             </motion.div>
 
-            {/* Right: Form + History */}
-            <div className="lg:w-[400px] xl:w-[440px] flex flex-col gap-8">
+            {/* ── RIGHT COLUMN ── */}
+            <div className="lg:w-[400px] xl:w-[440px] flex flex-col gap-6 w-full">
               <SpinForm onSpin={handleSpin} spinning={spinning} />
 
-              <div className="flex items-center gap-2 -mb-4">
-                <History className="w-5 h-5 text-[#D4A030]" />
-                <span className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4A030]/60 font-['Cinzel']">
-                  Pemenang Terbaru
-                </span>
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <History className="w-4 h-4 text-[#D4A030]" />
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#D4A030]/60 font-['Cinzel']">
+                    Pemenang Terbaru
+                  </span>
+                </div>
+                <WinnersList history={history} />
               </div>
-              <WinnersList history={history} />
             </div>
           </div>
 
-          {/* Informational sections - Cara Bermain & Syarat Ketentuan */}
+          {/* ── INFO SECTIONS ── */}
           <motion.section
-            className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
-            initial={{ opacity: 0, y: 30 }}
+            className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6"
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.6 }}
             data-testid="info-sections"
           >
             {/* Cara Bermain */}
-            <div
-              className="relative rounded-2xl border border-[#D4A030]/30 bg-gradient-to-br from-[#1a0a0a] to-[#2a0f0f] p-6 md:p-8 shadow-[0_0_30px_rgba(218,165,32,0.08)]"
+            <div className="rounded-2xl border border-[#D4A030]/25 p-6 md:p-8"
+              style={{ background: 'linear-gradient(135deg, rgba(26,10,10,0.9), rgba(42,15,15,0.9))' }}
               data-testid="cara-bermain-section"
             >
-              <div className="flex items-center gap-3 mb-5">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#D4A030] to-[#B8860B] text-[#1a0a0a] font-bold font-['Cinzel'] text-lg shadow-md">
-                  ?
-                </span>
-                <h3 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
-                  Cara Bermain
-                </h3>
-              </div>
-              <p className="text-[#D4A030]/70 italic text-sm md:text-base mb-5">
-                Langkah Mudah Mengikuti Lucky Spin NAGA1001:
-              </p>
+              <h3 className="text-xl md:text-2xl font-bold font-['Cinzel'] gold-text mb-5">
+                🎯 Cara Bermain
+              </h3>
+              <p className="text-[#D4A030]/60 text-sm mb-5 italic">Langkah mudah mengikuti Lucky Spin:</p>
               <ol className="space-y-4">
                 {[
-                  { t: "Login", d: "Masukkan Username resmi Anda yang terdaftar." },
-                  { t: "Kode Redeem", d: "Masukkan 8 digit Kode Redeem yang Anda dapatkan dari Admin atau Customer Service." },
-                  { t: "Putar Roda", d: "Klik tombol 'PUTAR RODA' dan tunggu hingga naga berhenti memberikan keberuntungan Anda." },
-                  { t: "Klaim Hadiah", d: "Jika Anda menang, ambil screenshot hasil kemenangan dan hubungi Livechat kami untuk klaim." },
+                  { t: "Login", d: "Masukkan Username resmi Anda yang terdaftar di Naga1001." },
+                  { t: "Kode Redeem", d: "Masukkan 8 digit Kode Redeem dari Admin atau Customer Service." },
+                  { t: "Putar Roda", d: "Klik 'PUTAR RODA' dan tunggu hingga roda berhenti." },
+                  { t: "Klaim Hadiah", d: "Screenshot hasilmu dan hubungi Livechat untuk klaim hadiah." },
                 ].map((step, i) => (
                   <li key={i} className="flex gap-4 items-start">
-                    <span className="shrink-0 w-8 h-8 rounded-full bg-[#9B1B30]/40 border border-[#D4A030]/50 flex items-center justify-center text-[#D4A030] font-bold font-['Cinzel']">
+                    <span className="shrink-0 w-7 h-7 rounded-full border border-[#D4A030]/50 flex items-center justify-center text-[#D4A030] font-bold font-['Cinzel'] text-sm bg-[#9B1B30]/30">
                       {i + 1}
                     </span>
-                    <div className="flex-1">
-                      <p className="font-bold text-[#FFD700] mb-1">{step.t}:</p>
-                      <p className="text-[#F5E6C8]/80 text-sm md:text-base leading-relaxed">{step.d}</p>
+                    <div>
+                      <p className="font-bold text-[#FFD700] text-sm mb-0.5">{step.t}</p>
+                      <p className="text-[#F5E6C8]/75 text-sm leading-relaxed">{step.d}</p>
                     </div>
                   </li>
                 ))}
@@ -255,31 +237,24 @@ export default function MainPage() {
             </div>
 
             {/* Syarat & Ketentuan */}
-            <div
-              className="relative rounded-2xl border border-[#D4A030]/30 bg-gradient-to-br from-[#1a0a0a] to-[#2a0f0f] p-6 md:p-8 shadow-[0_0_30px_rgba(218,165,32,0.08)]"
+            <div className="rounded-2xl border border-[#D4A030]/25 p-6 md:p-8"
+              style={{ background: 'linear-gradient(135deg, rgba(26,10,10,0.9), rgba(42,15,15,0.9))' }}
               data-testid="syarat-ketentuan-section"
             >
-              <div className="flex items-center gap-3 mb-5">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#D4A030] to-[#B8860B] text-[#1a0a0a] font-bold font-['Cinzel'] text-lg shadow-md">
-                  !
-                </span>
-                <h3 className="text-2xl md:text-3xl font-bold font-['Cinzel'] gold-text">
-                  Syarat &amp; Ketentuan
-                </h3>
-              </div>
-              <p className="text-[#D4A030]/70 italic text-sm md:text-base mb-5">
-                Peraturan Event Lucky Spin:
-              </p>
-              <ul className="space-y-3">
+              <h3 className="text-xl md:text-2xl font-bold font-['Cinzel'] gold-text mb-5">
+                📋 Syarat &amp; Ketentuan
+              </h3>
+              <p className="text-[#D4A030]/60 text-sm mb-5 italic">Peraturan event Lucky Spin:</p>
+              <ul className="space-y-4">
                 {[
                   "Setiap kode redeem hanya dapat digunakan satu kali per akun.",
-                  "Pemenang wajib melakukan screenshot saat mendapatkan hadiah.",
-                  "Hadiah tidak dapat diuangkan dan harus diklaim dalam waktu 1x24 jam.",
+                  "Pemenang wajib screenshot saat mendapatkan hadiah.",
+                  "Hadiah tidak dapat diuangkan dan wajib diklaim dalam 1×24 jam.",
                   "Keputusan manajemen NAGA1001 bersifat mutlak dan tidak dapat diganggu gugat.",
                 ].map((rule, i) => (
                   <li key={i} className="flex gap-3 items-start">
-                    <span className="shrink-0 mt-1.5 w-2 h-2 rounded-full bg-[#FFD700] shadow-[0_0_6px_rgba(255,215,0,0.6)]" />
-                    <p className="text-[#F5E6C8]/85 text-sm md:text-base leading-relaxed">{rule}</p>
+                    <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-[#FFD700]" style={{ boxShadow: '0 0 6px rgba(255,215,0,0.6)' }} />
+                    <p className="text-[#F5E6C8]/80 text-sm leading-relaxed">{rule}</p>
                   </li>
                 ))}
               </ul>
