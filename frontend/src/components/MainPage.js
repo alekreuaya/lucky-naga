@@ -18,7 +18,7 @@ const DRAGON_FRAME = "https://res.cloudinary.com/dagep4x49/image/upload/v1782912
 // Diameter lingkaran roda di dalam frame kira-kira 58% dari lebar frame
 // → 500 * 0.58 = 290px → kita set wheel 290px agar pas di dalam lingkaran
 const FRAME_SIZE = 500;   // ukuran frame dragon yang ditampilkan (px)
-const WHEEL_SIZE = 295;   // ukuran wheel agar pas di dalam lingkaran frame
+const WHEEL_SIZE = 260;   // 650/1254 * 500 = 259px → tepat di dalam lingkaran dragon
 
 export default function MainPage() {
   const [prizes, setPrizes] = useState([]);
@@ -162,7 +162,7 @@ export default function MainPage() {
                     <motion.div
                       className="absolute pointer-events-none rounded-full"
                       style={{
-                        inset: FRAME_SIZE * 0.17,
+                        inset: FRAME_SIZE * 0.24,
                         border: '2px solid transparent',
                         borderTopColor: '#FFD700',
                         borderRightColor: 'rgba(212,160,48,0.4)',
